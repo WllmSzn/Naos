@@ -1,0 +1,55 @@
+{
+  "id": "garden-serif",
+  "name": "Garden Serif",
+  "theme": "light",
+  "summary": "Une tech qui a de la poésie : blanc cassé, serif légère et élégante, bleu céruléen, et de grandes images-paysages où le texte flotte sur du verre dépoli.",
+  "bestFor": ["ai lab", "research lab", "company manifesto", "startup", "brand landing", "venture studio", "climate tech", "editorial", "careers page", "about page"],
+  "mood": ["poetic", "calm", "editorial", "optimistic", "light"],
+  "tokens": {
+    "base": "#FBFBF8",
+    "surface": "#FFFFFF",
+    "raised": "#F2F4EF",
+    "line": "#E2E5DF",
+    "ink": "#232323",
+    "muted": "#62646A",
+    "accent": "#0B6FA4",
+    "accentInk": "#FFFFFF",
+    "accent2": "#7FC1B8",
+    "accentText": "#0C6A9C",
+    "success": "#2D734C",
+    "warning": "#855F19",
+    "danger": "#B03C30"
+  },
+  "dataPalette": ["#0B6FA4", "#7FC1B8", "#E2B24A", "#5D7C4F", "#B9BDB7"],
+  "fonts": {
+    "display": "Newsreader",
+    "body": "Hanken Grotesk",
+    "mono": "IBM Plex Mono",
+    "displayWeights": [300, 400],
+    "bodyWeights": [400, 500]
+  },
+  "headings": { "weight": 400, "tracking": "-0.025em", "leading": "1.08" },
+  "shape": { "radius": "0.5rem", "radiusLarge": "1.5rem", "borderWidth": "1px" },
+  "elevation": {
+    "card": "0 1px 1px rgba(35,35,35,0.04)",
+    "overlay": "0 2px 6px rgba(35,35,35,0.12), 0 20px 48px -20px rgba(35,35,35,0.25)"
+  },
+  "signature": "Une image-paysage pleine page (illustration ou photo lumineuse) avec, posée dessus, une carte en verre dépoli (bg-surface/20 backdrop-blur) qui porte le titre serif et une phrase.",
+  "rules": {
+    "do": [
+      "Titres en serif légère (300 à 400), grands et posés, jamais en gras ; texte courant en grotesque 15px, interlignage 1.5.",
+      "Mettre en retrait une partie d'une phrase-titre en text-muted/60 (« Les agents ont réussi dans plusieurs domaines, mais isolément ») pour créer une lecture en deux temps.",
+      "Beaucoup de vide : une idée par écran, colonnes de texte étroites (max-w-md), sections de py-32 et plus.",
+      "Grandes images arrondies (rounded-card) qui portent l'émotion ; le verre dépoli est réservé aux cartes posées sur une image.",
+      "Navigation compacte et centrée dans une pilule, liens discrets, un seul bouton plein bg-ink.",
+      "Petits détails éditoriaux : légendes de figure en font-mono 11px (« fig. 1 »), heure ou lieu dans un coin, numérotation des sections."
+    ],
+    "dont": [
+      "Pas de couleurs saturées en aplat hors images : l'accent céruléen reste pour les liens, un bouton ou un graphique.",
+      "Pas de serif en gras ni en italique décoratif.",
+      "Pas de densité : jamais plus de trois blocs de contenu visibles en même temps.",
+      "Pas de verre dépoli sur fond uni (il ne se voit pas et réduit le contraste).",
+      "Pas d'icônes en pastilles colorées ni d'illustrations vectorielles génériques."
+    ]
+  }
+}

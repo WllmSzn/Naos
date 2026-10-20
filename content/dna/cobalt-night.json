@@ -1,0 +1,56 @@
+{
+  "id": "cobalt-night",
+  "name": "Cobalt Night",
+  "theme": "dark",
+  "summary": "Un produit sérieux qui ose : noir profond, titres géants, un mot en serif au milieu de la grotesque, et des aplats cobalt pour les preuves.",
+  "bestFor": ["ai product", "saas landing", "developer tools", "data platform", "research tool", "analytics", "product launch", "b2b saas", "api platform", "security"],
+  "mood": ["bold", "technical", "editorial", "dark", "confident"],
+  "tokens": {
+    "base": "#0A0A0B",
+    "surface": "#141416",
+    "raised": "#1C1C1F",
+    "line": "#2A2A2E",
+    "ink": "#F7F7F8",
+    "muted": "#A0A0A8",
+    "accent": "#1F45D1",
+    "accentInk": "#FFFFFF",
+    "accent2": "#A66BFF",
+    "accentText": "#647EDD",
+    "success": "#4CC38A",
+    "warning": "#E8C547",
+    "danger": "#F26D64"
+  },
+  "dataPalette": ["#4C74F5", "#A66BFF", "#F7F7F8", "#5FD0C2", "#6B6B73"],
+  "fonts": {
+    "display": "Geist",
+    "body": "Geist",
+    "mono": "Geist Mono",
+    "accent": "Instrument Serif",
+    "displayWeights": [500, 600],
+    "bodyWeights": [400, 500]
+  },
+  "headings": { "weight": 600, "tracking": "-0.035em", "leading": "0.98" },
+  "shape": { "radius": "0.5rem", "radiusLarge": "0.75rem", "borderWidth": "1px" },
+  "elevation": {
+    "card": "none",
+    "overlay": "0 0 0 1px #2A2A2E, 0 24px 60px -20px rgba(0,0,0,0.8)"
+  },
+  "signature": "Un titre géant (96 à 160px) sur deux lignes où un mot passe en font-accent (serif, poids normal), avec une capture produit sombre juste en dessous qui déborde du pli.",
+  "rules": {
+    "do": [
+      "Titres de section très grands (56 à 72px) et serrés ; un seul mot par titre en font-accent, en italique ou non, jamais deux.",
+      "Navigation par onglets empilés : l'élément actif en text-ink, les autres en text-muted (jamais plus pâle : le contraste doit rester lisible), qui passent en text-ink au survol.",
+      "Témoignages et chiffres clés sur des aplats bg-accent pleins (text-accent-ink), en alternance avec des cartes bg-surface bordées de border-line.",
+      "Sur-titres, horodatages et labels de capture en font-mono, 11 à 12px, capitales espacées.",
+      "Captures produit réelles (interfaces sombres) en grand, avec des annotations discrètes plutôt que des illustrations.",
+      "Interactions sobres et rapides : survol qui éclaircit la bordure, transitions de 150 à 200 ms, pas d'effet décoratif."
+    ],
+    "dont": [
+      "Pas de section claire ni de fond blanc, même pour le pied de page.",
+      "Pas de dégradés violets ni de halos flous : la couleur vient des aplats cobalt et des captures.",
+      "Pas plus d'un mot en font-accent par titre, et jamais dans le texte courant.",
+      "Pas d'ombres portées sur les cartes : bordures fines uniquement.",
+      "Pas d'emoji ni de pictogrammes colorés : icônes au trait, text-muted."
+    ]
+  }
+}

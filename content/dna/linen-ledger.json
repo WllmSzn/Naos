@@ -1,0 +1,53 @@
+{
+  "id": "linen-ledger",
+  "name": "Linen Ledger",
+  "theme": "light",
+  "summary": "La sobriété d'un registre bien tenu : papier chaud, titres en serif, vert profond. Inspire confiance sans être austère.",
+  "bestFor": ["finance", "accounting", "invoicing", "banking", "legal", "insurance", "b2b saas", "payroll", "wealth management", "consulting"],
+  "mood": ["serious", "trustworthy", "elegant", "calm", "light"],
+  "tokens": {
+    "base": "#F6F4EE",
+    "surface": "#FFFFFF",
+    "raised": "#EFECE3",
+    "line": "#E1DDD2",
+    "ink": "#1D1C19",
+    "muted": "#67635A",
+    "accent": "#1F5A46",
+    "accentInk": "#FFFFFF",
+    "accent2": "#B8892B",
+    "success": "#2C6D46",
+    "warning": "#825A1D",
+    "danger": "#A83D2D"
+  },
+  "dataPalette": ["#1F5A46", "#B8892B", "#5B7FA6", "#A65B4E", "#7C8B6F"],
+  "fonts": {
+    "display": "Instrument Serif",
+    "body": "Instrument Sans",
+    "mono": "IBM Plex Mono",
+    "displayWeights": [400],
+    "bodyWeights": [400, 500, 600]
+  },
+  "shape": { "radius": "0.375rem", "radiusLarge": "0.75rem", "borderWidth": "1px" },
+  "elevation": {
+    "card": "0 1px 0 rgba(29,28,25,0.04)",
+    "overlay": "0 16px 40px -12px rgba(29,28,25,0.18)"
+  },
+  "signature": "Un grand montant en serif (48 à 64px) en tête d'écran, accompagné d'une ligne de contexte en petites capitales espacées.",
+  "rules": {
+    "do": [
+      "Titres en serif régulier, jamais en gras ; le texte d'interface reste en sans-serif.",
+      "Montants alignés à droite, en tabular-nums, avec la devise en muted et plus petite que le nombre.",
+      "Tableaux aérés : lignes séparées par border-line, pas de zébrage, en-têtes en petites capitales muted.",
+      "Cartes blanches posées sur le fond papier, bordure fine plutôt qu'ombre.",
+      "Statuts en pastilles discrètes : texte coloré sur fond teinté à 10 %, jamais de fond saturé.",
+      "Libellés métier précis (« Échéance », « Solde reporté ») plutôt que génériques."
+    ],
+    "dont": [
+      "Pas de couleurs vives ni de néon : l'accent reste profond et rare.",
+      "Pas d'emoji, d'illustrations cartoon ni de mascotte.",
+      "Pas de rayons supérieurs à 12px.",
+      "Pas de graphiques en 3D, en camembert éclaté ou avec plus de cinq séries.",
+      "Pas de serif dans les boutons, champs ou menus."
+    ]
+  }
+}

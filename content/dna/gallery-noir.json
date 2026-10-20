@@ -1,0 +1,53 @@
+{
+  "id": "gallery-noir",
+  "name": "Gallery Noir",
+  "theme": "dark",
+  "summary": "Une galerie après la fermeture : noir chaud, serif de caractère, beaucoup de vide et des images qui portent tout.",
+  "bestFor": ["luxury", "fashion", "portfolio", "photography", "architecture", "hospitality", "fine dining", "jewelry", "art gallery", "premium brand"],
+  "mood": ["elegant", "cinematic", "minimal", "dark", "premium"],
+  "tokens": {
+    "base": "#0C0B0A",
+    "surface": "#151413",
+    "raised": "#1E1C1A",
+    "line": "#2E2B27",
+    "ink": "#F1EDE6",
+    "muted": "#9C968C",
+    "accent": "#D6B887",
+    "accentInk": "#17120A",
+    "accent2": "#7F9184",
+    "success": "#8DB38B",
+    "warning": "#D9A85B",
+    "danger": "#D9796B"
+  },
+  "dataPalette": ["#D6B887", "#7F9184", "#A3877A", "#8C9CB5", "#F1EDE6"],
+  "fonts": {
+    "display": "Cormorant Garamond",
+    "body": "Hanken Grotesk",
+    "mono": "IBM Plex Mono",
+    "displayWeights": [400, 500],
+    "bodyWeights": [300, 400, 500]
+  },
+  "shape": { "radius": "0.125rem", "radiusLarge": "0.25rem", "borderWidth": "1px" },
+  "elevation": {
+    "card": "none",
+    "overlay": "0 24px 64px -16px rgba(0,0,0,0.7)"
+  },
+  "signature": "Une image pleine largeur au ratio cinéma (21:9) avec un titre serif en surimpression, aligné en bas à gauche, sur un dégradé noir discret.",
+  "rules": {
+    "do": [
+      "Laisser respirer : marges verticales de section de 96 à 160px, peu d'éléments par écran.",
+      "Titres en serif léger, de très grande taille, avec un interlignage serré (1.05).",
+      "Petits libellés en capitales très espacées (tracking 0.2em), en muted.",
+      "Les images sont le contenu : grands formats, recadrages assumés, aucune bordure.",
+      "Liens et boutons sobres : texte souligné ou contour fin ; l'accent doré est réservé à un seul élément.",
+      "Grilles éditoriales asymétriques (7/5, 8/4) plutôt que des colonnes égales."
+    ],
+    "dont": [
+      "Pas de cartes à ombre, de pastilles colorées ni d'icônes décoratives.",
+      "Pas de gras sur les titres serif.",
+      "Pas d'arrière-plans clairs ni de couleurs saturées.",
+      "Pas de texte dense ni de listes à puces longues.",
+      "Pas plus d'un appel à l'action visible à la fois."
+    ]
+  }
+}

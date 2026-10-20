@@ -1,0 +1,53 @@
+{
+  "id": "graphite-console",
+  "name": "Graphite Console",
+  "theme": "dark",
+  "summary": "Un outil sombre et dense, pensé pour les gens qui le gardent ouvert toute la journée : précision, raccourcis clavier, zéro décoration gratuite.",
+  "bestFor": ["developer tools", "devops", "monitoring", "observability", "api platform", "infrastructure", "cli companion", "database", "logs", "internal tools"],
+  "mood": ["technical", "dense", "precise", "dark", "calm"],
+  "tokens": {
+    "base": "#0D0F12",
+    "surface": "#15181D",
+    "raised": "#1C2027",
+    "line": "#272C35",
+    "ink": "#E8EAED",
+    "muted": "#8C93A0",
+    "accent": "#F2A93B",
+    "accentInk": "#1A1306",
+    "accent2": "#5EC2D6",
+    "success": "#4CC38A",
+    "warning": "#E8C547",
+    "danger": "#EF6461"
+  },
+  "dataPalette": ["#F2A93B", "#5EC2D6", "#4CC38A", "#B48EF0", "#EF6461"],
+  "fonts": {
+    "display": "Manrope",
+    "body": "Manrope",
+    "mono": "JetBrains Mono",
+    "displayWeights": [600, 700],
+    "bodyWeights": [400, 500, 600]
+  },
+  "shape": { "radius": "0.375rem", "radiusLarge": "0.625rem", "borderWidth": "1px" },
+  "elevation": {
+    "card": "none",
+    "overlay": "0 12px 32px -8px rgba(0,0,0,0.6), 0 0 0 1px #272C35"
+  },
+  "signature": "Une barre de commande (⌘K) ou un bandeau de statut en mono, avec un point d'état lumineux, posé en haut de l'écran principal.",
+  "rules": {
+    "do": [
+      "Séparer les zones par des bordures fines border-line et des changements de surface, jamais par des ombres sur les cartes.",
+      "Mettre identifiants, durées, versions, horodatages et chiffres en police mono avec tabular-nums.",
+      "Densité assumée : lignes de tableau de 36 à 40px, texte courant en 13 à 14px, padding de carte p-4.",
+      "Afficher les raccourcis clavier dans des petites touches (kbd) à côté des actions principales.",
+      "Réserver l'accent ambre à l'action principale, à la sélection et au focus ; un seul bouton plein par vue.",
+      "États explicites partout : chargement en squelette, vide avec une commande à copier, erreur avec le message brut en mono."
+    ],
+    "dont": [
+      "Pas de dégradés, de glassmorphism ni d'illustrations décoratives.",
+      "Pas de fond blanc ou de section claire, même pour un encart.",
+      "Pas d'icônes colorées en pastille : icônes au trait, couleur muted, qui passent en ink au survol.",
+      "Pas de titres géants : le titre de page ne dépasse pas 20px.",
+      "Pas plus de deux couleurs vives sur un même écran, hors graphiques."
+    ]
+  }
+}

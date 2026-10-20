@@ -1,0 +1,35 @@
+{
+  "name": "hecate-mcp",
+  "version": "0.1.0",
+  "description": "Serveur MCP UI/UX : Design DNA, règles, lint déterministe, retheme et scan.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "test": "tsx --test test/*.test.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "demo": "tsx scripts/demo.ts",
+    "audit": "tsx scripts/audit.ts"
+  },
+  "license": "UNLICENSED",
+  "type": "module",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "cheerio": "^1.2.0",
+    "puppeteer-core": "^25.14.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  },
+  "bin": {
+    "hecate-mcp": "dist/index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "private": true
+}
