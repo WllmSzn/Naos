@@ -3,7 +3,7 @@
     <a href="#" class="mb-8 px-2 font-accent text-lg font-bold tracking-wide">ARTEFACT</a>
     <nav class="space-y-1 text-sm" aria-label="Navigation principale">
       <a href="#" class="flex items-center gap-3 rounded-ui px-3 py-2 text-muted hover:text-ink"><iconify-icon icon="lucide:layout-dashboard"></iconify-icon>Tableau de bord</a>
-      <a href="#" aria-current="page" class="flex items-center gap-3 rounded-ui border-l-[3px] border-accent-ui bg-accent-ui/10 px-3 py-2 font-semibold text-ink"><iconify-icon icon="lucide:siren"></iconify-icon>Alertes</a>
+      <a href="#" aria-current="page" class="relative flex items-center gap-3 rounded-ui bg-accent-ui/10 px-3 py-2 font-semibold text-ink"><span class="absolute inset-y-1.5 left-0 w-[3px] rounded-full bg-accent-ui" aria-hidden="true"></span><iconify-icon icon="lucide:siren"></iconify-icon>Alertes</a>
       <a href="#" class="flex items-center gap-3 rounded-ui px-3 py-2 text-muted hover:text-ink"><iconify-icon icon="lucide:search-check"></iconify-icon>Investigations</a>
       <a href="#" class="flex items-center gap-3 rounded-ui px-3 py-2 text-muted hover:text-ink"><iconify-icon icon="lucide:shield-check"></iconify-icon>Remédiations</a>
       <a href="#" class="flex items-center gap-3 rounded-ui px-3 py-2 text-muted hover:text-ink"><iconify-icon icon="lucide:grid-3x3"></iconify-icon>Couverture MITRE</a>
@@ -24,22 +24,22 @@
     </header>
 
     <section class="grid grid-cols-2 gap-4 lg:grid-cols-4" aria-label="Indicateurs">
-      <div class="rounded-card border border-line border-l-[3px] border-l-sev-critical bg-surface p-4">
+      <div class="relative rounded-card border border-line bg-surface p-4"><span class="absolute inset-y-3 left-0 w-[3px] rounded-full bg-sev-critical" aria-hidden="true"></span>
         <p class="text-xs font-medium uppercase tracking-wide text-muted">Critiques</p>
         <p class="mt-1 text-3xl font-semibold tabular-nums">7</p>
         <p class="mt-1 text-xs text-muted">dont 3 non assignées</p>
       </div>
-      <div class="rounded-card border border-line border-l-[3px] border-l-sev-high bg-surface p-4">
+      <div class="relative rounded-card border border-line bg-surface p-4"><span class="absolute inset-y-3 left-0 w-[3px] rounded-full bg-sev-high" aria-hidden="true"></span>
         <p class="text-xs font-medium uppercase tracking-wide text-muted">Élevées</p>
         <p class="mt-1 text-3xl font-semibold tabular-nums">24</p>
         <p class="mt-1 text-xs text-muted">+5 depuis 8 h</p>
       </div>
-      <div class="rounded-card border border-line border-l-[3px] border-l-status-investigation bg-surface p-4">
+      <div class="relative rounded-card border border-line bg-surface p-4"><span class="absolute inset-y-3 left-0 w-[3px] rounded-full bg-status-investigation" aria-hidden="true"></span>
         <p class="text-xs font-medium uppercase tracking-wide text-muted">En investigation</p>
         <p class="mt-1 text-3xl font-semibold tabular-nums">12</p>
         <p class="mt-1 text-xs text-muted">4 analystes mobilisés</p>
       </div>
-      <div class="rounded-card border border-line border-l-[3px] border-l-status-resolved bg-surface p-4">
+      <div class="relative rounded-card border border-line bg-surface p-4"><span class="absolute inset-y-3 left-0 w-[3px] rounded-full bg-status-resolved" aria-hidden="true"></span>
         <p class="text-xs font-medium uppercase tracking-wide text-muted">Classées</p>
         <p class="mt-1 text-3xl font-semibold tabular-nums">131</p>
         <p class="mt-1 text-xs text-muted">MTTR 38 min</p>

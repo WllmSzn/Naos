@@ -99,7 +99,8 @@
       "Pas de couleur codée en dur (hex, oklch, rgba) ni de couleur Tailwind nommée : uniquement les tokens et les couleurs métier de la DNA.",
       "Pas de rose de marque dans l’interface : il est réservé au wordmark ARTEFACT (font-accent, Kufam, gras) ; le violet accent2 sert à l’identité et à la dataviz.",
       "Pas de rouge, orange, ambre ou vert pour une catégorie, une difficulté ou un tag générique.",
-      "Pas de Kufam hors du wordmark et des titres d’identité forte : tout le texte d’interface est en Jost."
+      "Pas de Kufam hors du wordmark et des titres d’identité forte : tout le texte d’interface est en Jost.",
+      "Jamais de bordure latérale épaisse (border-l-[3px]…) sur un élément arrondi : elle épouse l’arrondi. Un indicateur latéral est un trait droit intérieur, en position absolue et décollé des coins (absolute inset-y-* left-0 w-[3px] rounded-full bg-<couleur>, parent relative)."
     ]
   },
   "modes": {
@@ -114,7 +115,7 @@
         "icon": "1rem"
       },
       "states": {
-        "selected": "bg-accent-ui/10 border-l-[3px] border-l-accent-ui font-semibold",
+        "selected": "relative bg-accent-ui/10 font-semibold, avec un trait droit intérieur <span class=\"absolute inset-y-1.5 left-0 w-[3px] rounded-full bg-accent-ui\" aria-hidden=\"true\">",
         "hover": "hover:bg-raised",
         "focus": "focus-visible:ring-[3px] focus-visible:ring-accent-ui",
         "disabled": "opacity-50 cursor-not-allowed"
@@ -126,7 +127,7 @@
           "Workflow d’alerte : En attente = status-pending, Investigation = status-investigation, Remédiation = status-remediation, Résolue = status-resolved, Incident = status-incident.",
           "Hiérarchie dense et sobre : titre de page text-xl font-semibold ; titre de section text-sm font-semibold ; label text-xs font-medium uppercase tracking-wide text-muted ; corps text-sm ; dense text-xs ; identifiants, IP, hash et horodatages en font-mono text-xs. Racine à 15 px : text-sm = 13,1 px.",
           "Page : conteneur p-6 space-y-6, en-tête (titre, contexte, action principale), puis grilles grid gap-4. Widgets et cartes de stats en verre : bg-surface/50 backdrop-blur-lg border border-line/50 shadow-overlay.",
-          "Carte KPI : fond neutre, accent porté par une barre latérale (border-l-[3px] border-l-sev-* ou border-l-status-*), une puce et un libellé, jamais par un aplat de couleur.",
+          "Carte KPI : fond neutre, accent porté par un trait droit intérieur (<span class=\"absolute inset-y-3 left-0 w-[3px] rounded-full bg-sev-*\" aria-hidden=\"true\"> dans une carte relative), décollé des coins, une puce et un libellé, jamais par un aplat de couleur.",
           "États distincts : chargement en squelette qui garde les colonnes du tableau ; vide (explication + action) ; ERREUR BACKEND distincte du vide (encart role=\"alert\" bordé danger, bouton Réessayer) : un échec de lecture ne s’affiche jamais comme « 0 résultat »."
         ],
         "dont": [
