@@ -1,0 +1,33 @@
+<!-- {"id":"chart-card","name":"Carte graphique","kind":"chart","description":"Carte de dataviz : titre et question à laquelle elle répond, sélecteur de période, chiffres de synthèse, courbe Chart.js aux couleurs de la DNA, légende textuelle et source des données.","tags":["chart","dataviz","trend","line chart","analytics"],"libs":["chartjs","alpine"]} -->
+<section x-data="{ period: '30j' }" aria-labelledby="chart-title" class="rounded-card border border-line bg-surface p-4">
+  <div class="flex flex-wrap items-start justify-between gap-3">
+    <div>
+      <h2 id="chart-title" class="text-sm font-semibold">Ruptures de stock</h2>
+      <p class="text-xs text-muted">Les commandes automatiques réduisent-elles les ruptures ?</p>
+    </div>
+    <div role="radiogroup" aria-label="Période" class="flex rounded-ui border border-line p-0.5 text-xs">
+      <button role="radio" :aria-checked="period === '7j'" @click="period = '7j'" :class="period === '7j' ? 'bg-raised text-ink' : 'text-muted'" class="h-ctl-sm rounded-ui px-2.5">7 j</button>
+      <button role="radio" :aria-checked="period === '30j'" @click="period = '30j'" :class="period === '30j' ? 'bg-raised text-ink' : 'text-muted'" class="h-ctl-sm rounded-ui px-2.5">30 j</button>
+      <button role="radio" :aria-checked="period === '12m'" @click="period = '12m'" :class="period === '12m' ? 'bg-raised text-ink' : 'text-muted'" class="h-ctl-sm rounded-ui px-2.5">12 mois</button>
+    </div>
+  </div>
+  <dl class="mt-4 flex gap-8 text-sm">
+    <div><dt class="text-xs text-muted">Ruptures sur la période</dt><dd class="text-2xl font-semibold tabular-nums">14</dd></div>
+    <div><dt class="text-xs text-muted">Période précédente</dt><dd class="text-2xl font-semibold tabular-nums text-muted">31</dd></div>
+  </dl>
+  <div class="mt-4 h-48"><canvas id="ruptures" aria-label="Ruptures par semaine : 9, 8, 5, 4, 3, 2 ; période précédente : 11, 10, 9, 8, 9, 7"></canvas></div>
+  <p class="mt-3 text-xs text-muted">Source : ventes de la caisse et réceptions, mises à jour chaque nuit.</p>
+</section>
+<script>
+  new Chart(document.getElementById('ruptures'), {
+    type: 'line',
+    data: {
+      labels: ['S38', 'S39', 'S40', 'S41', 'S42', 'S43'],
+      datasets: [
+        { label: 'Cette période', data: [9, 8, 5, 4, 3, 2], borderColor: NAOS.dataPalette[0], backgroundColor: NAOS.dataPalette[0], tension: 0.3 },
+        { label: 'Période précédente', data: [11, 10, 9, 8, 9, 7], borderColor: NAOS.tokens.muted, borderDash: [4, 4], pointRadius: 0, tension: 0.3 }
+      ]
+    },
+    options: { maintainAspectRatio: false, animation: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } }, scales: { x: { grid: { display: false } }, y: { beginAtZero: true, ticks: { precision: 0 } } } }
+  });
+</script>

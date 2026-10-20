@@ -1,0 +1,19 @@
+<!-- {"id":"artefact-sidebar","name":"ARTEFACT · navigation latérale","kind":"app-shell","description":"Barre latérale ARTEFACT : wordmark Kufam, modules avec icône et libellé, item actif (barre 3px accent-ui, fond accent-ui/10, semibold, aria-current), module inactif grisé avec cadenas, version en mono en pied. Zone principale min-w-0.","tags":["artefact","sidebar","navigation","shell","modules"],"dna":["artefact-dark","artefact-light"]} -->
+<div class="flex min-h-[36rem]">
+  <aside class="flex w-sidebar shrink-0 flex-col border-r border-line bg-surface px-3 py-4">
+    <a href="#" class="mb-6 px-2 font-accent text-lg font-bold tracking-wide">ARTEFACT</a>
+    <nav aria-label="Modules" class="space-y-0.5 text-sm">
+      <a href="#" class="flex h-ctl items-center gap-2.5 rounded-ui border-l-[3px] border-transparent px-2.5 text-muted hover:bg-raised hover:text-ink"><iconify-icon icon="lucide:house" class="size-icon"></iconify-icon>Accueil</a>
+      <a href="#" aria-current="page" class="flex h-ctl items-center gap-2.5 rounded-ui border-l-[3px] border-accent-ui bg-accent-ui/10 px-2.5 font-semibold text-ink"><iconify-icon icon="lucide:siren" class="size-icon"></iconify-icon>Alertes<span class="ml-auto rounded-ui bg-sev-critical px-1.5 text-xs font-medium tabular-nums text-inverse">7</span></a>
+      <a href="#" class="flex h-ctl items-center gap-2.5 rounded-ui border-l-[3px] border-transparent px-2.5 text-muted hover:bg-raised hover:text-ink"><iconify-icon icon="lucide:search" class="size-icon"></iconify-icon>Investigations</a>
+      <a href="#" class="flex h-ctl items-center gap-2.5 rounded-ui border-l-[3px] border-transparent px-2.5 text-muted hover:bg-raised hover:text-ink"><iconify-icon icon="lucide:shield-check" class="size-icon"></iconify-icon>Remédiations</a>
+      <a href="#" class="flex h-ctl items-center gap-2.5 rounded-ui border-l-[3px] border-transparent px-2.5 text-muted hover:bg-raised hover:text-ink"><iconify-icon icon="lucide:grid-3x3" class="size-icon"></iconify-icon>Couverture MITRE</a>
+      <p class="px-2.5 pb-1 pt-4 text-xs font-medium uppercase tracking-wide text-muted">Modules</p>
+      <a href="#" aria-disabled="true" class="flex h-ctl items-center gap-2.5 rounded-ui border-l-[3px] border-transparent px-2.5 text-muted"><iconify-icon icon="lucide:network" class="size-icon"></iconify-icon>Asset Mapping<iconify-icon icon="lucide:lock" class="ml-auto" aria-label="Module non activé"></iconify-icon></a>
+    </nav>
+    <p class="mt-auto px-2 font-mono text-xs text-muted">v0.1.14</p>
+  </aside>
+  <main class="min-w-0 flex-1 p-6">
+    <h1 class="text-xl font-semibold">Alertes</h1>
+  </main>
+</div>

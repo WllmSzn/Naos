@@ -3,8 +3,25 @@
   "name": "Daylight Product",
   "theme": "light",
   "summary": "Le site produit sûr de lui : fond blanc, grands titres grotesques serrés, un seul bleu franc et beaucoup d'air. La hiérarchie fait tout le travail.",
-  "bestFor": ["saas landing", "b2b saas", "marketing landing", "product launch", "startup", "ai product", "health membership", "fintech landing", "public procurement", "waitlist"],
-  "mood": ["confident", "clean", "premium", "minimal", "light"],
+  "bestFor": [
+    "saas landing",
+    "b2b saas",
+    "marketing landing",
+    "product launch",
+    "startup",
+    "ai product",
+    "health membership",
+    "fintech landing",
+    "public procurement",
+    "waitlist"
+  ],
+  "mood": [
+    "confident",
+    "clean",
+    "premium",
+    "minimal",
+    "light"
+  ],
   "tokens": {
     "base": "#FFFFFF",
     "surface": "#F5F3F0",
@@ -20,37 +37,61 @@
     "warning": "#805A13",
     "danger": "#AB382B"
   },
-  "dataPalette": ["#2D5BE3", "#9DB4F2", "#E8813A", "#0B0B0A", "#B8B3AC"],
+  "dataPalette": [
+    "#2D5BE3",
+    "#9DB4F2",
+    "#E8813A",
+    "#0B0B0A",
+    "#B8B3AC"
+  ],
   "fonts": {
     "display": "Inter Tight",
     "body": "Inter",
     "mono": "JetBrains Mono",
-    "displayWeights": [500, 600],
-    "bodyWeights": [400, 500]
+    "displayWeights": [
+      500,
+      600
+    ],
+    "bodyWeights": [
+      400,
+      500
+    ]
   },
-  "headings": { "weight": 600, "tracking": "-0.03em", "leading": "1.05" },
-  "shape": { "radius": "9999px", "radiusLarge": "1.5rem", "borderWidth": "1px" },
+  "headings": {
+    "weight": 600,
+    "tracking": "-0.03em",
+    "leading": "1.05"
+  },
+  "shape": {
+    "radius": "9999px",
+    "radiusLarge": "1.5rem",
+    "borderWidth": "1px"
+  },
   "elevation": {
     "card": "none",
     "overlay": "0 1px 2px rgba(11,11,10,0.06), 0 16px 40px -12px rgba(11,11,10,0.18)"
   },
-  "signature": "Un hero plein cadre (photo réelle et chaleureuse, ou visuel produit) avec un titre de 64 à 88px en deux lignes courtes, une phrase d'appui, un bouton pilule, et une carte produit flottante qui montre un vrai chiffre.",
-  "rules": {
-    "do": [
-      "Hiérarchie stricte en quatre niveaux par section : sur-titre (12px, accent ou muted, capitales espacées), titre (40 à 64px), texte d'appui de deux lignes maximum (muted), appel à l'action.",
-      "Mettre en valeur un ou deux mots-clés du titre en text-accent (« Cibler les marchés faits pour vous »), jamais une phrase entière.",
-      "Boutons en pilule (rounded-ui) : principal bg-accent ou bg-ink, secondaire en contour fin ; une flèche dans un petit cercle à droite du libellé est la signature.",
-      "Sections très aérées (py-24 à py-32), une idée par section, alternance texte et visuel en deux colonnes sur desktop.",
-      "Preuves concrètes et chiffrées : bandeau de logos clients en niveaux de gris, rangée de 3 ou 4 statistiques (« x2 », « +15 % ») avec une légende courte.",
-      "Grands visuels (photos, captures produit) dans des conteneurs rounded-card, avec une ou deux cartes d'interface flottantes en surimpression.",
-      "Section FAQ en deux colonnes (titre à gauche, accordéon à droite) et appel à l'action final sur un grand aplat bg-accent ou un dégradé doux de l'accent."
-    ],
-    "dont": [
-      "Pas d'ombres sur les cartes de contenu : séparer par bg-surface et l'espace.",
-      "Pas plus d'une couleur vive (l'accent) ; accent2 est réservé aux graphiques et à un détail chaud.",
-      "Pas de titres en gras extrême (800+) ni d'interlignage lâche sur les titres.",
-      "Pas de grilles de 3 cartes « icône + titre + texte » identiques comme seule structure.",
-      "Pas de texte d'appui de plus de deux ou trois lignes sous un titre."
-    ]
+  "modes": {
+    "website": {
+      "signature": "Un hero plein cadre (photo réelle et chaleureuse, ou visuel produit) avec un titre de 64 à 88px en deux lignes courtes, une phrase d'appui, un bouton pilule, et une carte produit flottante qui montre un vrai chiffre.",
+      "rules": {
+        "do": [
+          "Hiérarchie stricte en quatre niveaux par section : sur-titre (12px, accent ou muted, capitales espacées), titre (40 à 64px), texte d'appui de deux lignes maximum (muted), appel à l'action.",
+          "Mettre en valeur un ou deux mots-clés du titre en text-accent (« Cibler les marchés faits pour vous »), jamais une phrase entière.",
+          "Boutons en pilule (rounded-ui) : principal bg-accent ou bg-ink, secondaire en contour fin ; une flèche dans un petit cercle à droite du libellé est la signature.",
+          "Sections très aérées (py-24 à py-32), une idée par section, alternance texte et visuel en deux colonnes sur desktop.",
+          "Preuves concrètes et chiffrées : bandeau de logos clients en niveaux de gris, rangée de 3 ou 4 statistiques (« x2 », « +15 % ») avec une légende courte.",
+          "Grands visuels (photos, captures produit) dans des conteneurs rounded-card, avec une ou deux cartes d'interface flottantes en surimpression.",
+          "Section FAQ en deux colonnes (titre à gauche, accordéon à droite) et appel à l'action final sur un grand aplat bg-accent ou un dégradé doux de l'accent."
+        ],
+        "dont": [
+          "Pas d'ombres sur les cartes de contenu : séparer par bg-surface et l'espace.",
+          "Pas plus d'une couleur vive (l'accent) ; accent2 est réservé aux graphiques et à un détail chaud.",
+          "Pas de titres en gras extrême (800+) ni d'interlignage lâche sur les titres.",
+          "Pas de grilles de 3 cartes « icône + titre + texte » identiques comme seule structure.",
+          "Pas de texte d'appui de plus de deux ou trois lignes sous un titre."
+        ]
+      }
+    }
   }
 }

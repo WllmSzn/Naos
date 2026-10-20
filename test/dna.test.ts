@@ -13,7 +13,7 @@ const dnas = [...lib.dnas.values()];
 
 test('toutes les DNA de la bibliothèque sont valides', () => {
   assert.deepEqual(lib.errors, []);
-  assert.equal(lib.dnas.size, 9);
+  assert.ok(lib.dnas.size >= 9, `${lib.dnas.size} DNA`);
 });
 
 test('chaque fichier porte le nom de son id', () => {

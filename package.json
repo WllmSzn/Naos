@@ -1,5 +1,5 @@
 {
-  "name": "hecate-mcp",
+  "name": "naos-mcp",
   "version": "0.1.0",
   "description": "Serveur MCP UI/UX : Design DNA, règles, lint déterministe, retheme et scan.",
   "main": "dist/index.js",
@@ -26,7 +26,7 @@
     "typescript": "^7.0.2"
   },
   "bin": {
-    "hecate-mcp": "dist/index.js"
+    "naos-mcp": "dist/index.js"
   },
   "engines": {
     "node": ">=20"

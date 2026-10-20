@@ -123,6 +123,8 @@ export interface SuggestQuery {
   product: string;
   mood?: string;
   theme?: 'light' | 'dark';
+  /** Ne proposer que les DNA qui servent ce mode. */
+  mode?: string;
 }
 
 /** Classe les DNA par adéquation au produit décrit (heuristique déterministe). */
@@ -133,6 +135,7 @@ export function suggestDna(dnas: Iterable<Dna>, q: SuggestQuery, limit = 3): Sug
 
   const results: Suggestion[] = [];
   for (const dna of dnas) {
+    if (q.mode && !(q.mode in dna.modes)) continue;
     let score = 0;
     const reasons: string[] = [];
 

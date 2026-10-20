@@ -14,7 +14,9 @@ export interface RenderChecks {
   fonts: Array<{ family: string; loaded: boolean }>;
 }
 
-export const RENDER_CHECKS_SCRIPT = String.raw`(() => {
+/** Script des contrôles, avec les seuils de cibles du mode (px). */
+export const renderChecksScript = (controlMin: number, linkMin: number): string => String.raw`(() => {
+  const CONTROL_MIN = ${controlMin}, LINK_MIN = ${linkMin};
   const canvas = document.createElement('canvas');
   canvas.width = canvas.height = 1;
   const ctx = canvas.getContext('2d', { willReadFrequently: true });
@@ -102,12 +104,13 @@ export const RENDER_CHECKS_SCRIPT = String.raw`(() => {
 
     const interactive = el.matches('button, [role="button"], [role="tab"], input:not([type="hidden"]), select, textarea, summary, a[href]');
     if (interactive && smallTargets.length < 10) {
-      // Liens dans un paragraphe : exemptés (WCAG 2.5.8). Contrôles : 40px ; liens isolés : 24px.
+      // Liens dans un paragraphe : exemptés (WCAG 2.5.8). Seuils fournis par le mode.
       // Une case à cocher dans un label : c'est le label entier qui reçoit le doigt.
       const inLabel = el.matches('input') && el.closest('label');
       const inline = (el.matches('a') && el.closest('p, li') && cs.display === 'inline') || inLabel;
-      const min = el.matches('a') ? 24 : 40;
-      if (!inline && (rect.height < min || rect.width < 24)) {
+      const min = el.matches('a') ? LINK_MIN : CONTROL_MIN;
+      // Tolérance d'un demi-pixel : un bouton de 40 px mesure souvent 39,99 px.
+      if (!inline && (rect.height < min - 0.5 || rect.width < 23.5)) {
         smallTargets.push({ el: describe(el), text: snippet(el), w: Math.round(rect.width), h: Math.round(rect.height), min });
       }
     }
@@ -118,12 +121,15 @@ export const RENDER_CHECKS_SCRIPT = String.raw`(() => {
   // Le navigateur ne charge une police que si elle sert : on ne vérifie que les familles utilisées.
   const used = new Set();
   for (const el of document.body.querySelectorAll('*')) {
+    // Un élément masqué (ex. barre latérale en mobile) ne déclenche pas le chargement de sa police.
+    if (!el.getClientRects().length) continue;
     let hasText = false;
     for (const n of el.childNodes) if (n.nodeType === 3 && n.textContent.trim()) { hasText = true; break; }
     if (hasText) used.add(getComputedStyle(el).fontFamily.split(',')[0].trim().replace(/["']/g, ''));
   }
-  const H = window.HECATE;
-  const families = H ? [...new Set([H.fonts.display, H.fonts.body, H.fonts.mono, H.fonts.accent].filter((f) => f && used.has(f)))] : [];
+  const H = window.NAOS;
+  const system = /^(ui-[a-z-]+|system-ui|-apple-system|sans-serif|serif|monospace)$/i;
+  const families = H ? [...new Set([H.fonts.display, H.fonts.body, H.fonts.mono, H.fonts.accent].filter((f) => f && used.has(f) && !system.test(f)))] : [];
   const fonts = families.map((family) => ({ family, loaded: document.fonts.check('16px "' + family + '"') && [...document.fonts].some((f) => f.family.replace(/["']/g, '') === family && f.status === 'loaded') }));
 
   return { viewportWidth: vw, overflowX, overflowing, lowContrast, smallTargets, brokenImages, fonts };

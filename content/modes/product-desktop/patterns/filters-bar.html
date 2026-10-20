@@ -1,0 +1,20 @@
+<!-- {"id":"filters-bar","name":"Barre de filtres","kind":"filters","description":"Recherche, filtres en menus, filtres actifs en puces retirables, réinitialisation et compteur de résultats. Se place juste au-dessus de la liste ou du tableau qu'elle filtre.","tags":["filters","search","chips","facets","toolbar"]} -->
+<div class="space-y-3">
+  <div class="flex flex-wrap items-center gap-2">
+    <div class="relative">
+      <iconify-icon icon="lucide:search" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"></iconify-icon>
+      <label for="flt-q" class="sr-only">Rechercher</label>
+      <input id="flt-q" type="search" placeholder="Fournisseur, n° de commande…" class="h-ctl w-72 rounded-ui border border-line bg-surface pl-9 pr-3 text-sm">
+    </div>
+    <button class="inline-flex h-ctl items-center gap-1.5 rounded-ui border border-line px-3 text-sm" aria-haspopup="menu">Statut<iconify-icon icon="lucide:chevron-down" class="text-muted"></iconify-icon></button>
+    <button class="inline-flex h-ctl items-center gap-1.5 rounded-ui border border-line px-3 text-sm" aria-haspopup="menu">Fournisseur<iconify-icon icon="lucide:chevron-down" class="text-muted"></iconify-icon></button>
+    <button class="inline-flex h-ctl items-center gap-1.5 rounded-ui border border-line px-3 text-sm"><iconify-icon icon="lucide:calendar-range" class="text-muted"></iconify-icon>30 derniers jours</button>
+    <p class="ml-auto text-sm text-muted tabular-nums" aria-live="polite">24 sur 1 280 commandes</p>
+  </div>
+  <div class="flex flex-wrap items-center gap-2 text-sm">
+    <span class="text-muted">Filtres actifs :</span>
+    <span class="inline-flex h-ctl-sm items-center gap-1 rounded-ui border border-line bg-raised pl-2">Statut : à valider<button class="-mr-1 grid h-ctl-sm w-ctl-sm place-items-center rounded-ui hover:bg-surface" aria-label="Retirer le filtre Statut"><iconify-icon icon="lucide:x"></iconify-icon></button></span>
+    <span class="inline-flex h-ctl-sm items-center gap-1 rounded-ui border border-line bg-raised pl-2">Fournisseur : Fromagerie Bel<button class="-mr-1 grid h-ctl-sm w-ctl-sm place-items-center rounded-ui hover:bg-surface" aria-label="Retirer le filtre Fournisseur"><iconify-icon icon="lucide:x"></iconify-icon></button></span>
+    <button class="h-ctl-sm px-2 text-accent underline underline-offset-4">Réinitialiser</button>
+  </div>
+</div>

@@ -18,7 +18,7 @@ try {
 const dna = loadLibrary().dnas.get('daylight-product')!;
 
 test('preview : détecte débordement, contraste réel, cible tactile, image cassée et erreur JS', { skip: !hasBrowser && 'aucun navigateur' }, async () => {
-  const dir = mkdtempSync(path.join(tmpdir(), 'hecate-preview-'));
+  const dir = mkdtempSync(path.join(tmpdir(), 'naos-preview-'));
   try {
     const body = `<main class="p-6"><h1 class="font-display text-4xl">Piège</h1>
       <div class="w-[1100px] bg-surface p-4">Bloc trop large</div>
@@ -39,7 +39,7 @@ test('preview : détecte débordement, contraste réel, cible tactile, image cas
 });
 
 test('preview : une page propre ne lève aucune erreur', { skip: !hasBrowser && 'aucun navigateur' }, async () => {
-  const dir = mkdtempSync(path.join(tmpdir(), 'hecate-preview-'));
+  const dir = mkdtempSync(path.join(tmpdir(), 'naos-preview-'));
   try {
     const body = `<main class="mx-auto max-w-3xl p-6"><h1 class="font-display text-4xl">Factures</h1>
       <p class="mt-4 text-muted">Trois factures arrivent à échéance cette semaine.</p>

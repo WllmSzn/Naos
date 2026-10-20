@@ -34,6 +34,55 @@ export const FontsSchema = z.object({
   bodyWeights: z.array(z.number().int().min(100).max(900)).min(1).default([400, 500, 600]),
 });
 
+/** Familles fournies par le système : jamais chargées depuis Google Fonts. */
+export function isSystemFont(family: string): boolean {
+  return /^(ui-[a-z-]+|system-ui|-apple-system|sans-serif|serif|monospace)$/i.test(family.trim());
+}
+
+// Noms interdits pour une couleur métier : ils entreraient en collision avec un token
+// sémantique ou une famille de couleurs Tailwind (et le lint les refuserait).
+const RESERVED_COLOR_NAMES = new Set([
+  'base', 'surface', 'raised', 'line', 'ink', 'muted', 'accent', 'accent-ink', 'accent2', 'success', 'warning', 'danger', 'inverse',
+  'white', 'black', 'transparent', 'current', 'inherit',
+  'slate', 'gray', 'zinc', 'neutral', 'stone', 'red', 'orange', 'amber', 'yellow', 'lime', 'green', 'emerald', 'teal', 'cyan',
+  'sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose',
+]);
+
+export const RulesSchema = z.object({
+  do: z.array(z.string().min(1)).min(1),
+  dont: z.array(z.string().min(1)).min(1),
+});
+
+const cssLength = z.string().regex(/^\d+(?:\.\d+)?(?:px|rem)$/, 'longueur en px ou rem');
+
+/**
+ * Dimensions sémantiques d'un mode produit. Elles deviennent des classes
+ * (h-ctl, h-ctl-sm, h-row, w-sidebar, h-header, size-icon) : la densité se règle
+ * dans la DNA et suit le retheme, comme les couleurs.
+ */
+export const SizesSchema = z
+  .object({
+    control: cssLength.describe('Hauteur d’un contrôle standard (bouton, champ) → h-ctl'),
+    controlSm: cssLength.describe('Hauteur d’un contrôle compact → h-ctl-sm'),
+    row: cssLength.describe('Hauteur d’une ligne de tableau ou de liste → h-row'),
+    sidebar: cssLength.describe('Largeur de la barre latérale → w-sidebar'),
+    header: cssLength.describe('Hauteur de l’en-tête d’application → h-header'),
+    icon: cssLength.describe('Taille d’icône standard → size-icon'),
+  })
+  .partial();
+
+/** Ce qu'une DNA apporte à un mode donné. Les champs exigés dépendent du mode (dnaRequires). */
+export const ModeBlockSchema = z.object({
+  signature: z.string().min(10).optional().describe('Le moment fort de l’écran'),
+  density: z.enum(['compact', 'comfortable', 'spacious']).optional(),
+  sizes: SizesSchema.optional(),
+  states: z.record(z.string(), z.string()).optional().describe('Classes des états récurrents (selected, hover…)'),
+  rules: RulesSchema.optional(),
+  patterns: z.array(z.string()).optional().describe('Sections propres à cette DNA, à privilégier dans ce mode'),
+});
+
+export type ModeBlock = z.infer<typeof ModeBlockSchema>;
+
 /** Réglages par défaut des titres h1-h3, appliqués par l'enveloppe (les classes du corps restent prioritaires). */
 export const HeadingsSchema = z.object({
   weight: z.number().int().min(100).max(900),
@@ -51,6 +100,21 @@ export const DnaSchema = z
     bestFor: z.array(z.string().min(1)).min(3).describe('Types de produits adaptés (mots-clés)'),
     mood: z.array(z.string().min(1)).min(2).describe('Adjectifs d’ambiance'),
     tokens: TokensSchema,
+    extraColors: z
+      .record(
+        z
+          .string()
+          .regex(/^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/, 'nom en kebab-case')
+          .refine((n) => !RESERVED_COLOR_NAMES.has(n), 'nom réservé (token sémantique ou couleur Tailwind)'),
+        hex,
+      )
+      .optional()
+      .describe('Couleurs métier nommées (ex. "sev-critical") : classes text-/bg-/border-<nom>, opacités comprises'),
+    rootFontSize: z
+      .string()
+      .regex(/^\d+(?:\.\d+)?px$/, 'taille en px, ex. "15px"')
+      .optional()
+      .describe('Taille de police racine du produit (1rem). 16px par défaut'),
     dataPalette: z.array(hex).min(3).max(6).describe('Couleurs de séries pour graphiques, dans l’ordre'),
     fonts: FontsSchema,
     headings: HeadingsSchema.optional(),
@@ -63,11 +127,11 @@ export const DnaSchema = z
       card: z.string().describe('box-shadow des cartes, ou "none"'),
       overlay: z.string().describe('box-shadow des popovers, menus, modales'),
     }),
-    signature: z.string().min(10).describe('Le moment fort autorisé, un seul par écran'),
-    rules: z.object({
-      do: z.array(z.string().min(1)).min(3),
-      dont: z.array(z.string().min(1)).min(3),
-    }),
+    rules: RulesSchema.optional().describe('Règles d’identité, valables dans tous les modes'),
+    modes: z
+      .record(z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/), ModeBlockSchema)
+      .refine((m) => Object.keys(m).length > 0, 'au moins un mode')
+      .describe('Un bloc par mode servi par la DNA (website, product-desktop…)'),
   })
   .superRefine((dna, ctx) => {
     // Garde-fous d'accessibilité vérifiés à chaque chargement.
@@ -96,6 +160,16 @@ export const DnaSchema = z
           path: ['tokens', fg],
           message: `contraste ${fg}/${bg} = ${ratio.toFixed(2)} (minimum ${min})`,
         });
+      }
+    }
+
+    // Couleurs métier : au minimum lisibles comme indicateur (point, bordure) sur les fonds,
+    // soit 3:1 (WCAG 1.4.11). Leur usage en texte est vérifié au rendu (preview_screen, npm run audit).
+    for (const [name, value] of Object.entries(dna.extraColors ?? {})) {
+      if (!HEX_RE.test(value) || !HEX_RE.test(t.base ?? '') || !HEX_RE.test(t.surface ?? '')) continue;
+      const worst = Math.min(contrastRatio(value, t.base!), contrastRatio(value, t.surface!));
+      if (worst < 3) {
+        ctx.addIssue({ code: 'custom', path: ['extraColors', name], message: `contraste ${name} sur le fond = ${worst.toFixed(2)} (minimum 3 pour un indicateur)` });
       }
     }
 

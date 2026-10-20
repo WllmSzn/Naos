@@ -1,0 +1,35 @@
+<!-- {"id":"artefact-kpi","name":"ARTEFACT · cartes KPI","kind":"kpi","description":"Cartes KPI ARTEFACT au fond neutre : barre latérale 3px à la couleur de sévérité ou de statut, puce d'icône, label en capitales, valeur, tendance avec son contexte. Jamais d'aplat de couleur en fond.","tags":["artefact","kpi","stats","dashboard","severity"],"dna":["artefact-dark","artefact-light"]} -->
+<section class="grid grid-cols-2 gap-4 xl:grid-cols-4" aria-label="Indicateurs des dernières 24 heures">
+  <div class="rounded-card border border-line border-l-[3px] border-l-sev-critical bg-surface p-4">
+    <div class="flex items-center justify-between">
+      <p class="text-xs font-medium uppercase tracking-wide text-muted">Critiques</p>
+      <span class="grid size-6 place-items-center rounded-ui bg-sev-critical/10 text-sev-critical" aria-hidden="true"><iconify-icon icon="lucide:octagon-alert"></iconify-icon></span>
+    </div>
+    <p class="mt-2 text-3xl font-semibold tabular-nums">7</p>
+    <p class="mt-1 text-xs text-muted">dont 3 non assignées</p>
+  </div>
+  <div class="rounded-card border border-line border-l-[3px] border-l-sev-high bg-surface p-4">
+    <div class="flex items-center justify-between">
+      <p class="text-xs font-medium uppercase tracking-wide text-muted">Élevées</p>
+      <span class="grid size-6 place-items-center rounded-ui bg-sev-high/10 text-sev-high" aria-hidden="true"><iconify-icon icon="lucide:triangle-alert"></iconify-icon></span>
+    </div>
+    <p class="mt-2 text-3xl font-semibold tabular-nums">24</p>
+    <p class="mt-1 text-xs text-muted">+5 depuis 8 h</p>
+  </div>
+  <div class="rounded-card border border-line border-l-[3px] border-l-status-investigation bg-surface p-4">
+    <div class="flex items-center justify-between">
+      <p class="text-xs font-medium uppercase tracking-wide text-muted">En investigation</p>
+      <span class="grid size-6 place-items-center rounded-ui bg-status-investigation/10 text-status-investigation" aria-hidden="true"><iconify-icon icon="lucide:search"></iconify-icon></span>
+    </div>
+    <p class="mt-2 text-3xl font-semibold tabular-nums">12</p>
+    <p class="mt-1 text-xs text-muted">4 analystes mobilisés</p>
+  </div>
+  <div class="rounded-card border border-line border-l-[3px] border-l-status-resolved bg-surface p-4">
+    <div class="flex items-center justify-between">
+      <p class="text-xs font-medium uppercase tracking-wide text-muted">Classées</p>
+      <span class="grid size-6 place-items-center rounded-ui bg-status-resolved/10 text-status-resolved" aria-hidden="true"><iconify-icon icon="lucide:circle-check"></iconify-icon></span>
+    </div>
+    <p class="mt-2 text-3xl font-semibold tabular-nums">131</p>
+    <p class="mt-1 text-xs text-muted">MTTR 38 min</p>
+  </div>
+</section>

@@ -1,0 +1,24 @@
+{
+  "id": "website",
+  "name": "Site web",
+  "description": "Sites vitrines, landing pages, pages de marque et éditoriales : une page qui raconte, convainc et mène à une action.",
+  "viewports": [
+    { "name": "desktop", "width": 1440, "height": 900, "mobile": false, "scale": 0.6, "slice": 1500 },
+    { "name": "mobile", "width": 390, "height": 844, "mobile": true, "scale": 1, "slice": 1400 }
+  ],
+  "preview": { "controlMinHeight": 40, "linkMinHeight": 24, "tapTargetViewports": ["mobile"] },
+  "lint": {
+    "bannedWords": true,
+    "genericCta": ["ok", "valider", "envoyer", "submit", "click here", "cliquez ici", "ici", "here", "go", "lien", "link"],
+    "requireH1": true
+  },
+  "dnaRequires": ["signature"],
+  "patternKinds": ["nav", "hero", "logos", "intro", "feature", "stats", "testimonial", "pricing", "faq", "cta", "footer"],
+  "workflow": {
+    "unit": "une page",
+    "frame": "Résume en cinq lignes : le produit ou la marque, le visiteur visé, ce qu'il doit faire en quittant la page (une seule action), le ton, la langue.",
+    "structure": "Liste les sections dans l'ordre (nav, hero, logos, intro, feature, stats, testimonial, pricing, faq, cta, footer…), chacune avec son rôle dans le récit de la page. Une idée par section.",
+    "compose": "Le moment fort défini par la « signature » de la DNA, une seule fois. Hiérarchie en quatre temps par section : sur-titre, titre, phrase d'appui, action. Des emplacements data-image décrits pour les visuels.",
+    "review": "La promesse et l'action principale sont-elles visibles sans défiler, en desktop comme en mobile ? Le moment fort est-il unique ? Les sections ont-elles un rythme (tailles et compositions variées) ? Rien ne se chevauche ni ne déborde en mobile."
+  }
+}

@@ -1,0 +1,35 @@
+<!-- {"id":"list-selectable","name":"Liste sélectionnable avec actions groupées","kind":"list","description":"Lignes à case à cocher (titre, métadonnées, statut, date), dont deux sélectionnées : la barre d'actions groupées apparaît au-dessus avec le nombre sélectionné. Lignes de hauteur h-row constante.","tags":["list","selection","bulk actions","checkbox","rows"]} -->
+<section class="rounded-card border border-line bg-surface">
+  <div class="flex h-ctl items-center gap-3 border-b border-line bg-accent/10 px-4 text-sm" role="toolbar" aria-label="Actions sur la sélection">
+    <span class="font-medium tabular-nums">2 sélectionnées</span>
+    <button class="inline-flex h-ctl-sm items-center gap-1.5 rounded-ui border border-line bg-surface px-3"><iconify-icon icon="lucide:send"></iconify-icon>Envoyer aux fournisseurs</button>
+    <button class="inline-flex h-ctl-sm items-center gap-1.5 rounded-ui border border-line bg-surface px-3"><iconify-icon icon="lucide:user-plus"></iconify-icon>Assigner</button>
+    <button class="ml-auto h-ctl-sm px-2 underline underline-offset-4">Tout désélectionner</button>
+  </div>
+  <ul class="divide-y divide-line text-sm">
+    <li class="flex h-row items-center gap-3 border-l-2 border-accent px-4" aria-selected="true">
+      <label class="grid size-6 shrink-0 cursor-pointer place-items-center"><input type="checkbox" checked aria-label="Sélectionner CF-0412" class="accent-accent"></label>
+      <span class="min-w-0 flex-1 truncate"><span class="font-medium">Fromagerie Bel</span> <span class="font-mono text-xs text-muted">CF-0412</span></span>
+      <span class="rounded-ui border border-warning/30 bg-warning/10 px-2 py-0.5 text-xs text-warning">À valider</span>
+      <span class="w-20 text-right font-mono text-xs text-muted">23 oct.</span>
+    </li>
+    <li class="flex h-row items-center gap-3 border-l-2 border-accent px-4" aria-selected="true">
+      <label class="grid size-6 shrink-0 cursor-pointer place-items-center"><input type="checkbox" checked aria-label="Sélectionner CF-0410" class="accent-accent"></label>
+      <span class="min-w-0 flex-1 truncate" title="Moulin de la Roche — farines anciennes et levain naturel, livraison mutualisée Croix-Rousse"><span class="font-medium">Moulin de la Roche — farines anciennes et levain naturel, livraison mutualisée Croix-Rousse</span> <span class="font-mono text-xs text-muted">CF-0410</span></span>
+      <span class="rounded-ui border border-warning/30 bg-warning/10 px-2 py-0.5 text-xs text-warning">À valider</span>
+      <span class="w-20 text-right font-mono text-xs text-muted">22 oct.</span>
+    </li>
+    <li class="flex h-row items-center gap-3 border-l-2 border-transparent px-4 hover:bg-raised">
+      <label class="grid size-6 shrink-0 cursor-pointer place-items-center"><input type="checkbox" aria-label="Sélectionner CF-0409" class="accent-accent"></label>
+      <span class="min-w-0 flex-1 truncate"><span class="font-medium">Cave Sauvage</span> <span class="font-mono text-xs text-muted">CF-0409</span></span>
+      <span class="rounded-ui border border-success/30 bg-success/10 px-2 py-0.5 text-xs text-success">Reçue</span>
+      <span class="w-20 text-right font-mono text-xs text-muted">20 oct.</span>
+    </li>
+    <li class="flex h-row items-center gap-3 border-l-2 border-transparent px-4 hover:bg-raised">
+      <label class="grid size-6 shrink-0 cursor-pointer place-items-center"><input type="checkbox" aria-label="Sélectionner CF-0407" class="accent-accent"></label>
+      <span class="min-w-0 flex-1 truncate"><span class="font-medium">Primeurs Rizzo</span> <span class="font-mono text-xs text-muted">CF-0407</span></span>
+      <span class="rounded-ui border border-line bg-raised px-2 py-0.5 text-xs text-muted">Brouillon</span>
+      <span class="w-20 text-right font-mono text-xs text-muted">—</span>
+    </li>
+  </ul>
+</section>

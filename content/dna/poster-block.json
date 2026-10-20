@@ -3,8 +3,25 @@
   "name": "Poster Block",
   "theme": "light",
   "summary": "L'énergie d'une affiche imprimée : aplats francs, contours noirs épais, ombres décalées dures et typographie massive.",
-  "bestFor": ["event", "festival", "marketing landing", "creative agency", "community", "newsletter", "indie product", "music", "youth brand", "launch page"],
-  "mood": ["bold", "playful", "loud", "graphic", "light"],
+  "bestFor": [
+    "event",
+    "festival",
+    "marketing landing",
+    "creative agency",
+    "community",
+    "newsletter",
+    "indie product",
+    "music",
+    "youth brand",
+    "launch page"
+  ],
+  "mood": [
+    "bold",
+    "playful",
+    "loud",
+    "graphic",
+    "light"
+  ],
   "tokens": {
     "base": "#FFF6E3",
     "surface": "#FFFFFF",
@@ -20,35 +37,55 @@
     "warning": "#7E5E0A",
     "danger": "#A31F14"
   },
-  "dataPalette": ["#C9361E", "#2B55E6", "#F2B705", "#1E9E5A", "#141414"],
+  "dataPalette": [
+    "#C9361E",
+    "#2B55E6",
+    "#F2B705",
+    "#1E9E5A",
+    "#141414"
+  ],
   "fonts": {
     "display": "Archivo Black",
     "body": "Archivo",
     "mono": "Space Mono",
-    "displayWeights": [400],
-    "bodyWeights": [400, 500, 700]
+    "displayWeights": [
+      400
+    ],
+    "bodyWeights": [
+      400,
+      500,
+      700
+    ]
   },
-  "shape": { "radius": "0", "radiusLarge": "0", "borderWidth": "2px" },
+  "shape": {
+    "radius": "0",
+    "radiusLarge": "0",
+    "borderWidth": "2px"
+  },
   "elevation": {
     "card": "4px 4px 0 #141414",
     "overlay": "8px 8px 0 #141414"
   },
-  "signature": "Un titre géant (72px et plus) sur deux ou trois lignes, avec un mot encadré dans un aplat accent légèrement pivoté (-2°).",
-  "rules": {
-    "do": [
-      "Contours de 2px en couleur ink sur cartes, boutons et champs ; ombres décalées dures, sans flou.",
-      "Au survol, le bouton se décale vers son ombre (translate 2px) : l'effet « tampon ».",
-      "Titres en capitales serrées (tracking négatif), corps de texte simple et lisible.",
-      "Aplats francs : sections alternant base, raised, accent et ink pleine largeur.",
-      "Bandeaux défilants ou étiquettes « autocollant » autorisés pour annoncer dates et infos clés.",
-      "Copie qui a du caractère : courte, directe, avec un vrai point de vue."
-    ],
-    "dont": [
-      "Pas d'ombres floues, de dégradés ni de transparence.",
-      "Pas de coins arrondis.",
-      "Pas plus de trois couleurs vives sur un même écran, en plus de ink.",
-      "Pas de petit texte gris : le muted reste foncé et lisible.",
-      "Pas d'images de banque génériques : préférer aplats, formes géométriques ou photos détourées."
-    ]
+  "modes": {
+    "website": {
+      "signature": "Un titre géant (72px et plus) sur deux ou trois lignes, avec un mot encadré dans un aplat accent légèrement pivoté (-2°).",
+      "rules": {
+        "do": [
+          "Contours de 2px en couleur ink sur cartes, boutons et champs ; ombres décalées dures, sans flou.",
+          "Au survol, le bouton se décale vers son ombre (translate 2px) : l'effet « tampon ».",
+          "Titres en capitales serrées (tracking négatif), corps de texte simple et lisible.",
+          "Aplats francs : sections alternant base, raised, accent et ink pleine largeur.",
+          "Bandeaux défilants ou étiquettes « autocollant » autorisés pour annoncer dates et infos clés.",
+          "Copie qui a du caractère : courte, directe, avec un vrai point de vue."
+        ],
+        "dont": [
+          "Pas d'ombres floues, de dégradés ni de transparence.",
+          "Pas de coins arrondis.",
+          "Pas plus de trois couleurs vives sur un même écran, en plus de ink.",
+          "Pas de petit texte gris : le muted reste foncé et lisible.",
+          "Pas d'images de banque génériques : préférer aplats, formes géométriques ou photos détourées."
+        ]
+      }
+    }
   }
 }

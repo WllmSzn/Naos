@@ -1,0 +1,43 @@
+<!-- {"id":"artefact-alert-rows","name":"ARTEFACT · lignes d'alerte compactes","kind":"list","description":"Motif Alert Card d'ARTEFACT : carte neutre relative, titre text-xs font-medium tronqué, métadonnées (IP, hôte, source) en mono, à droite le badge de statut (icône + mot) et le point de sévérité, centrés verticalement. Statuts et sévérités avec les libellés du produit.","tags":["artefact","alert","alert row","triage","severity","status badge","soc"],"dna":["artefact-dark","artefact-light"]} -->
+<ul class="space-y-1.5" aria-label="Dernières alertes">
+  <li class="relative rounded-card border border-line bg-surface transition-all duration-300 hover:border-line/60 hover:bg-surface/40">
+    <a href="#" class="block px-2 py-2 pr-48">
+      <p class="truncate text-xs font-medium">Exécution PowerShell encodée depuis un document Office</p>
+      <p class="mt-0.5 truncate font-mono text-xs text-muted">SRV-COMPTA-02 · 10.12.4.27 · Elastic Defend · 09:42:17</p>
+    </a>
+    <div class="absolute right-2 top-1/2 flex -translate-y-1/2 items-center gap-2">
+      <span class="inline-flex items-center gap-1 rounded-ui border border-status-pending/30 bg-status-pending/10 px-1.5 py-0.5 text-xs leading-none text-status-pending"><iconify-icon icon="lucide:circle-pause"></iconify-icon>En attente</span>
+      <span class="inline-flex items-center gap-1.5 text-xs"><span class="h-1.5 w-1.5 rounded-full bg-sev-critical" aria-hidden="true"></span>Critique</span>
+    </div>
+  </li>
+  <li class="relative rounded-card border border-line bg-surface transition-all duration-300 hover:border-line/60 hover:bg-surface/40">
+    <a href="#" class="block px-2 py-2 pr-48">
+      <p class="truncate text-xs font-medium">Connexions SMB vers 14 postes en moins de 2 minutes</p>
+      <p class="mt-0.5 truncate font-mono text-xs text-muted">PC-RH-117 · 10.12.8.140 · Sysmon · 09:31:05</p>
+    </a>
+    <div class="absolute right-2 top-1/2 flex -translate-y-1/2 items-center gap-2">
+      <span class="inline-flex items-center gap-1 rounded-ui border border-status-investigation/30 bg-status-investigation/10 px-1.5 py-0.5 text-xs leading-none text-status-investigation"><iconify-icon icon="lucide:search"></iconify-icon>Investigation</span>
+      <span class="inline-flex items-center gap-1.5 text-xs"><span class="h-1.5 w-1.5 rounded-full bg-sev-high" aria-hidden="true"></span>Élevée</span>
+    </div>
+  </li>
+  <li class="relative rounded-card border border-line bg-surface transition-all duration-300 hover:border-line/60 hover:bg-surface/40">
+    <a href="#" class="block px-2 py-2 pr-48">
+      <p class="truncate text-xs font-medium">Échecs d'authentification répétés sur la passerelle VPN</p>
+      <p class="mt-0.5 truncate font-mono text-xs text-muted">VPN-GW-01 · 185.220.101.4 · FortiGate · 08:58:44</p>
+    </a>
+    <div class="absolute right-2 top-1/2 flex -translate-y-1/2 items-center gap-2">
+      <span class="inline-flex items-center gap-1 rounded-ui border border-status-incident/30 bg-status-incident/10 px-1.5 py-0.5 text-xs leading-none text-status-incident"><iconify-icon icon="lucide:triangle-alert"></iconify-icon>Incident</span>
+      <span class="inline-flex items-center gap-1.5 text-xs"><span class="h-1.5 w-1.5 rounded-full bg-sev-medium" aria-hidden="true"></span>Modérée</span>
+    </div>
+  </li>
+  <li class="relative rounded-card border border-line bg-surface transition-all duration-300 hover:border-line/60 hover:bg-surface/40">
+    <a href="#" class="block px-2 py-2 pr-48">
+      <p class="truncate text-xs font-medium">Nouveau service installé : PrintSpoolerHelper</p>
+      <p class="mt-0.5 truncate font-mono text-xs text-muted">SRV-PRINT-01 · 10.12.2.9 · Windows Event · 08:12:30</p>
+    </a>
+    <div class="absolute right-2 top-1/2 flex -translate-y-1/2 items-center gap-2">
+      <span class="inline-flex items-center gap-1 rounded-ui border border-status-resolved/30 bg-status-resolved/10 px-1.5 py-0.5 text-xs leading-none text-status-resolved"><iconify-icon icon="lucide:circle-check"></iconify-icon>Classée</span>
+      <span class="inline-flex items-center gap-1.5 text-xs"><span class="h-1.5 w-1.5 rounded-full bg-sev-low" aria-hidden="true"></span>Faible</span>
+    </div>
+  </li>
+</ul>

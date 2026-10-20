@@ -1,0 +1,23 @@
+<!-- {"id":"data-states","name":"Zone de données : chargement et erreur","kind":"empty","description":"Les deux états qu'on oublie : squelette de chargement qui garde la structure du tableau (mêmes colonnes, mêmes hauteurs de ligne) et encart d'erreur distinct du vide (cause, conséquence, reprise). Jamais « 0 résultat » pour un échec.","tags":["loading","skeleton","error state","backend error","retry"]} -->
+<div class="grid gap-4 lg:grid-cols-2">
+  <section class="rounded-card border border-line bg-surface" aria-busy="true" aria-label="Commandes, chargement en cours">
+    <div class="flex h-ctl items-center border-b border-line px-4 text-sm font-semibold">Commandes</div>
+    <div class="divide-y divide-line">
+      <div class="flex h-row items-center gap-4 px-4"><span class="h-3 w-20 animate-pulse rounded-ui bg-raised"></span><span class="h-3 flex-1 animate-pulse rounded-ui bg-raised"></span><span class="h-3 w-16 animate-pulse rounded-ui bg-raised"></span></div>
+      <div class="flex h-row items-center gap-4 px-4"><span class="h-3 w-20 animate-pulse rounded-ui bg-raised"></span><span class="h-3 w-2/3 animate-pulse rounded-ui bg-raised"></span><span class="h-3 w-16 animate-pulse rounded-ui bg-raised"></span></div>
+      <div class="flex h-row items-center gap-4 px-4"><span class="h-3 w-20 animate-pulse rounded-ui bg-raised"></span><span class="h-3 w-1/2 animate-pulse rounded-ui bg-raised"></span><span class="h-3 w-16 animate-pulse rounded-ui bg-raised"></span></div>
+    </div>
+    <p class="sr-only" role="status">Chargement des commandes…</p>
+  </section>
+  <section class="rounded-card border border-line bg-surface">
+    <div class="flex h-ctl items-center border-b border-line px-4 text-sm font-semibold">Commandes</div>
+    <div role="alert" class="m-4 flex items-start gap-3 rounded-card border border-danger/40 bg-danger/10 p-4 text-sm">
+      <iconify-icon icon="lucide:server-crash" class="mt-0.5 text-danger"></iconify-icon>
+      <div class="flex-1">
+        <p class="font-medium">Les commandes n'ont pas pu être chargées.</p>
+        <p class="mt-1 text-ink/80">Le service de stock ne répond pas (délai dépassé). Ce n'est pas une liste vide : réessayez dans un instant.</p>
+        <button class="mt-3 inline-flex h-ctl-sm items-center gap-1.5 rounded-ui border border-line bg-surface px-3"><iconify-icon icon="lucide:rotate-cw"></iconify-icon>Réessayer</button>
+      </div>
+    </div>
+  </section>
+</div>

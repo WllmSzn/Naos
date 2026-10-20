@@ -14,12 +14,15 @@ export interface RethemeOptions {
   overrides?: DnaOverrides;
   libs?: readonly Lib[];
   title?: string;
+  /** Mode de la page ; par défaut celui inscrit dans le document. */
+  mode?: string;
 }
 
 export interface RethemeResult {
   html: string;
   from?: string;
   to: string;
+  mode?: string;
   hexReplaced: number;
 }
 
@@ -29,6 +32,10 @@ function hexMap(from: Dna, to: Dna): Map<string, string> {
     const source = from.tokens[key];
     const target = to.tokens[key] ?? (key === 'accentText' ? to.tokens.accent : undefined);
     if (source && target) map.set(source.toLowerCase(), target);
+  }
+  for (const [name, source] of Object.entries(from.extraColors ?? {})) {
+    const target = to.extraColors?.[name];
+    if (target && !map.has(source.toLowerCase())) map.set(source.toLowerCase(), target);
   }
   from.dataPalette.forEach((hex, i) => {
     const target = to.dataPalette[i % to.dataPalette.length];
@@ -49,6 +56,10 @@ export function retheme(
   const meta = readMeta(html);
   const baseSource = opts.source ?? (meta.dnaId ? resolveSource(meta.dnaId) : undefined);
   const source = baseSource ? applyOverrides(baseSource, meta.overrides) : undefined;
+  const mode = opts.mode ?? meta.mode;
+  if (mode && !(mode in target.modes)) {
+    throw new Error(`La DNA « ${target.id} » ne sert pas le mode « ${mode} » (modes : ${Object.keys(target.modes).join(', ')}).`);
+  }
   const effective = applyOverrides(target, opts.overrides);
 
   let body = extractBody(html);
@@ -69,9 +80,11 @@ export function retheme(
       lang: meta.lang,
       libs: opts.libs ?? meta.libs,
       overrides: opts.overrides,
+      mode,
     }),
     from: meta.dnaId ?? opts.source?.id,
     to: target.id,
+    mode,
     hexReplaced,
   };
 }

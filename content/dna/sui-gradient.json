@@ -1,0 +1,95 @@
+{
+  "id": "sui-gradient",
+  "name": "Sui Gradient",
+  "version": 1,
+  "theme": "dark",
+  "summary": "Base noire et grotesque fine inspirées de sui.io, réchauffées par un dégradé rouge, violet, bleu réservé au moment fort.",
+  "bestFor": [
+    "web3",
+    "blockchain",
+    "developer platform",
+    "ai product",
+    "infrastructure",
+    "product launch",
+    "api platform",
+    "saas landing"
+  ],
+  "mood": [
+    "technical",
+    "bold",
+    "dark",
+    "vibrant",
+    "confident"
+  ],
+  "tokens": {
+    "base": "#000000",
+    "surface": "#131518",
+    "raised": "#1F2124",
+    "line": "#242424",
+    "ink": "#FFFFFF",
+    "muted": "#78808E",
+    "accent": "#D93A3F",
+    "accentInk": "#FFFFFF",
+    "accent2": "#2276D6",
+    "accentText": "#F2666A",
+    "success": "#4CC38A",
+    "warning": "#E8C547",
+    "danger": "#FF8A65"
+  },
+  "dataPalette": [
+    "#D93A3F",
+    "#8B5CF6",
+    "#2276D6",
+    "#94C6FF",
+    "#78808E"
+  ],
+  "fonts": {
+    "display": "Inter",
+    "body": "Inter",
+    "mono": "JetBrains Mono",
+    "displayWeights": [
+      400,
+      500
+    ],
+    "bodyWeights": [
+      400,
+      500
+    ]
+  },
+  "headings": {
+    "weight": 400,
+    "tracking": "-0.045em",
+    "leading": "1"
+  },
+  "shape": {
+    "radius": "0.563rem",
+    "radiusLarge": "0",
+    "borderWidth": "1px"
+  },
+  "elevation": {
+    "card": "none",
+    "overlay": "0 0 0 1px #242424, 0 24px 60px -20px rgba(0,0,0,0.85)"
+  },
+  "modes": {
+    "website": {
+      "signature": "Un titre géant (80 à 96px, poids 400, très serré) sur fond noir dont un seul mot est rempli par le dégradé rouge vers bleu (bg-gradient-to-r from-accent to-accent2 bg-clip-text text-transparent), au-dessus d'un visuel de rayons lumineux qui reprend les mêmes teintes.",
+      "rules": {
+        "do": [
+          "Le dégradé from-accent to-accent2 est réservé au moment fort : un mot du titre principal, et au plus un filet de 1 à 2px qui sépare deux sections. Jamais ailleurs.",
+          "Action principale en aplat bg-accent (rouge) avec text-accent-ink ; actions secondaires en contour border-line, text-ink.",
+          "Navigation en barre bg-surface collée en haut, liens text-ink, petits pictogrammes au trait dans des carrés bg-raised.",
+          "Conteneurs à angles droits (rounded-card = 0), contrôles légèrement arrondis (rounded-ui).",
+          "Sur-titres, chiffres techniques et labels en font-mono, 12px, capitales espacées, text-muted.",
+          "Graphiques : séries dans l'ordre de dataPalette (rouge, violet, bleu) pour prolonger le dégradé."
+        ],
+        "dont": [
+          "Pas de dégradé en fond de carte, de bouton ou de section entière.",
+          "Pas d'orbes floues ni de glassmorphism : le dégradé reste net et ponctuel.",
+          "Pas de section à fond clair.",
+          "Ne pas employer le rouge accent pour signaler une erreur : les erreurs utilisent danger avec une icône et un libellé.",
+          "Pas d'ombres portées sur les cartes : bordures border-line uniquement."
+        ]
+      }
+    }
+  }
+}

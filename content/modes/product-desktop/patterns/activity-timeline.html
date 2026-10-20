@@ -1,0 +1,26 @@
+<!-- {"id":"activity-timeline","name":"Frise d'activité","kind":"timeline","description":"Historique vertical d'un élément : acteur (personne ou automatisme), action, changement de valeur, horodatage en mono, regroupement par jour, commentaire. Le plus récent en haut.","tags":["timeline","activity","history","audit log","comments"]} -->
+<section aria-labelledby="tl-title" class="rounded-card border border-line bg-surface p-4">
+  <h2 id="tl-title" class="mb-4 text-sm font-semibold">Historique</h2>
+  <p class="mb-2 text-xs font-medium uppercase tracking-wide text-muted">Aujourd'hui</p>
+  <ol class="relative space-y-4 border-l border-line pl-5 text-sm">
+    <li class="relative">
+      <span class="absolute -left-[1.6rem] top-1 grid size-icon place-items-center rounded-full border border-line bg-surface text-xs text-muted" aria-hidden="true"><iconify-icon icon="lucide:send"></iconify-icon></span>
+      <p><span class="font-medium">Claire Bonnet</span> a envoyé la commande au fournisseur.</p>
+      <p class="font-mono text-xs text-muted">09:44:02</p>
+    </li>
+    <li class="relative">
+      <span class="absolute -left-[1.6rem] top-1 grid size-icon place-items-center rounded-full border border-line bg-surface text-xs text-muted" aria-hidden="true"><iconify-icon icon="lucide:pencil"></iconify-icon></span>
+      <p><span class="font-medium">Claire Bonnet</span> a modifié la quantité de <span class="font-mono text-xs">FR-COMTE-18</span> : <span class="text-muted line-through">4 kg</span> → <span class="font-medium">6 kg</span>.</p>
+      <p class="font-mono text-xs text-muted">09:43:15</p>
+      <blockquote class="mt-2 rounded-ui border border-line bg-raised p-2 text-muted">Marché de Noël samedi, on prévoit large.</blockquote>
+    </li>
+  </ol>
+  <p class="mb-2 mt-5 text-xs font-medium uppercase tracking-wide text-muted">Hier</p>
+  <ol class="relative space-y-4 border-l border-line pl-5 text-sm">
+    <li class="relative">
+      <span class="absolute -left-[1.6rem] top-1 grid size-icon place-items-center rounded-full border border-line bg-surface text-xs text-muted" aria-hidden="true"><iconify-icon icon="lucide:sparkles"></iconify-icon></span>
+      <p><span class="font-medium">Prévision automatique</span> a créé la commande (12 références, 864,00 €).</p>
+      <p class="font-mono text-xs text-muted">22:00:00</p>
+    </li>
+  </ol>
+</section>

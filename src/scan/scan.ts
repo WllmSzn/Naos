@@ -11,7 +11,7 @@ import { analyzeScan, type ScanAnalysis } from './analyze.js';
  */
 
 const BROWSER_CANDIDATES = [
-  process.env.HECATE_BROWSER,
+  process.env.NAOS_BROWSER,
   'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
   'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe',
   'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
@@ -25,7 +25,7 @@ const BROWSER_CANDIDATES = [
 
 export function findBrowser(): string {
   const found = BROWSER_CANDIDATES.find((p): p is string => !!p && existsSync(p));
-  if (!found) throw new Error('Aucun navigateur Chromium trouvé. Définir HECATE_BROWSER avec le chemin de Chrome ou Edge.');
+  if (!found) throw new Error('Aucun navigateur Chromium trouvé. Définir NAOS_BROWSER avec le chemin de Chrome ou Edge.');
   return found;
 }
 

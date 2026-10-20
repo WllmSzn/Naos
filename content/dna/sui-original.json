@@ -1,0 +1,92 @@
+{
+  "id": "sui-original",
+  "name": "Sui Original",
+  "version": 1,
+  "theme": "dark",
+  "summary": "Le système visuel de sui.io tel que scanné : noir profond, grotesque fine et très serrée, un seul bleu franc, conteneurs à angles droits.",
+  "bestFor": [
+    "web3",
+    "blockchain",
+    "developer platform",
+    "ai product",
+    "infrastructure",
+    "api platform",
+    "saas landing",
+    "product launch"
+  ],
+  "mood": [
+    "technical",
+    "minimal",
+    "dark",
+    "confident",
+    "precise"
+  ],
+  "tokens": {
+    "base": "#000000",
+    "surface": "#131518",
+    "raised": "#1F2124",
+    "line": "#242424",
+    "ink": "#FFFFFF",
+    "muted": "#78808E",
+    "accent": "#2276D6",
+    "accentInk": "#FFFFFF",
+    "accent2": "#94C6FF",
+    "accentText": "#458CDD",
+    "success": "#4CC38A",
+    "warning": "#E8C547",
+    "danger": "#EF6461"
+  },
+  "dataPalette": [
+    "#2276D6",
+    "#94C6FF",
+    "#4DA2FF",
+    "#78808E"
+  ],
+  "fonts": {
+    "display": "Inter",
+    "body": "Inter",
+    "mono": "JetBrains Mono",
+    "displayWeights": [
+      400,
+      500
+    ],
+    "bodyWeights": [
+      400,
+      500
+    ]
+  },
+  "headings": {
+    "weight": 400,
+    "tracking": "-0.045em",
+    "leading": "1"
+  },
+  "shape": {
+    "radius": "0.563rem",
+    "radiusLarge": "0",
+    "borderWidth": "1px"
+  },
+  "elevation": {
+    "card": "none",
+    "overlay": "0 0 0 1px #242424, 0 24px 60px -20px rgba(0,0,0,0.85)"
+  },
+  "modes": {
+    "website": {
+      "signature": "Un titre géant blanc (80 à 96px, poids 400, très serré) centré sur un visuel sombre de rayons lumineux bleus, avec deux boutons accolés juste en dessous.",
+      "rules": {
+        "do": [
+          "Un seul bleu : bg-accent pour l'action principale, text-accent pour les sur-titres et les liens actifs.",
+          "Navigation en barre bg-surface, liens text-ink, petits pictogrammes au trait dans des carrés bg-raised.",
+          "Conteneurs à angles droits (rounded-card = 0), contrôles légèrement arrondis (rounded-ui).",
+          "Sur-titres, chiffres techniques et labels en font-mono, 12px, capitales espacées, text-muted.",
+          "Grilles séparées par des filets fins border-line plutôt que des cartes espacées."
+        ],
+        "dont": [
+          "Pas de dégradé de couleur : la couleur vient de l'aplat bleu.",
+          "Pas de section à fond clair.",
+          "Pas d'ombres portées sur les cartes : bordures border-line uniquement.",
+          "Pas de seconde couleur vive en dehors des états success, warning et danger."
+        ]
+      }
+    }
+  }
+}

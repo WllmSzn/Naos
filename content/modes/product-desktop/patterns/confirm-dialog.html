@@ -1,0 +1,15 @@
+<!-- {"id":"confirm-dialog","name":"Dialogue de confirmation destructive","kind":"dialog","description":"Modale centrée pour une action irréversible : titre qui nomme l'action et l'objet, conséquence explicite, confirmation par saisie pour les cas graves, bouton destructif nommé. Fermeture par Échap. Ouverte pour l'aperçu.","tags":["modal","dialog","confirm","destructive","delete"],"libs":["alpine"]} -->
+<div x-data="{ open: true, typed: '' }" @keydown.escape.window="open = false" class="relative grid min-h-[26rem] place-items-center">
+  <button @click="open = true" class="inline-flex h-ctl items-center rounded-ui border border-danger/40 px-3 text-sm text-danger">Supprimer le fournisseur</button>
+  <div x-show="open" class="absolute inset-0 bg-ink/40" aria-hidden="true"></div>
+  <div x-show="open" role="alertdialog" aria-modal="true" aria-labelledby="dlg-title" aria-describedby="dlg-desc" class="absolute w-[28rem] max-w-[calc(100%-2rem)] rounded-card border border-line bg-surface p-5 shadow-overlay">
+    <h2 id="dlg-title" class="font-semibold">Supprimer le fournisseur « Cave Sauvage » ?</h2>
+    <p id="dlg-desc" class="mt-2 text-sm text-muted">Ses 3 commandes en cours seront annulées et son historique (148 commandes) ne sera plus consultable. Cette action est définitive.</p>
+    <label for="dlg-confirm" class="mt-4 block text-sm font-medium">Tapez <span class="font-mono">Cave Sauvage</span> pour confirmer</label>
+    <input id="dlg-confirm" x-model="typed" class="mt-1.5 h-ctl w-full rounded-ui border border-line bg-base px-3 text-sm" autocomplete="off">
+    <div class="mt-5 flex justify-end gap-2">
+      <button @click="open = false" class="h-ctl rounded-ui border border-line px-4 text-sm">Annuler</button>
+      <button :disabled="typed !== 'Cave Sauvage'" class="h-ctl rounded-ui bg-danger px-4 text-sm font-medium text-inverse disabled:cursor-not-allowed disabled:opacity-50">Supprimer définitivement</button>
+    </div>
+  </div>
+</div>

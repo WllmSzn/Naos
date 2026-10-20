@@ -1,0 +1,26 @@
+<!-- {"id":"app-shell","name":"Coque d'application avec barre latérale","kind":"app-shell","description":"Barre latérale (marque, navigation avec élément actif, carte utilisateur en bas) et zone principale avec en-tête de page : titre, contexte, action principale. Base de tout écran d'application.","tags":["dashboard","sidebar","layout","admin","navigation"]} -->
+<div class="flex min-h-screen">
+  <aside class="hidden w-sidebar shrink-0 flex-col border-r border-line bg-surface p-4 md:flex">
+    <a href="#" class="mb-8 flex items-center gap-2 px-2 font-display text-lg font-semibold"><iconify-icon icon="lucide:hexagon" class="text-accent"></iconify-icon>Brève</a>
+    <nav class="space-y-1 text-sm" aria-label="Navigation principale">
+      <a href="#" aria-current="page" class="flex h-ctl items-center gap-3 rounded-ui bg-raised px-3 font-medium text-ink"><iconify-icon icon="lucide:layout-dashboard"></iconify-icon>Vue d'ensemble</a>
+      <a href="#" class="flex h-ctl items-center gap-3 rounded-ui px-3 text-muted hover:text-ink"><iconify-icon icon="lucide:package"></iconify-icon>Catalogue</a>
+      <a href="#" class="flex h-ctl items-center gap-3 rounded-ui px-3 text-muted hover:text-ink"><iconify-icon icon="lucide:truck"></iconify-icon>Commandes<span class="ml-auto rounded-full bg-accent/10 px-2 text-xs text-accent">3</span></a>
+      <a href="#" class="flex h-ctl items-center gap-3 rounded-ui px-3 text-muted hover:text-ink"><iconify-icon icon="lucide:settings"></iconify-icon>Réglages</a>
+    </nav>
+    <div class="mt-auto flex items-center gap-3 rounded-ui border border-line p-3">
+      <span class="grid h-8 w-8 place-items-center rounded-full bg-raised text-xs font-medium" aria-hidden="true">CB</span>
+      <span class="min-w-0 text-sm"><span class="block truncate font-medium">Claire Bonnet</span><span class="block truncate text-xs text-muted">Épicerie Lune</span></span>
+    </div>
+  </aside>
+  <main class="min-w-0 flex-1 p-6 md:p-10">
+    <header class="mb-8 flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <p class="text-xs uppercase tracking-widest text-muted">Semaine 43</p>
+        <h1 class="font-display text-3xl">Vue d'ensemble</h1>
+      </div>
+      <button class="inline-flex h-ctl items-center gap-2 rounded-ui bg-accent px-4 text-sm font-medium text-accent-ink"><iconify-icon icon="lucide:send"></iconify-icon>Valider les 3 commandes</button>
+    </header>
+    <!-- Contenu de l'écran : kpi-row, data-table, etc. -->
+  </main>
+</div>

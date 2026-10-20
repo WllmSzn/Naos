@@ -1,0 +1,162 @@
+{
+  "id": "artefact-pillar",
+  "name": "Artefact Pillar",
+  "version": 2,
+  "theme": "dark",
+  "summary": "La structure Room & Pillar aux couleurs d'ARTEFACT : noir graphite, sections papier, un indigo lumineux pour l'unique action, dégradé de marque rouge → prune → indigo porté par une sphère (l'icône) ; grotesque gras ultra-serré en titres géants, labels mono en capitales. En produit : console graphite à angles vifs, labels mono et grilles filaires.",
+  "bestFor": [
+    "security product marketing",
+    "soc",
+    "siem",
+    "corporate landing page",
+    "editorial brand site",
+    "about page",
+    "portfolio",
+    "security console",
+    "alert triage",
+    "admin console"
+  ],
+  "mood": [
+    "bold",
+    "editorial",
+    "premium",
+    "dark",
+    "minimal"
+  ],
+  "tokens": {
+    "base": "#131419",
+    "surface": "#1F2025",
+    "raised": "#2A2B2F",
+    "line": "#323338",
+    "ink": "#F2F2F6",
+    "muted": "#C2C2DD",
+    "accent": "#8F8AFF",
+    "accentInk": "#131419",
+    "accent2": "#C9A7E8",
+    "accentText": "#A9A5FF",
+    "success": "#4CC38A",
+    "warning": "#E8C547",
+    "danger": "#EF7270"
+  },
+  "extraColors": {
+    "paper": "#F2F2F6",
+    "paper-soft": "#DBDBE9",
+    "brand-red": "#E2333A",
+    "brand-plum": "#B2559A",
+    "brand-indigo": "#6A64E0",
+    "accent-ui": "#2F6AFF",
+    "ink-soft": "#CCCED1",
+    "sev-critical": "#FF577B",
+    "sev-high": "#FF8947",
+    "sev-medium": "#EDAB00",
+    "sev-low": "#FDB171",
+    "status-pending": "#A4A9B4",
+    "status-investigation": "#5D96FF",
+    "status-remediation": "#00ADBA",
+    "status-resolved": "#36D261",
+    "status-incident": "#FA6A57"
+  },
+  "dataPalette": [
+    "#8F8AFF",
+    "#B2559A",
+    "#E2333A",
+    "#C2C2DD",
+    "#6A64E0"
+  ],
+  "fonts": {
+    "display": "Inter Tight",
+    "body": "Inter Tight",
+    "mono": "IBM Plex Mono",
+    "displayWeights": [
+      600,
+      700
+    ],
+    "bodyWeights": [
+      400,
+      500,
+      600
+    ]
+  },
+  "headings": {
+    "weight": 700,
+    "tracking": "-0.06em",
+    "leading": "1.02"
+  },
+  "shape": {
+    "radius": "6px",
+    "radiusLarge": "8px",
+    "borderWidth": "1px"
+  },
+  "elevation": {
+    "card": "0 2px 6px rgba(0,0,0,0.2), 0 0 0 1px rgba(217,222,231,0.25)",
+    "overlay": "inset 0 0 0 0.5px rgba(143,138,255,1), 0 12px 40px rgba(0,0,0,0.5)"
+  },
+  "modes": {
+    "website": {
+      "signature": "Titres monumentaux pleine largeur (text-[11vw] font-bold tracking-[-0.06em] leading-none) avec, incrustée entre les lettres, la sphère de marque : un disque net rounded-full bg-gradient-to-b from-brand-red via-brand-plum to-brand-indigo (jamais flou) ; en-tête « Artefact ——— / ——— SIEM » relié par de fines lignes ; navigation flottante en bas d'écran avec un unique bouton indigo.",
+      "rules": {
+        "do": [
+          "Alternance de sections sombres bg-base et claires bg-paper (texte text-inverse et text-inverse/70 sur paper ; text-base est une taille, pas une couleur).",
+          "La sphère de marque (disque en dégradé vertical rouge en haut → indigo en bas) est le seul objet coloré : hero, logo, et au plus une répétition plus petite. Les autres visuels restent des rendus 3D monochromes.",
+          "Action principale unique : bg-accent text-accent-ink rounded-ui px-3 py-2 text-sm font-medium avec flèche. Sur fond paper : bouton bg-base text-accent.",
+          "Titres grotesque gras ultra-serré text-6xl md:text-8xl font-bold tracking-[-0.06em] leading-none ; corps text-sm leading-snug en colonnes étroites.",
+          "Labels et en-têtes de tableau en font-mono text-[10px] uppercase tracking-widest text-muted, alignés aux trois coins d'une ligne.",
+          "Grilles à angles vifs séparées par border-l border-line ; tableaux mono sans zébrage.",
+          "Liens en text-accent, sans soulignement, avec flèche →.",
+          "Couleurs métier ARTEFACT (reprises d’artefact-dark) : sev-critical, sev-high, sev-medium, sev-low pour la criticité, status-* pour le workflow d’alerte, accent-ui pour le focus, ink-soft pour le texte courant atténué. Mêmes usages qu’artefact-dark : points, badges /10 et barres latérales, jamais de fond teinté."
+        ],
+        "dont": [
+          "Pas de couleur codée en dur ni de couleur Tailwind nommée : uniquement les tokens et extraColors.",
+          "Pas de brand-red en texte, badge ou aplat d'interface : réservé au dégradé de la sphère, pour ne pas concurrencer la criticité.",
+          "Pas de sphère floue ni d'orbe en arrière-plan : la sphère est nette, posée comme un objet.",
+          "Pas d'ombres douces ni de cartes arrondies flottantes.",
+          "Pas plus d'une action indigo pleine par écran visible.",
+          "Pas de titres en capitales ni en serif."
+        ]
+      }
+    },
+    "product-desktop": {
+      "signature": "Une console graphite filaire : panneaux à angles presque vifs séparés par des lignes fines (divide-x divide-line), en-têtes de panneau en labels mono capitales posés aux coins (titre à gauche, périmètre au centre, compteur à droite), et la sphère de marque réduite à un disque net size-6 dans la barre latérale, seul objet coloré de l'écran.",
+      "density": "compact",
+      "sizes": {
+        "control": "2.25rem",
+        "controlSm": "2rem",
+        "row": "2.5rem",
+        "sidebar": "224px",
+        "header": "3rem",
+        "icon": "1rem"
+      },
+      "states": {
+        "selected": "bg-accent/10 border-l-2 border-l-accent text-ink font-medium",
+        "hover": "hover:bg-raised",
+        "focus": "focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-accent-ui",
+        "disabled": "opacity-50 cursor-not-allowed"
+      },
+      "rules": {
+        "do": [
+          "Titres à l'échelle produit, toujours avec un tracking explicite (l'enveloppe applique -0.06em aux h1-h3 par défaut) : titre de page text-xl font-semibold tracking-tight, titre de panneau text-sm font-semibold tracking-tight. Le serré extrême tracking-[-0.04em] font-bold ne sert qu'aux grands chiffres KPI (text-3xl tabular-nums).",
+          "Labels, en-têtes de tableau, métadonnées et compteurs en font-mono text-xs uppercase tracking-wider text-muted ; identifiants, IP, hash et horodatages en font-mono text-xs text-ink normal-case.",
+          "Panneaux bg-surface border border-line rounded-card, sans ombre ; en-tête de panneau h-ctl px-4 border-b border-line flex items-center justify-between avec labels mono aux coins. Les grilles de panneaux et de KPI se séparent par des lignes (divide-x divide-line dans un seul cadre bordé) plutôt que par des cartes espacées.",
+          "Une seule action pleine par vue : bg-accent text-accent-ink rounded-ui h-ctl px-3 text-sm font-medium. Secondaires en contour (border border-line text-ink hover:bg-raised), actions de barre d'outils h-ctl-sm en texte text-muted hover:text-ink.",
+          "Liens dans les tableaux et la navigation en text-accent avec flèche → ou chevron ; dans une phrase, ajouter underline underline-offset-4 pour ne pas reposer sur la couleur seule.",
+          "Tableaux : en-têtes mono, lignes h-row séparées par divide-y divide-line sans zébrage, texte à gauche, nombres à droite en tabular-nums, statuts en badge ; ligne sélectionnée avec l'état selected.",
+          "Criticité et workflow comme artefact-dark : point h-1.5 w-1.5 rounded-full bg-sev-*, badge border border-sev-*/30 bg-sev-*/10 text-sev-* (idem status-*), barre latérale border-l-[3px] border-l-sev-* sur une carte KPI. En attente = status-pending, Investigation = status-investigation, Remédiation = status-remediation, Résolue = status-resolved, Incident = status-incident.",
+          "Barre latérale bg-base border-r border-line : la sphère (size-6 rounded-full bg-gradient-to-b from-brand-red via-brand-plum to-brand-indigo) suivie du wordmark « Artefact » en text-sm font-bold tracking-tight, puis groupes de navigation titrés par des labels mono.",
+          "Graphiques : séries HECATE.dataPalette[0], [1], [4], [3] dans cet ordre ; dataPalette[2] (rouge de marque) est exclu des données qui ne sont pas de la criticité.",
+          "Menus, popovers et dialogues seuls en shadow-overlay (contour indigo fin) sur bg-raised.",
+          "États distincts : chargement en squelette (bg-raised animate-pulse) qui garde colonnes et hauteurs ; vide expliqué avec une action ; erreur backend distincte du vide (encart role=\"alert\" border-danger/40 text-danger, bouton Réessayer).",
+          "Traduction vers le code ARTEFACT : bg-base → bg-background, bg-surface → bg-card, bg-raised → bg-muted ou bg-popover, text-ink → text-foreground, text-muted → text-muted-foreground, border-line → border-border, bg-accent + text-accent-ink → <Button variant=\"default\">, text-accent → text-accent-ui."
+        ],
+        "dont": [
+          "Pas de titres monumentaux, de hero ni de texte au-delà de text-2xl hors chiffres KPI : la signature éditoriale du site ne vient pas dans un écran de travail.",
+          "Pas de sections bg-paper dans un écran produit : tout reste sur base, surface et raised.",
+          "Pas de brand-red, brand-plum ni brand-indigo hors de la sphère ; pas d'autre dégradé que celui de la sphère.",
+          "Pas de shadow-card ni de cartes flottantes espacées : la structure vient des lignes.",
+          "Pas de fond de carte, de ligne ou de KPI teinté par la sévérité.",
+          "Pas de badge d'état tronqué ni de label mono en text-[10px] dans un tableau : 12 px minimum.",
+          "Pas de couleur codée en dur ni de couleur Tailwind nommée."
+        ]
+      }
+    }
+  }
+}

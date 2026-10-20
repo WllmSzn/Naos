@@ -1,0 +1,101 @@
+<div class="flex min-h-screen">
+  <aside class="hidden w-60 shrink-0 flex-col border-r border-line bg-surface p-4 md:flex">
+    <a href="#" class="mb-8 px-2 font-accent text-lg font-bold tracking-wide">ARTEFACT</a>
+    <nav class="space-y-1 text-sm" aria-label="Navigation principale">
+      <a href="#" class="flex items-center gap-3 rounded-ui px-3 py-2 text-muted hover:text-ink"><iconify-icon icon="lucide:layout-dashboard"></iconify-icon>Tableau de bord</a>
+      <a href="#" aria-current="page" class="flex items-center gap-3 rounded-ui border-l-[3px] border-accent-ui bg-accent-ui/10 px-3 py-2 font-semibold text-ink"><iconify-icon icon="lucide:siren"></iconify-icon>Alertes</a>
+      <a href="#" class="flex items-center gap-3 rounded-ui px-3 py-2 text-muted hover:text-ink"><iconify-icon icon="lucide:search-check"></iconify-icon>Investigations</a>
+      <a href="#" class="flex items-center gap-3 rounded-ui px-3 py-2 text-muted hover:text-ink"><iconify-icon icon="lucide:shield-check"></iconify-icon>Remédiations</a>
+      <a href="#" class="flex items-center gap-3 rounded-ui px-3 py-2 text-muted hover:text-ink"><iconify-icon icon="lucide:grid-3x3"></iconify-icon>Couverture MITRE</a>
+    </nav>
+    <p class="mt-auto px-2 font-mono text-xs text-muted">v0.1.14</p>
+  </aside>
+
+  <main class="min-w-0 flex-1 space-y-6 p-6">
+    <header class="flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <p class="text-xs font-medium uppercase tracking-wide text-muted">SOC · 24 dernières heures</p>
+        <h1 class="text-xl font-semibold">Alertes</h1>
+      </div>
+      <div class="flex items-center gap-2">
+        <button class="inline-flex items-center gap-2 rounded-ui border border-line px-3 py-2.5 text-sm"><iconify-icon icon="lucide:calendar-range"></iconify-icon>24 h</button>
+        <button class="inline-flex items-center gap-2 rounded-ui bg-accent px-4 py-2.5 text-sm font-medium text-accent-ink"><iconify-icon icon="lucide:folder-search"></iconify-icon>Ouvrir une investigation</button>
+      </div>
+    </header>
+
+    <section class="grid grid-cols-2 gap-4 lg:grid-cols-4" aria-label="Indicateurs">
+      <div class="rounded-card border border-line border-l-[3px] border-l-sev-critical bg-surface p-4">
+        <p class="text-xs font-medium uppercase tracking-wide text-muted">Critiques</p>
+        <p class="mt-1 text-3xl font-semibold tabular-nums">7</p>
+        <p class="mt-1 text-xs text-muted">dont 3 non assignées</p>
+      </div>
+      <div class="rounded-card border border-line border-l-[3px] border-l-sev-high bg-surface p-4">
+        <p class="text-xs font-medium uppercase tracking-wide text-muted">Élevées</p>
+        <p class="mt-1 text-3xl font-semibold tabular-nums">24</p>
+        <p class="mt-1 text-xs text-muted">+5 depuis 8 h</p>
+      </div>
+      <div class="rounded-card border border-line border-l-[3px] border-l-status-investigation bg-surface p-4">
+        <p class="text-xs font-medium uppercase tracking-wide text-muted">En investigation</p>
+        <p class="mt-1 text-3xl font-semibold tabular-nums">12</p>
+        <p class="mt-1 text-xs text-muted">4 analystes mobilisés</p>
+      </div>
+      <div class="rounded-card border border-line border-l-[3px] border-l-status-resolved bg-surface p-4">
+        <p class="text-xs font-medium uppercase tracking-wide text-muted">Classées</p>
+        <p class="mt-1 text-3xl font-semibold tabular-nums">131</p>
+        <p class="mt-1 text-xs text-muted">MTTR 38 min</p>
+      </div>
+    </section>
+
+    <section class="rounded-card border border-line bg-surface">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line px-4 py-3">
+        <h2 class="text-sm font-semibold">File de triage</h2>
+        <div class="flex items-center gap-2">
+          <label for="q" class="sr-only">Rechercher une alerte</label>
+          <input id="q" type="search" placeholder="Règle, hôte, IP, utilisateur…" class="w-64 rounded-ui border border-line bg-raised px-3 py-2.5 text-sm">
+          <button class="inline-flex items-center gap-1.5 rounded-ui border border-line px-3 py-2.5 text-sm"><iconify-icon icon="lucide:filter"></iconify-icon>Sévérité</button>
+        </div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full min-w-[760px] text-sm">
+          <thead class="text-left text-xs font-medium uppercase tracking-wide text-muted">
+            <tr><th class="px-4 py-3 font-medium">Sévérité</th><th class="px-4 py-3 font-medium">Alerte</th><th class="px-4 py-3 font-medium">Hôte</th><th class="px-4 py-3 font-medium">Statut</th><th class="px-4 py-3 text-right font-medium">Détectée</th></tr>
+          </thead>
+          <tbody class="divide-y divide-line">
+            <tr class="hover:bg-raised">
+              <td class="px-4 py-3"><span class="inline-flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-sev-critical" aria-hidden="true"></span>Critique</span></td>
+              <td class="px-4 py-3"><p class="font-medium">Exécution PowerShell encodée</p><p class="font-mono text-xs text-muted">T1059.001 · rule-4412</p></td>
+              <td class="px-4 py-3 font-mono text-xs">SRV-COMPTA-02</td>
+              <td class="px-4 py-3"><span class="rounded-ui border border-status-pending/30 bg-status-pending/10 px-2 py-0.5 text-xs text-status-pending">En attente</span></td>
+              <td class="px-4 py-3 text-right font-mono text-xs text-muted">09:42:17</td>
+            </tr>
+            <tr class="hover:bg-raised">
+              <td class="px-4 py-3"><span class="inline-flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-sev-high" aria-hidden="true"></span>Élevée</span></td>
+              <td class="px-4 py-3"><p class="font-medium">Connexions SMB vers 14 postes</p><p class="font-mono text-xs text-muted">T1021.002 · rule-3108</p></td>
+              <td class="px-4 py-3 font-mono text-xs">PC-RH-117</td>
+              <td class="px-4 py-3"><span class="rounded-ui border border-status-investigation/30 bg-status-investigation/10 px-2 py-0.5 text-xs text-status-investigation">Investigation</span></td>
+              <td class="px-4 py-3 text-right font-mono text-xs text-muted">09:31:05</td>
+            </tr>
+            <tr class="hover:bg-raised">
+              <td class="px-4 py-3"><span class="inline-flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-sev-medium" aria-hidden="true"></span>Modérée</span></td>
+              <td class="px-4 py-3"><p class="font-medium">Échecs d'authentification répétés</p><p class="font-mono text-xs text-muted">T1110.003 · rule-0921</p></td>
+              <td class="px-4 py-3 font-mono text-xs">VPN-GW-01</td>
+              <td class="px-4 py-3"><span class="rounded-ui border border-status-incident/30 bg-status-incident/10 px-2 py-0.5 text-xs text-status-incident">Incident</span></td>
+              <td class="px-4 py-3 text-right font-mono text-xs text-muted">08:58:44</td>
+            </tr>
+            <tr class="hover:bg-raised">
+              <td class="px-4 py-3"><span class="inline-flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-sev-low" aria-hidden="true"></span>Faible</span></td>
+              <td class="px-4 py-3"><p class="font-medium">Nouveau service installé</p><p class="font-mono text-xs text-muted">T1543.003 · rule-2207</p></td>
+              <td class="px-4 py-3 font-mono text-xs">SRV-PRINT-01</td>
+              <td class="px-4 py-3"><span class="rounded-ui border border-status-resolved/30 bg-status-resolved/10 px-2 py-0.5 text-xs text-status-resolved">Classée</span></td>
+              <td class="px-4 py-3 text-right font-mono text-xs text-muted">08:12:30</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="flex items-center justify-between border-t border-line px-4 py-3 text-xs text-muted">
+        <p>4 sur 174 alertes</p>
+        <a href="#" class="py-2 text-accent underline underline-offset-4">Voir toutes les alertes</a>
+      </div>
+    </section>
+  </main>
+</div>

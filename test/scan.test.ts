@@ -71,8 +71,8 @@ test('analyse : le brouillon complété par du texte passe le schéma', () => {
     summary: 'Brouillon complété pour le test.',
     bestFor: ['a', 'b', 'c'],
     mood: ['x', 'y'],
-    signature: 'Un grand titre et rien d\u2019autre.',
-    rules: { do: ['a', 'b', 'c'], dont: ['a', 'b', 'c'] },
+    modes: { website: { signature: "Un grand titre et rien d'autre." } },
+    rules: { do: ['a'], dont: ['b'] },
     ...draft,
   });
   assert.equal(res.success, true, JSON.stringify(res.error?.issues));
@@ -100,7 +100,7 @@ test('URL de scan : validation et nom de dossier', () => {
 });
 
 test('saveDna : valide, enregistre, refuse d\u2019écraser sans overwrite', () => {
-  const dir = mkdtempSync(path.join(tmpdir(), 'hecate-dna-'));
+  const dir = mkdtempSync(path.join(tmpdir(), 'naos-dna-'));
   try {
     const dna = JSON.parse(readFileSync(path.join(DNA_DIR, 'daylight-product.json'), 'utf8'));
     const first = saveDna({ ...dna, id: 'copie-test' }, { dir });

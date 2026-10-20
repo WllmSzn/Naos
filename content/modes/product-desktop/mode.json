@@ -1,0 +1,25 @@
+{
+  "id": "product-desktop",
+  "name": "Produit desktop",
+  "description": "Écrans d'application utilisés au quotidien sur ordinateur (SaaS, outils métier, consoles, back-offices) : densité, lecture rapide, tâches répétées, états et cohérence entre écrans.",
+  "viewports": [
+    { "name": "desktop-1280", "width": 1280, "height": 800, "mobile": false, "scale": 0.6, "slice": 1200 },
+    { "name": "desktop-1440", "width": 1440, "height": 900, "mobile": false, "scale": 0.6, "slice": 1200 },
+    { "name": "desktop-1920", "width": 1920, "height": 1080, "mobile": false, "scale": 0.5, "slice": 1400 }
+  ],
+  "preview": { "controlMinHeight": 24, "linkMinHeight": 20, "tapTargetViewports": [] },
+  "lint": {
+    "bannedWords": false,
+    "genericCta": ["ok", "submit", "click here", "cliquez ici", "ici", "here", "go", "lien", "link"],
+    "requireH1": true
+  },
+  "dnaRequires": ["density", "sizes"],
+  "patternKinds": ["app-shell", "page-header", "kpi", "filters", "table", "list", "master-detail", "panel", "tabs", "form", "dialog", "command", "feedback", "timeline", "chart", "empty"],
+  "workflow": {
+    "unit": "un écran",
+    "frame": "Résume en six lignes : qui utilise l'écran et à quelle fréquence (quotidienne, ponctuelle, sous urgence) ; la tâche principale et les deux ou trois tâches secondaires ; les données affichées, avec leurs volumes réels et leurs cas limites (valeurs longues, champs vides, centaines de lignes) ; d'où vient l'utilisateur et où il va ensuite ; les états à prévoir ; la langue.",
+    "structure": "Décris les zones de l'écran dans l'ordre de lecture : coque (barre latérale, en-tête d'application), en-tête de page (titre, contexte, action principale), zones de travail (filtres, liste ou tableau, détail ou panneau latéral, onglets), retours (bannières, toasts). Pour chaque zone : les données qu'elle montre et les actions qu'elle permet.",
+    "compose": "Densité et dimensions de la DNA : h-ctl et h-ctl-sm pour les contrôles, h-row pour les lignes, w-sidebar pour la barre latérale, et les classes de ses « states » (selected, hover, focus, disabled). Données réalistes et en volume (au moins huit lignes dans un tableau, dont une valeur très longue et un champ vide), identifiants et horodatages en font-mono. Chaque zone de données montre son état nominal ; ajoute à côté, ou en variante commentée, ses états vide, chargement et erreur. Pas de moment fort décoratif : la hiérarchie vient de l'information.",
+    "review": "Aux trois largeurs (1280, 1440, 1920) : la tâche principale et l'état de la situation se lisent-ils en cinq secondes ? La densité est-elle régulière (mêmes hauteurs de lignes et de contrôles partout) ? Les alignements tiennent-ils ? Rien d'important n'est tronqué sans infobulle ni ellipse lisible ? Les zones qui défilent sont-elles les bonnes (le tableau, pas toute la page) ? L'espace en 1920 est-il utilisé sans étirer les lignes de texte à l'infini ?"
+  }
+}

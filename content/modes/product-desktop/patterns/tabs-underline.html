@@ -1,0 +1,15 @@
+<!-- {"id":"tabs-underline","name":"Onglets soulignés avec compteurs","kind":"tabs","description":"Onglets de premier niveau sous l'en-tête de page, avec compteurs et onglet actif souligné ; navigation clavier par flèches. Interactif avec Alpine.","tags":["tabs","navigation","sections","counters"],"libs":["alpine"]} -->
+<div x-data="{ tab: 'open' }">
+  <div role="tablist" aria-label="Commandes par statut" class="flex gap-6 border-b border-line text-sm"
+       @keydown.right.prevent="tab = { open: 'sent', sent: 'received', received: 'open' }[tab]"
+       @keydown.left.prevent="tab = { open: 'received', sent: 'open', received: 'sent' }[tab]">
+    <button role="tab" :aria-selected="tab === 'open'" @click="tab = 'open'" :class="tab === 'open' ? 'border-accent text-ink font-medium' : 'border-transparent text-muted hover:text-ink'" class="-mb-px inline-flex h-ctl items-center gap-2 border-b-2">À valider <span class="rounded-ui bg-raised px-1.5 text-xs tabular-nums">3</span></button>
+    <button role="tab" :aria-selected="tab === 'sent'" @click="tab = 'sent'" :class="tab === 'sent' ? 'border-accent text-ink font-medium' : 'border-transparent text-muted hover:text-ink'" class="-mb-px inline-flex h-ctl items-center gap-2 border-b-2">Envoyées <span class="rounded-ui bg-raised px-1.5 text-xs tabular-nums">12</span></button>
+    <button role="tab" :aria-selected="tab === 'received'" @click="tab = 'received'" :class="tab === 'received' ? 'border-accent text-ink font-medium' : 'border-transparent text-muted hover:text-ink'" class="-mb-px inline-flex h-ctl items-center gap-2 border-b-2">Reçues <span class="rounded-ui bg-raised px-1.5 text-xs tabular-nums">1 265</span></button>
+  </div>
+  <div role="tabpanel" class="pt-4 text-sm text-muted">
+    <p x-show="tab === 'open'">Trois commandes attendent votre validation avant envoi.</p>
+    <p x-show="tab === 'sent'" x-cloak>Douze commandes envoyées, en attente de livraison.</p>
+    <p x-show="tab === 'received'" x-cloak>Historique des commandes reçues.</p>
+  </div>
+</div>

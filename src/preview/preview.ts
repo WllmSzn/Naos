@@ -4,20 +4,17 @@ import puppeteer, { type Browser, type Page } from 'puppeteer-core';
 import { OUTPUT_DIR } from '../paths.js';
 import { findBrowser } from '../scan/scan.js';
 import { safeScreenName } from '../screen/output.js';
-import { RENDER_CHECKS_SCRIPT, type RenderChecks } from './checks.js';
+import { renderChecksScript, type RenderChecks } from './checks.js';
+import { getMode, type Mode } from '../modes/modes.js';
 
 /**
  * Rendu réel d'un écran : captures découpées en tranches lisibles + contrôles de mise en page.
  * Le modèle voit enfin ce qu'il a produit.
  */
 
-export type ViewportName = 'desktop' | 'mobile';
+/** Nom d'un viewport du mode (ex. « mobile », « desktop-1440 »). */
+export type ViewportName = string;
 
-const VIEWPORTS: Record<ViewportName, { width: number; height: number; isMobile: boolean; scale: number; slice: number }> = {
-  // scale < 1 : image plus légère, toujours lisible ; slice = hauteur CSS d'une tranche.
-  desktop: { width: 1440, height: 900, isMobile: false, scale: 0.6, slice: 1500 },
-  mobile: { width: 390, height: 844, isMobile: true, scale: 1, slice: 1400 },
-};
 
 export interface PreviewIssue {
   rule: string;
@@ -43,6 +40,9 @@ export interface PreviewResult {
 
 export interface PreviewOptions {
   name: string;
+  /** Mode de conception : fournit les viewports et les seuils. « website » par défaut. */
+  mode?: Mode;
+  /** Sous-ensemble des viewports du mode, par nom. */
   viewports?: ViewportName[];
   /** Nombre maximal de tranches par viewport (le reste de la page est signalé, non capturé). */
   maxSlices?: number;
@@ -62,7 +62,7 @@ async function settle(page: Page) {
   })()`);
 }
 
-function toIssues(c: RenderChecks, viewport: ViewportName): PreviewIssue[] {
+function toIssues(c: RenderChecks, viewport: ViewportName, mode: Mode): PreviewIssue[] {
   const issues: PreviewIssue[] = [];
   if (c.overflowX > 0) {
     issues.push({
@@ -82,12 +82,13 @@ function toIssues(c: RenderChecks, viewport: ViewportName): PreviewIssue[] {
       samples: c.lowContrast.map((x) => `${x.ratio}:1 < ${x.required} · « ${x.text} » · ${x.fg} sur ${x.bg} · ${x.el}`),
     });
   }
-  if (c.smallTargets.length && viewport === 'mobile') {
+  const tapViewports = mode.preview.tapTargetViewports;
+  if (c.smallTargets.length && (!tapViewports.length || tapViewports.includes(viewport))) {
     issues.push({
       rule: 'render.tap-target',
       severity: 'warning',
       viewport,
-      message: 'Cibles tactiles trop petites en mobile (contrôles : 40px de haut, liens isolés : 24px).',
+      message: `Cibles trop petites pour le mode « ${mode.name} » (contrôles : ${mode.preview.controlMinHeight}px de haut, liens isolés : ${mode.preview.linkMinHeight}px).`,
       samples: c.smallTargets.map((x) => `${x.w}×${x.h}px < ${x.min} · « ${x.text} » · ${x.el}`),
     });
   }
@@ -124,7 +125,11 @@ export async function previewScreen(html: string, opts: PreviewOptions): Promise
   const name = safeScreenName(opts.name).replace(/\.html$/, '');
   const dir = path.join(opts.outDir ?? path.join(OUTPUT_DIR, 'previews'), name);
   mkdirSync(dir, { recursive: true });
-  const viewports = opts.viewports?.length ? opts.viewports : (['desktop', 'mobile'] as ViewportName[]);
+  const mode = opts.mode ?? getMode('website');
+  if (!mode) throw new Error('Aucun mode disponible pour le rendu (content/modes/website manquant ?).');
+  const unknown = (opts.viewports ?? []).filter((v) => !mode.viewports.some((x) => x.name === v));
+  if (unknown.length) throw new Error(`Viewport(s) inconnu(s) du mode ${mode.id} : ${unknown.join(', ')} (disponibles : ${mode.viewports.map((v) => v.name).join(', ')})`);
+  const viewports = opts.viewports?.length ? mode.viewports.filter((v) => opts.viewports!.includes(v.name)) : mode.viewports;
   const maxSlices = opts.maxSlices ?? 4;
 
   const issues: PreviewIssue[] = [];
@@ -136,8 +141,8 @@ export async function previewScreen(html: string, opts: PreviewOptions): Promise
   let browser: Browser | undefined;
   try {
     browser = await puppeteer.launch({ executablePath: findBrowser(), headless: true, args: ['--hide-scrollbars', '--mute-audio', '--no-first-run'] });
-    for (const vpName of viewports) {
-      const vp = VIEWPORTS[vpName];
+    for (const vp of viewports) {
+      const vpName = vp.name;
       const page = await browser.newPage();
       page.on('pageerror', (e) => jsErrors.add((e as Error).message.split('\n')[0]!.slice(0, 160)));
       page.on('console', (m) => {
@@ -146,14 +151,14 @@ export async function previewScreen(html: string, opts: PreviewOptions): Promise
       });
       page.on('requestfailed', (r) => failedRequests.add(`${r.url().slice(0, 100)} (${r.failure()?.errorText ?? 'échec'})`));
 
-      await page.setViewport({ width: vp.width, height: vp.height, deviceScaleFactor: vp.scale, isMobile: vp.isMobile, hasTouch: vp.isMobile });
+      await page.setViewport({ width: vp.width, height: vp.height, deviceScaleFactor: vp.scale, isMobile: vp.mobile, hasTouch: vp.mobile });
       await page.setContent(html, { waitUntil: 'load', timeout: 30000 });
       // Tailwind CDN, polices et icônes arrivent après « load » : on attend le calme réseau.
       await page.waitForNetworkIdle({ idleTime: 500, timeout: 15000 }).catch(() => undefined);
       await settle(page);
 
-      const checks = (await page.evaluate(RENDER_CHECKS_SCRIPT)) as RenderChecks;
-      issues.push(...toIssues(checks, vpName));
+      const checks = (await page.evaluate(renderChecksScript(mode.preview.controlMinHeight, mode.preview.linkMinHeight))) as RenderChecks;
+      issues.push(...toIssues(checks, vpName, mode));
 
       const height = (await page.evaluate('document.documentElement.scrollHeight')) as number;
       pageHeight[vpName] = height;

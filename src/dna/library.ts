@@ -1,7 +1,8 @@
 import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { DNA_DIR } from '../paths.js';
-import { DnaSchema, type Dna } from './schema.js';
+import { DnaSchema, isSystemFont, type Dna, type ModeBlock } from './schema.js';
+import { getModes, type ModeRegistry } from '../modes/modes.js';
 
 export interface LibraryError {
   file: string;
@@ -11,6 +12,28 @@ export interface LibraryError {
 export interface Library {
   dnas: Map<string, Dna>;
   errors: LibraryError[];
+}
+
+/**
+ * Cohérence entre une DNA et les modes installés : chaque bloc doit viser un mode
+ * existant et fournir les champs que ce mode exige (dnaRequires).
+ */
+export function checkDnaModes(dna: Dna, registry: ModeRegistry = getModes()): string[] {
+  const issues: string[] = [];
+  for (const [modeId, block] of Object.entries(dna.modes)) {
+    const mode = registry.modes.get(modeId);
+    if (!mode) {
+      issues.push(`modes.${modeId} : mode inconnu (disponibles : ${[...registry.modes.keys()].join(', ')})`);
+      continue;
+    }
+    for (const field of mode.dnaRequires) {
+      const value = (block as Record<string, unknown>)[field];
+      if (value === undefined || (typeof value === 'object' && value !== null && !Object.keys(value).length)) {
+        issues.push(`modes.${modeId}.${field} : requis par le mode « ${mode.name} »`);
+      }
+    }
+  }
+  return issues;
 }
 
 /**
@@ -42,9 +65,37 @@ export function loadLibrary(dir: string = DNA_DIR): Library {
       errors.push({ file, issues: [`id en double : ${parsed.data.id}`] });
       continue;
     }
+    const modeIssues = checkDnaModes(parsed.data);
+    if (modeIssues.length) {
+      errors.push({ file, issues: modeIssues });
+      continue;
+    }
     dnas.set(parsed.data.id, parsed.data);
   }
   return { dnas, errors };
+}
+
+export function dnaModes(dna: Dna): string[] {
+  return Object.keys(dna.modes);
+}
+
+export function supportsMode(dna: Dna, mode: string): boolean {
+  return mode in dna.modes;
+}
+
+export function modeBlock(dna: Dna, mode: string): ModeBlock | undefined {
+  return dna.modes[mode];
+}
+
+/**
+ * Mode à utiliser quand l'appelant n'en précise pas : celui demandé s'il est servi,
+ * sinon le seul mode de la DNA, sinon « website » s'il existe, sinon le premier.
+ */
+export function defaultMode(dna: Dna, requested?: string): string {
+  if (requested && supportsMode(dna, requested)) return requested;
+  const modes = dnaModes(dna);
+  if (modes.length === 1) return modes[0]!;
+  return modes.includes('website') ? 'website' : modes[0]!;
 }
 
 /**
@@ -56,6 +107,8 @@ export function saveDna(input: unknown, { overwrite = false, dir = DNA_DIR } = {
   if (!parsed.success) {
     throw new Error(`DNA invalide : ${parsed.error.issues.map((i) => `${i.path.join('.') || '(racine)'} : ${i.message}`).join(' ; ')}`);
   }
+  const modeIssues = checkDnaModes(parsed.data);
+  if (modeIssues.length) throw new Error(`DNA invalide : ${modeIssues.join(' ; ')}`);
   const file = path.join(dir, `${parsed.data.id}.json`);
   const replaced = existsSync(file);
   if (replaced && !overwrite) throw new Error(`La DNA « ${parsed.data.id} » existe déjà. Passer overwrite: true pour la remplacer.`);
@@ -79,6 +132,7 @@ export function reloadLibrary(): Library {
 export function googleFontsUrl(dna: Dna): string {
   const weights = new Map<string, Set<number>>();
   const add = (family: string, ws: number[]) => {
+    if (isSystemFont(family)) return;
     const set = weights.get(family) ?? new Set<number>();
     ws.forEach((w) => set.add(w));
     weights.set(family, set);
@@ -88,6 +142,7 @@ export function googleFontsUrl(dna: Dna): string {
   add(dna.fonts.mono, [400, 500]);
   if (dna.fonts.accent) add(dna.fonts.accent, [400]);
 
+  if (!weights.size) return '';
   const params = [...weights].map(([family, ws]) => {
     const list = [...ws].sort((a, b) => a - b).join(';');
     return `family=${family.trim().replace(/\s+/g, '+')}:wght@${list}`;
@@ -104,6 +159,7 @@ export function dnaSummary(dna: Dna) {
     summary: dna.summary,
     mood: dna.mood,
     bestFor: dna.bestFor,
+    modes: dnaModes(dna),
     fonts: `${dna.fonts.display} / ${dna.fonts.body}${dna.fonts.accent ? ` (+ accent ${dna.fonts.accent})` : ''}`,
     accent: dna.tokens.accent,
   };

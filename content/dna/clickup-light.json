@@ -1,0 +1,94 @@
+{
+  "id": "clickup-light",
+  "name": "ClickUp Light",
+  "version": 1,
+  "theme": "light",
+  "summary": "Le système visuel de clickup.com : fond blanc, cartes très claires, titres Plus Jakarta Sans gras et serrés, un bleu nuit pour l'action et un bleu vif en touche.",
+  "bestFor": [
+    "saas landing",
+    "productivity",
+    "project management",
+    "b2b saas",
+    "ai product",
+    "collaboration",
+    "product launch",
+    "marketing landing"
+  ],
+  "mood": [
+    "clean",
+    "friendly",
+    "confident",
+    "light",
+    "productive"
+  ],
+  "tokens": {
+    "base": "#FFFFFF",
+    "surface": "#F8F9FA",
+    "raised": "#F3F3F4",
+    "line": "#E1E2E4",
+    "ink": "#090C1D",
+    "muted": "#646464",
+    "accent": "#24223E",
+    "accentInk": "#FFFFFF",
+    "accent2": "#0091FF",
+    "accentText": "#24223E",
+    "success": "#276645",
+    "warning": "#77521E",
+    "danger": "#9C392C"
+  },
+  "dataPalette": [
+    "#24223E",
+    "#0091FF",
+    "#6647F0",
+    "#6EE7B7",
+    "#067A6F"
+  ],
+  "fonts": {
+    "display": "Plus Jakarta Sans",
+    "body": "Inter",
+    "mono": "Sometype Mono",
+    "displayWeights": [
+      600,
+      700
+    ],
+    "bodyWeights": [
+      400,
+      500
+    ]
+  },
+  "headings": {
+    "weight": 700,
+    "tracking": "-0.035em",
+    "leading": "1.1"
+  },
+  "shape": {
+    "radius": "0.5rem",
+    "radiusLarge": "0.75rem",
+    "borderWidth": "1px"
+  },
+  "elevation": {
+    "card": "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px",
+    "overlay": "rgba(18, 43, 165, 0.04) 0px 1px 1px -0.5px, rgba(18, 43, 165, 0.04) 0px 3px 3px -1.5px, rgba(18, 43, 165, 0.04) 0px 6px 6px -3px, rgba(18, 43, 165, 0.04) 0px 12px 12px -6px"
+  },
+  "modes": {
+    "website": {
+      "signature": "Un titre centré en Plus Jakarta Sans gras (56 à 64px, très serré) dont la fin passe en text-muted, au-dessus d'une large capture produit posée dans une carte bg-surface arrondie avec une ombre douce.",
+      "rules": {
+        "do": [
+          "Action principale en aplat bg-accent (bleu nuit) avec text-accent-ink ; actions secondaires en bg-raised et text-ink.",
+          "Fin de titre en text-muted pour créer deux niveaux dans une même phrase (« AI solutions for every team »).",
+          "Onglets en pastilles bordées border-line ; l'onglet actif prend border-accent2 et un fond bg-accent2/10.",
+          "Cartes bg-surface arrondies en rounded-card avec shadow-card, padding généreux de 24 à 32px.",
+          "Listes d'avantages avec coches au trait text-muted, texte en 14 à 16px.",
+          "Chiffres clés en grand, tabular-nums, avec une légende courte en text-muted."
+        ],
+        "dont": [
+          "Pas de texte en accent2 sur fond blanc : le bleu vif sert aux aplats, bordures et indicateurs uniquement.",
+          "Pas de section sombre dans cette DNA : utiliser une variante sombre dédiée.",
+          "Pas de dégradés décoratifs en arrière-plan de section.",
+          "Pas plus d'un bouton plein bg-accent par vue."
+        ]
+      }
+    }
+  }
+}

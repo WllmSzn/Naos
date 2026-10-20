@@ -1,0 +1,36 @@
+<!-- {"id":"artefact-question-card","name":"ARTEFACT · carte question d'investigation","kind":"form","description":"Carte question d'une étape d'investigation : numéro, intitulé, progression des sous-questions en segments, réponses en choix, champ de justification, bouton déplier les questions filles (aria-expanded + chevron, jamais le mot). Une seule action principale.","tags":["artefact","investigation","question","playbook","step","answer"],"dna":["artefact-dark","artefact-light"],"libs":["alpine"]} -->
+<article x-data="{ open: true, answer: 'oui' }" class="rounded-card border border-line bg-surface">
+  <header class="flex items-start gap-3 px-6 py-4">
+    <span class="inline-flex h-6 min-w-6 shrink-0 items-center justify-center rounded-ui bg-raised px-1.5 text-xs font-semibold tabular-nums">2.1</span>
+    <div class="min-w-0 flex-1">
+      <h3 class="text-base font-medium leading-snug">Le processus parent est-il un document Office ouvert par l'utilisateur ?</h3>
+      <div class="mt-2 flex items-center gap-2 text-xs text-muted">
+        <span class="flex gap-0.5" aria-hidden="true"><span class="h-1.5 w-3 rounded-ui bg-status-resolved"></span><span class="h-1.5 w-3 rounded-ui bg-status-resolved"></span><span class="h-1.5 w-3 rounded-ui bg-raised"></span></span>
+        2 sous-questions sur 3 répondues
+      </div>
+    </div>
+    <button @click="open = !open" :aria-expanded="open" aria-controls="q21-children" class="grid size-8 shrink-0 place-items-center rounded-ui hover:bg-raised"><span class="sr-only">Questions filles de 2.1</span><iconify-icon icon="lucide:chevron-down" class="transition-transform duration-200" :class="open ? 'rotate-180' : ''"></iconify-icon></button>
+  </header>
+  <div class="space-y-4 border-t border-line px-6 py-4">
+    <fieldset>
+      <legend class="mb-2 text-xs font-medium uppercase tracking-wide text-muted">Réponse</legend>
+      <div class="flex gap-2 text-sm">
+        <label class="inline-flex h-ctl cursor-pointer items-center gap-2 rounded-ui border px-3" :class="answer === 'oui' ? 'border-accent-ui bg-accent-ui/10 font-medium' : 'border-line'"><input type="radio" name="q21" value="oui" x-model="answer" class="accent-accent">Oui</label>
+        <label class="inline-flex h-ctl cursor-pointer items-center gap-2 rounded-ui border px-3" :class="answer === 'non' ? 'border-accent-ui bg-accent-ui/10 font-medium' : 'border-line'"><input type="radio" name="q21" value="non" x-model="answer" class="accent-accent">Non</label>
+        <label class="inline-flex h-ctl cursor-pointer items-center gap-2 rounded-ui border px-3" :class="answer === 'nsp' ? 'border-accent-ui bg-accent-ui/10 font-medium' : 'border-line'"><input type="radio" name="q21" value="nsp" x-model="answer" class="accent-accent">Indéterminé</label>
+      </div>
+    </fieldset>
+    <div>
+      <label for="q21-note" class="mb-1.5 block text-sm font-medium">Justification</label>
+      <textarea id="q21-note" rows="2" aria-describedby="q21-help" class="w-full rounded-ui border border-line bg-raised px-3 py-2 text-sm">winword.exe (PID 4412) lance powershell.exe -enc… à 09:41:58, document reçu par e-mail à 09:40.</textarea>
+      <p id="q21-help" class="mt-1.5 text-xs text-muted">Citez les éléments observés : processus, PID, horodatages.</p>
+    </div>
+    <div id="q21-children" x-show="open" class="space-y-2 border-l-2 border-line pl-4 text-sm">
+      <p class="flex items-center gap-2"><iconify-icon icon="lucide:circle-check" class="text-status-resolved"></iconify-icon>2.1.1 · La pièce jointe provient-elle d'un expéditeur externe ? <span class="text-muted">Oui</span></p>
+      <p class="flex items-center gap-2"><iconify-icon icon="lucide:circle-dashed" class="text-muted"></iconify-icon>2.1.3 · Le document contient-il des macros ? <span class="text-muted">À répondre</span></p>
+    </div>
+    <div class="flex justify-end">
+      <button class="inline-flex h-ctl items-center rounded-ui bg-accent px-4 text-sm font-medium text-accent-ink">Enregistrer la réponse</button>
+    </div>
+  </div>
+</article>

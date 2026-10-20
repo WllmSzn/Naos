@@ -3,8 +3,25 @@
   "name": "Field Notes",
   "theme": "light",
   "summary": "Chaleureux et tactile, comme un carnet de marché : terracotta, vert sauge, typographie ronde et généreuse.",
-  "bestFor": ["ecommerce", "food", "restaurant", "recipe", "marketplace", "local business", "subscription box", "travel", "nonprofit", "lifestyle"],
-  "mood": ["warm", "friendly", "organic", "playful", "light"],
+  "bestFor": [
+    "ecommerce",
+    "food",
+    "restaurant",
+    "recipe",
+    "marketplace",
+    "local business",
+    "subscription box",
+    "travel",
+    "nonprofit",
+    "lifestyle"
+  ],
+  "mood": [
+    "warm",
+    "friendly",
+    "organic",
+    "playful",
+    "light"
+  ],
   "tokens": {
     "base": "#FBF6EF",
     "surface": "#FFFFFF",
@@ -20,35 +37,57 @@
     "warning": "#835B1A",
     "danger": "#AF382D"
   },
-  "dataPalette": ["#B4502A", "#5B7A4C", "#D9A441", "#6E8FA8", "#9C6B8E"],
+  "dataPalette": [
+    "#B4502A",
+    "#5B7A4C",
+    "#D9A441",
+    "#6E8FA8",
+    "#9C6B8E"
+  ],
   "fonts": {
     "display": "Bricolage Grotesque",
     "body": "Plus Jakarta Sans",
     "mono": "DM Mono",
-    "displayWeights": [600, 700, 800],
-    "bodyWeights": [400, 500, 600]
+    "displayWeights": [
+      600,
+      700,
+      800
+    ],
+    "bodyWeights": [
+      400,
+      500,
+      600
+    ]
   },
-  "shape": { "radius": "0.75rem", "radiusLarge": "1.5rem", "borderWidth": "1px" },
+  "shape": {
+    "radius": "0.75rem",
+    "radiusLarge": "1.5rem",
+    "borderWidth": "1px"
+  },
   "elevation": {
     "card": "0 2px 0 #E6DACA",
     "overlay": "0 18px 40px -14px rgba(42,32,25,0.22)"
   },
-  "signature": "Une rangée de cartes produit aux photos chaleureuses, l'une mise en avant par une étiquette manuscrite (« coup de cœur ») en accent2.",
-  "rules": {
-    "do": [
-      "Photos réelles, lumineuses et chaudes, aux coins arrondis radiusLarge.",
-      "Prix bien visibles, en display semi-gras ; ancien prix barré en muted.",
-      "Boutons pleins et arrondis, généreux (h-11 minimum), avec un verbe concret (« Ajouter au panier »).",
-      "Puces et étiquettes en fond raised ou teinté accent2 à 15 %, texte foncé.",
-      "Sections séparées par des changements de fond (base, raised), pas par des lignes.",
-      "Micro-textes chaleureux et concrets : provenance, délai, personne derrière le produit."
-    ],
-    "dont": [
-      "Pas de bleu vif, de violet ni de néon.",
-      "Pas de noir pur ni de blanc pur pour le texte et les fonds de page.",
-      "Pas de coins carrés sur les images et les cartes.",
-      "Pas d'images génériques de bureau ou de personnes en costume.",
-      "Pas de graphiques complexes : chiffres simples et visuels."
-    ]
+  "modes": {
+    "website": {
+      "signature": "Une rangée de cartes produit aux photos chaleureuses, l'une mise en avant par une étiquette manuscrite (« coup de cœur ») en accent2.",
+      "rules": {
+        "do": [
+          "Photos réelles, lumineuses et chaudes, aux coins arrondis radiusLarge.",
+          "Prix bien visibles, en display semi-gras ; ancien prix barré en muted.",
+          "Boutons pleins et arrondis, généreux (h-11 minimum), avec un verbe concret (« Ajouter au panier »).",
+          "Puces et étiquettes en fond raised ou teinté accent2 à 15 %, texte foncé.",
+          "Sections séparées par des changements de fond (base, raised), pas par des lignes.",
+          "Micro-textes chaleureux et concrets : provenance, délai, personne derrière le produit."
+        ],
+        "dont": [
+          "Pas de bleu vif, de violet ni de néon.",
+          "Pas de noir pur ni de blanc pur pour le texte et les fonds de page.",
+          "Pas de coins carrés sur les images et les cartes.",
+          "Pas d'images génériques de bureau ou de personnes en costume.",
+          "Pas de graphiques complexes : chiffres simples et visuels."
+        ]
+      }
+    }
   }
 }

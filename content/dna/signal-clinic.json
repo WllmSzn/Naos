@@ -3,8 +3,25 @@
   "name": "Signal Clinic",
   "theme": "light",
   "summary": "Clair, apaisé, lisible par tout le monde : un bleu-vert soignant, de grandes cibles tactiles et une hiérarchie sans ambiguïté.",
-  "bestFor": ["health", "telemedicine", "wellness", "booking", "public service", "education", "patient portal", "pharmacy", "insurance claims", "onboarding"],
-  "mood": ["calm", "reassuring", "accessible", "friendly", "light"],
+  "bestFor": [
+    "health",
+    "telemedicine",
+    "wellness",
+    "booking",
+    "public service",
+    "education",
+    "patient portal",
+    "pharmacy",
+    "insurance claims",
+    "onboarding"
+  ],
+  "mood": [
+    "calm",
+    "reassuring",
+    "accessible",
+    "friendly",
+    "light"
+  ],
   "tokens": {
     "base": "#F2F6F7",
     "surface": "#FFFFFF",
@@ -20,35 +37,56 @@
     "warning": "#7E5C1B",
     "danger": "#A63E39"
   },
-  "dataPalette": ["#0B6E78", "#E9845F", "#6C8EBF", "#8DB580", "#B07AA1"],
+  "dataPalette": [
+    "#0B6E78",
+    "#E9845F",
+    "#6C8EBF",
+    "#8DB580",
+    "#B07AA1"
+  ],
   "fonts": {
     "display": "Figtree",
     "body": "Figtree",
     "mono": "DM Mono",
-    "displayWeights": [600, 700],
-    "bodyWeights": [400, 500, 600]
+    "displayWeights": [
+      600,
+      700
+    ],
+    "bodyWeights": [
+      400,
+      500,
+      600
+    ]
   },
-  "shape": { "radius": "0.75rem", "radiusLarge": "1.25rem", "borderWidth": "1px" },
+  "shape": {
+    "radius": "0.75rem",
+    "radiusLarge": "1.25rem",
+    "borderWidth": "1px"
+  },
   "elevation": {
     "card": "0 1px 2px rgba(14,40,48,0.06), 0 4px 12px -6px rgba(14,40,48,0.08)",
     "overlay": "0 20px 48px -16px rgba(14,40,48,0.25)"
   },
-  "signature": "Une carte « prochaine étape » en tête d'écran : fond raised, une seule action claire, date et heure en gros.",
-  "rules": {
-    "do": [
-      "Texte courant en 16px minimum, cibles tactiles de 44px minimum, focus visible épais (ring 3px accent).",
-      "Une seule action principale par écran, formulée avec un verbe (« Prendre rendez-vous »).",
-      "Formulaires en une colonne, libellés au-dessus des champs, aide sous le champ, erreurs en clair avec la solution.",
-      "Icônes au trait accompagnées d'un libellé, jamais seules.",
-      "Indiquer la progression dans les parcours en plusieurs étapes (étape 2 sur 4).",
-      "Ton humain et direct, phrases courtes, aucun jargon médical non expliqué."
-    ],
-    "dont": [
-      "Pas de rouge hors erreurs réelles : il inquiète.",
-      "Pas de texte en gris clair sous le niveau muted, pas de texte sur image.",
-      "Pas d'animations rapides ou clignotantes.",
-      "Pas de tableaux denses : préférer des listes de cartes lisibles.",
-      "Pas de majuscules pour des phrases entières."
-    ]
+  "modes": {
+    "website": {
+      "signature": "Une carte « prochaine étape » en tête d'écran : fond raised, une seule action claire, date et heure en gros.",
+      "rules": {
+        "do": [
+          "Texte courant en 16px minimum, cibles tactiles de 44px minimum, focus visible épais (ring 3px accent).",
+          "Une seule action principale par écran, formulée avec un verbe (« Prendre rendez-vous »).",
+          "Formulaires en une colonne, libellés au-dessus des champs, aide sous le champ, erreurs en clair avec la solution.",
+          "Icônes au trait accompagnées d'un libellé, jamais seules.",
+          "Indiquer la progression dans les parcours en plusieurs étapes (étape 2 sur 4).",
+          "Ton humain et direct, phrases courtes, aucun jargon médical non expliqué."
+        ],
+        "dont": [
+          "Pas de rouge hors erreurs réelles : il inquiète.",
+          "Pas de texte en gris clair sous le niveau muted, pas de texte sur image.",
+          "Pas d'animations rapides ou clignotantes.",
+          "Pas de tableaux denses : préférer des listes de cartes lisibles.",
+          "Pas de majuscules pour des phrases entières."
+        ]
+      }
+    }
   }
 }

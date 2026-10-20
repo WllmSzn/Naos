@@ -1,0 +1,104 @@
+{
+  "id": "room-and-pillar",
+  "name": "Room & Pillar",
+  "version": 1,
+  "theme": "dark",
+  "summary": "Capital-risque sombre et éditorial : noir graphite bleuté, sections papier gris lavande, un seul jaune-citron électrique pour l'action, grotesque gras ultra-serré en titres géants, labels mono en capitales, rendus 3D monochromes.",
+  "bestFor": [
+    "venture capital",
+    "investment firm",
+    "agency site",
+    "portfolio",
+    "corporate landing page",
+    "editorial brand site",
+    "about page",
+    "team page"
+  ],
+  "mood": [
+    "bold",
+    "editorial",
+    "premium",
+    "dark",
+    "minimal"
+  ],
+  "tokens": {
+    "base": "#131419",
+    "surface": "#1F2025",
+    "raised": "#2A2B2F",
+    "line": "#323338",
+    "ink": "#F2F2F6",
+    "muted": "#C2C2DD",
+    "accent": "#D2FE71",
+    "accentInk": "#131419",
+    "accent2": "#C2C2DD",
+    "accentText": "#D2FE71",
+    "success": "#4CC38A",
+    "warning": "#E8C547",
+    "danger": "#EF7270"
+  },
+  "extraColors": {
+    "paper": "#F2F2F6",
+    "paper-soft": "#DBDBE9"
+  },
+  "dataPalette": [
+    "#D2FE71",
+    "#C2C2DD",
+    "#8C9C6C",
+    "#63646A",
+    "#F2F2F6"
+  ],
+  "fonts": {
+    "display": "Inter Tight",
+    "body": "Inter Tight",
+    "mono": "IBM Plex Mono",
+    "displayWeights": [
+      600,
+      700
+    ],
+    "bodyWeights": [
+      400,
+      500,
+      600
+    ]
+  },
+  "headings": {
+    "weight": 700,
+    "tracking": "-0.06em",
+    "leading": "1.02"
+  },
+  "shape": {
+    "radius": "6px",
+    "radiusLarge": "30px",
+    "borderWidth": "1px"
+  },
+  "elevation": {
+    "card": "0 2px 6px rgba(0,0,0,0.2), 0 0 0 1px rgba(217,222,231,0.25)",
+    "overlay": "inset 0 0 0 0.5px rgba(210,254,113,1), 0 12px 40px rgba(0,0,0,0.5)"
+  },
+  "modes": {
+    "website": {
+      "signature": "Titres monumentaux pleine largeur (text-[9vw] font-bold tracking-[-0.06em] leading-none) qui débordent presque de l'écran, avec un objet 3D monochrome (rocher, instrument) incrusté au centre ou entre les lettres ; en-tête « Room ——— & ——— Pillar » relié par de fines lignes horizontales ; barre de navigation flottante en bas d'écran (bg-surface rounded border-line) avec un unique bouton citron.",
+      "rules": {
+        "do": [
+          "Alternance de grandes sections sombres bg-base et claires bg-paper (texte text-inverse et text-inverse/70 sur paper ; text-base est une taille, pas une couleur) ; jamais de dégradé.",
+          "Action principale unique : bg-accent text-accent-ink rounded px-3 py-1.5 text-sm font-medium avec flèche →. Sur fond paper : bouton bg-base text-accent.",
+          "Titres en grotesque gras ultra-serré : hero et titres de section text-6xl md:text-8xl font-bold tracking-[-0.06em] leading-none ; tout le texte garde un tracking négatif (tracking-tight).",
+          "Corps petit et dense : text-sm leading-snug, colonnes étroites (max-w-sm) à côté d'éléments géants — le contraste d'échelle fait le style.",
+          "Labels, catégories, métadonnées et en-têtes de tableau en font-mono text-[10px] uppercase tracking-widest text-muted, souvent alignés aux trois coins (gauche, centre, droite) d'une ligne.",
+          "Grilles à angles vifs : colonnes séparées par border-l border-line, cartes sans fond ni arrondi, visuel 3D en haut, titre text-sm font-semibold puis texte text-xs text-muted.",
+          "Listes de portefeuille en tableau mono sur trois colonnes (nom, catégorie, site), lignes fines, sans zébrage.",
+          "Images : rendus 3D ou photos en noir et blanc / monochromes, sur fond uni, jamais en couleur saturée (data-image décrit en ce sens).",
+          "Liens de navigation et liens secondaires en text-accent, sans soulignement, flèche → ou chevron."
+        ],
+        "dont": [
+          "Pas de couleur codée en dur ni de couleur Tailwind nommée : uniquement les tokens et extraColors.",
+          "Pas de citron en grand aplat : il est réservé aux boutons, liens et petits indicateurs.",
+          "Pas d'ombres portées douces ni de cartes arrondies flottantes : la structure vient des lignes et de l'échelle.",
+          "Pas de titres en casse capitale ni en serif : grotesque gras en casse normale ; les capitales sont réservées aux labels mono.",
+          "Pas plus d'une action citron par écran visible.",
+          "Pas d'icônes décoratives colorées ni d'illustrations plates."
+        ]
+      }
+    }
+  }
+}

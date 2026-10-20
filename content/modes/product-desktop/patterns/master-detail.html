@@ -1,0 +1,46 @@
+<!-- {"id":"master-detail","name":"Maître-détail","kind":"master-detail","description":"Liste compacte à gauche (élément sélectionné marqué), détail à droite : en-tête avec statut et actions, grille clé-valeur, onglets, contenu. Chaque colonne défile indépendamment. Pour traiter une file d'éléments sans quitter l'écran.","tags":["master detail","split view","inbox","queue","detail panel","triage"]} -->
+<div class="grid h-[40rem] grid-cols-[22rem_1fr] overflow-hidden rounded-card border border-line bg-surface">
+  <div class="flex min-h-0 flex-col border-r border-line">
+    <div class="flex h-ctl items-center justify-between border-b border-line px-3 text-sm">
+      <span class="font-semibold">À traiter</span><span class="text-muted tabular-nums">12</span>
+    </div>
+    <ul class="min-h-0 flex-1 divide-y divide-line overflow-auto text-sm" aria-label="Commandes à traiter">
+      <li><a href="#" aria-current="true" class="block border-l-2 border-accent bg-raised px-3 py-2.5"><span class="flex justify-between gap-2"><span class="truncate font-medium">Fromagerie Bel</span><span class="font-mono text-xs text-muted">09:42</span></span><span class="block truncate text-xs text-muted">CF-0412 · 864,00 € · 12 références</span></a></li>
+      <li><a href="#" class="block border-l-2 border-transparent px-3 py-2.5 hover:bg-raised"><span class="flex justify-between gap-2"><span class="truncate font-medium">Moulin de la Roche</span><span class="font-mono text-xs text-muted">09:31</span></span><span class="block truncate text-xs text-muted">CF-0410 · 412,50 € · 4 références</span></a></li>
+      <li><a href="#" class="block border-l-2 border-transparent px-3 py-2.5 hover:bg-raised"><span class="flex justify-between gap-2"><span class="truncate font-medium">Primeurs Rizzo</span><span class="font-mono text-xs text-muted">08:58</span></span><span class="block truncate text-xs text-muted">CF-0407 · 1 230,00 € · 31 références</span></a></li>
+    </ul>
+  </div>
+  <article class="flex min-h-0 flex-col">
+    <header class="flex flex-wrap items-start justify-between gap-3 border-b border-line p-4">
+      <div>
+        <p class="font-mono text-xs text-muted">CF-0412</p>
+        <h2 class="text-lg font-semibold">Fromagerie Bel</h2>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="rounded-ui border border-warning/30 bg-warning/10 px-2 py-0.5 text-xs text-warning">À valider</span>
+        <button class="inline-flex h-ctl items-center rounded-ui border border-line px-3 text-sm">Modifier</button>
+        <button class="inline-flex h-ctl items-center gap-2 rounded-ui bg-accent px-4 text-sm font-medium text-accent-ink"><iconify-icon icon="lucide:send"></iconify-icon>Envoyer la commande</button>
+      </div>
+    </header>
+    <div class="min-h-0 flex-1 space-y-5 overflow-auto p-4">
+      <dl class="grid grid-cols-2 gap-x-6 gap-y-3 text-sm lg:grid-cols-4">
+        <div><dt class="text-xs text-muted">Montant HT</dt><dd class="font-medium tabular-nums">864,00 €</dd></div>
+        <div><dt class="text-xs text-muted">Livraison prévue</dt><dd>jeudi 23 octobre</dd></div>
+        <div><dt class="text-xs text-muted">Créée par</dt><dd>Prévision automatique</dd></div>
+        <div><dt class="text-xs text-muted">Contact</dt><dd class="truncate"><a href="#" class="text-accent underline underline-offset-4">commandes@fromagerie-bel.fr</a></dd></div>
+      </dl>
+      <div role="tablist" aria-label="Détail de la commande" class="flex gap-4 border-b border-line text-sm">
+        <button role="tab" aria-selected="true" class="-mb-px border-b-2 border-accent pb-2 font-medium">Lignes (12)</button>
+        <button role="tab" aria-selected="false" class="pb-2 text-muted hover:text-ink">Historique</button>
+        <button role="tab" aria-selected="false" class="pb-2 text-muted hover:text-ink">Pièces jointes</button>
+      </div>
+      <table class="w-full text-sm">
+        <thead class="text-left text-xs text-muted"><tr><th class="py-2 font-medium">Référence</th><th class="py-2 font-medium">Article</th><th class="py-2 text-right font-medium">Qté</th><th class="py-2 text-right font-medium">Total</th></tr></thead>
+        <tbody class="divide-y divide-line">
+          <tr class="h-row"><td class="font-mono text-xs text-muted">FR-COMTE-18</td><td>Comté 18 mois, meule entamée</td><td class="text-right tabular-nums">6 kg</td><td class="text-right tabular-nums">198,00 €</td></tr>
+          <tr class="h-row"><td class="font-mono text-xs text-muted">FR-STMAR-01</td><td>Saint-Marcellin fermier</td><td class="text-right tabular-nums">40</td><td class="text-right tabular-nums">72,00 €</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </article>
+</div>

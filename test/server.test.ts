@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 import { createServer } from '../src/server.js';
+import { getLibrary } from '../src/dna/library.js';
 
 async function connect() {
   const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
@@ -21,7 +22,7 @@ test('le serveur expose les outils attendus', async () => {
   const client = await connect();
   const { tools } = await client.listTools();
   assert.deepEqual(tools.map((t) => t.name).sort(), [
-    'get_dna', 'get_patterns', 'get_rules', 'get_workflow', 'lint_screen', 'list_dna', 'list_patterns', 'preview_screen', 'read_screen',
+    'get_dna', 'get_patterns', 'get_rules', 'get_workflow', 'lint_screen', 'list_dna', 'list_modes', 'list_patterns', 'preview_screen', 'read_screen',
     'reload_library', 'retheme', 'save_dna', 'scan_url', 'suggest_dna', 'wrap_screen',
   ]);
 });
@@ -29,11 +30,11 @@ test('le serveur expose les outils attendus', async () => {
 test('prompts MCP : liste et rendu avec arguments', async () => {
   const client = await connect();
   const { prompts } = await client.listPrompts();
-  assert.deepEqual(prompts.map((p) => p.name).sort(), ['dna_from_sites', 'ui_review', 'ui_screen']);
-  const res = await client.getPrompt({ name: 'ui_screen', arguments: { brief: 'Page tarifs pour un logiciel de paie', dna: 'linen-ledger' } });
+  assert.deepEqual(prompts.map((p) => p.name).sort(), ['dna_from_sites', 'ui_component', 'ui_review', 'ui_screen']);
+  const res = await client.getPrompt({ name: 'ui_screen', arguments: { brief: 'Page tarifs pour un logiciel de paie', mode: 'website', dna: 'linen-ledger' } });
   const msg = res.messages[0]?.content as { type: string; text: string };
   assert.match(msg.text, /Page tarifs pour un logiciel de paie/);
-  assert.match(msg.text, /get_dna avec "linen-ledger"/);
+  assert.match(msg.text, /get_dna avec id "linen-ledger" et mode "website"/);
 });
 
 test('get_workflow : exige les arguments requis', async () => {
@@ -46,9 +47,9 @@ test('get_workflow : exige les arguments requis', async () => {
 
 test('get_patterns et list_patterns', async () => {
   const client = await connect();
-  const list = JSON.parse(text(await client.callTool({ name: 'list_patterns', arguments: { platform: 'app' } })));
-  assert.ok(list.patterns.every((p: { platform: string; html?: string }) => p.platform === 'app' && p.html === undefined));
-  const html = text(await client.callTool({ name: 'get_patterns', arguments: { ids: ['cta-panel'] } }));
+  const list = JSON.parse(text(await client.callTool({ name: 'list_patterns', arguments: { mode: 'product-desktop' } })));
+  assert.ok(list.patterns.length > 0 && list.patterns.every((p: { mode: string; html?: string }) => p.mode === 'product-desktop' && p.html === undefined));
+  const html = text(await client.callTool({ name: 'get_patterns', arguments: { mode: 'website', ids: ['cta-panel'] } }));
   assert.match(html, /<!-- cta-panel · cta ·/);
   assert.match(html, /bg-accent/);
 });
@@ -69,7 +70,7 @@ test('wrap_screen : lint puis assemblage', async () => {
   assert.equal(report.dna, 'signal-clinic');
   assert.equal(report.lint.needsRepair, false);
   assert.match(html, /<h1 class="text-ink">Bonjour <\/h1>/);
-  assert.match(html, /<meta name="hecate-dna" content="signal-clinic">/);
+  assert.match(html, /<meta name="naos-dna" content="signal-clinic">/);
 });
 
 test('wrap_screen refuse des surcharges illisibles', async () => {
@@ -103,7 +104,7 @@ test('retheme via le serveur', async () => {
 test('list_dna puis get_dna', async () => {
   const client = await connect();
   const list = JSON.parse(text(await client.callTool({ name: 'list_dna', arguments: {} })));
-  assert.equal(list.count, 9);
+  assert.equal(list.count, getLibrary().dnas.size);
 
   const dna = JSON.parse(text(await client.callTool({ name: 'get_dna', arguments: { id: 'field-notes' } })));
   assert.equal(dna.tokens.accent, '#B4502A');

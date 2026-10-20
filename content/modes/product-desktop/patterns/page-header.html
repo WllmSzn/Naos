@@ -1,0 +1,21 @@
+<!-- {"id":"page-header","name":"En-tête de page","kind":"page-header","description":"Fil d'Ariane, titre avec compteur, ligne de contexte (périmètre, mise à jour), action principale à droite et actions secondaires regroupées. Se pose en haut de la zone principale.","tags":["header","breadcrumb","title","actions","toolbar"]} -->
+<header class="border-b border-line pb-4">
+  <nav aria-label="Fil d'Ariane" class="mb-2 text-xs text-muted">
+    <ol class="flex items-center gap-1.5">
+      <li><a href="#" class="hover:text-ink">Achats</a></li>
+      <li aria-hidden="true"><iconify-icon icon="lucide:chevron-right"></iconify-icon></li>
+      <li aria-current="page" class="text-ink">Commandes fournisseurs</li>
+    </ol>
+  </nav>
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <div class="min-w-0">
+      <h1 class="flex items-baseline gap-3 text-xl font-semibold">Commandes fournisseurs <span class="text-sm font-normal text-muted tabular-nums">48</span></h1>
+      <p class="mt-1 text-sm text-muted">Épicerie Lune · mise à jour il y a 3 min</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <button class="inline-flex h-ctl items-center gap-2 rounded-ui border border-line px-3 text-sm"><iconify-icon icon="lucide:download"></iconify-icon>Exporter</button>
+      <button class="inline-flex h-ctl items-center rounded-ui border border-line px-2 text-sm" aria-label="Plus d'actions"><iconify-icon icon="lucide:more-horizontal"></iconify-icon></button>
+      <button class="inline-flex h-ctl items-center gap-2 rounded-ui bg-accent px-4 text-sm font-medium text-accent-ink"><iconify-icon icon="lucide:plus"></iconify-icon>Nouvelle commande <kbd class="ml-1 rounded-ui border border-accent-ink/30 px-1 font-mono text-xs">N</kbd></button>
+    </div>
+  </div>
+</header>

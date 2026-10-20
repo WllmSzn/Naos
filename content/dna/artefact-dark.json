@@ -1,0 +1,146 @@
+{
+  "id": "artefact-dark",
+  "name": "Artefact Dark",
+  "version": 1,
+  "theme": "dark",
+  "summary": "Le thème principal d’ARTEFACT : un bleu-gris profond pour des analystes SOC qui y passent leur journée, une hiérarchie dense en Jost, la criticité portée par des points et des badges, jamais par les fonds.",
+  "bestFor": [
+    "soc",
+    "siem",
+    "security operations",
+    "alert triage",
+    "incident response",
+    "investigation",
+    "threat intelligence",
+    "asset inventory",
+    "cybersecurity dashboard",
+    "admin console"
+  ],
+  "mood": [
+    "technical",
+    "dense",
+    "precise",
+    "calm",
+    "dark"
+  ],
+  "tokens": {
+    "base": "#181C23",
+    "surface": "#1B1E24",
+    "raised": "#1E232C",
+    "line": "#2E3441",
+    "ink": "#FAFAFA",
+    "muted": "#9498A2",
+    "accent": "#FAFAFA",
+    "accentInk": "#181C23",
+    "accent2": "#CC6BFF",
+    "accentText": "#88A9FD",
+    "success": "#27CC44",
+    "warning": "#FFA44E",
+    "danger": "#FE5A74"
+  },
+  "extraColors": {
+    "accent-ui": "#2F6AFF",
+    "ink-soft": "#CCCED1",
+    "sev-critical": "#FF577B",
+    "sev-high": "#FF8947",
+    "sev-medium": "#EDAB00",
+    "sev-low": "#FDB171",
+    "status-pending": "#9298A4",
+    "status-investigation": "#5D96FF",
+    "status-remediation": "#00ADBA",
+    "status-resolved": "#36D261",
+    "status-incident": "#FA6A57"
+  },
+  "rootFontSize": "15px",
+  "dataPalette": [
+    "#2F6AFF",
+    "#CC6BFF",
+    "#00BDCA",
+    "#7173D7",
+    "#A7AEBB"
+  ],
+  "fonts": {
+    "display": "Jost",
+    "body": "Jost",
+    "mono": "ui-monospace",
+    "accent": "Kufam",
+    "displayWeights": [
+      500,
+      600
+    ],
+    "bodyWeights": [
+      400,
+      500,
+      600
+    ]
+  },
+  "headings": {
+    "weight": 600,
+    "tracking": "0em",
+    "leading": "1.35"
+  },
+  "shape": {
+    "radius": "7.375px",
+    "radiusLarge": "13.375px",
+    "borderWidth": "1px"
+  },
+  "elevation": {
+    "card": "none",
+    "overlay": "0 12px 40px rgba(0,0,0,0.55)"
+  },
+  "rules": {
+    "do": [
+      "Une seule action principale pleine par section : bg-accent text-accent-ink (= --primary, near-black en clair, near-blanc en sombre). Jamais brandée : ni rose, ni bleu. Actions secondaires en contour (border border-line), barres d’outils en bouton discret.",
+      "Liens textuels en text-accent underline underline-offset-4, soulignement PERSISTANT (pas seulement au survol). Un lien n’est jamais en couleur primaire.",
+      "Sévérité : rouge, orange, ambre et beige sont RÉSERVÉS à la criticité (sev-critical, sev-high, sev-medium, sev-low) ; le vert au succès et à la résolution. Badge de sévérité ou de statut : border border-sev-critical/30 bg-sev-critical/10 text-sev-critical (idem status-*). Catégories et tags neutres : text-muted bg-raised border-line/40.",
+      "Focus visible sur tout contrôle : focus-visible:ring-[3px] ring-accent-ui, anneau plein (jamais ring-accent-ui/50). Transitions 150 à 500 ms, survol discret (hover:brightness-110 ou fond un cran plus clair)."
+    ],
+    "dont": [
+      "Pas de couleur codée en dur (hex, oklch, rgba) ni de couleur Tailwind nommée : uniquement les tokens et les couleurs métier de la DNA.",
+      "Pas de rose de marque dans l’interface : il est réservé au wordmark ARTEFACT (font-accent, Kufam, gras) ; le violet accent2 sert à l’identité et à la dataviz.",
+      "Pas de rouge, orange, ambre ou vert pour une catégorie, une difficulté ou un tag générique.",
+      "Pas de Kufam hors du wordmark et des titres d’identité forte : tout le texte d’interface est en Jost."
+    ]
+  },
+  "modes": {
+    "product-desktop": {
+      "signature": "Le fond technique ARTEFACT : grille fine et diagonales discrètes, halos radiaux bleu et violet très doux derrière le contenu ; sur le tableau de bord, l’orbe SIEM centrale (disque en verre au contour violet, satellites cliquables) avec un léger glow additif.",
+      "density": "compact",
+      "sizes": {
+        "control": "2.25rem",
+        "controlSm": "2rem",
+        "row": "2.5rem",
+        "sidebar": "224px",
+        "icon": "1rem"
+      },
+      "states": {
+        "selected": "bg-accent-ui/10 border-l-[3px] border-l-accent-ui font-semibold",
+        "hover": "hover:bg-raised",
+        "focus": "focus-visible:ring-[3px] focus-visible:ring-accent-ui",
+        "disabled": "opacity-50 cursor-not-allowed"
+      },
+      "rules": {
+        "do": [
+          "Traduction vers le code ARTEFACT (React + Tailwind + composants ui/) : bg-base → bg-background, bg-surface → bg-card, bg-raised → bg-muted ou bg-popover, text-ink → text-foreground, text-muted → text-muted-foreground, border-line → border-border, bg-accent + text-accent-ink → <Button variant=\"default\"> (bg-primary), text-accent → text-accent-ui. Les couleurs métier (sev-*, status-*, accent-ui, ink-soft) portent déjà le nom des tokens de vars.css.",
+          "Cartes au fond neutre (bg-surface border border-line rounded-card), padding sur un div interne (p-6, ou px-2 py-2 pour une ligne d’alerte compacte). La criticité vit dans un point h-1.5 w-1.5 rounded-full bg-sev-* ou un badge compact, jamais dans le fond.",
+          "Workflow d’alerte : En attente = status-pending, Investigation = status-investigation, Remédiation = status-remediation, Résolue = status-resolved, Incident = status-incident.",
+          "Hiérarchie dense et sobre : titre de page text-xl font-semibold ; titre de section text-sm font-semibold ; label text-xs font-medium uppercase tracking-wide text-muted ; corps text-sm ; dense text-xs ; identifiants, IP, hash et horodatages en font-mono text-xs. Racine à 15 px : text-sm = 13,1 px.",
+          "Page : conteneur p-6 space-y-6, en-tête (titre, contexte, action principale), puis grilles grid gap-4. Widgets et cartes de stats en verre : bg-surface/50 backdrop-blur-lg border border-line/50 shadow-overlay.",
+          "Carte KPI : fond neutre, accent porté par une barre latérale (border-l-[3px] border-l-sev-* ou border-l-status-*), une puce et un libellé, jamais par un aplat de couleur.",
+          "États distincts : chargement en squelette qui garde les colonnes du tableau ; vide (explication + action) ; ERREUR BACKEND distincte du vide (encart role=\"alert\" bordé danger, bouton Réessayer) : un échec de lecture ne s’affiche jamais comme « 0 résultat »."
+        ],
+        "dont": [
+          "Pas de fond de carte, de ligne ou de KPI teinté par la sévérité ou un sentiment (« tout est en erreur »).",
+          "Pas de badge d’état tronqué : le mot porte l’information. Dimensionner le conteneur pour que le libellé tienne plutôt que de le rogner."
+        ]
+      },
+      "patterns": [
+        "artefact-sidebar",
+        "artefact-alert-rows",
+        "artefact-kpi",
+        "artefact-backend-error",
+        "artefact-question-card"
+      ]
+    }
+  }
+}

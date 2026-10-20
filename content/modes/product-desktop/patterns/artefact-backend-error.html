@@ -1,0 +1,14 @@
+<!-- {"id":"artefact-backend-error","name":"ARTEFACT · erreur backend","kind":"feedback","description":"Équivalent de BackendErrorState : encart role=alert dans la carte de la zone en échec, bordé danger, cause courte selon le statut HTTP (jamais d'URL ni de trace), bouton Réessayer. Distinct de l'état vide : un échec n'est jamais « 0 résultat ».","tags":["artefact","error","backend error","403","503","retry"],"dna":["artefact-dark","artefact-light"]} -->
+<section class="rounded-card border border-line bg-surface">
+  <div class="flex h-ctl items-center justify-between border-b border-line px-4">
+    <h2 class="text-sm font-semibold">File de triage</h2>
+  </div>
+  <div role="alert" class="m-4 flex items-start gap-3 rounded-card border border-danger/40 bg-danger/10 p-4 text-sm">
+    <iconify-icon icon="lucide:circle-x" class="mt-0.5 text-danger"></iconify-icon>
+    <div class="flex-1">
+      <p class="font-medium">Les alertes n'ont pas pu être chargées.</p>
+      <p class="mt-1 text-ink/80">Le service de recherche est indisponible (503). Ce n'est pas une file vide : les alertes réapparaîtront dès son rétablissement.</p>
+      <button class="mt-3 inline-flex h-ctl-sm items-center gap-1.5 rounded-ui border border-line bg-surface px-3 text-sm"><iconify-icon icon="lucide:rotate-cw"></iconify-icon>Réessayer</button>
+    </div>
+  </div>
+</section>

@@ -12,7 +12,7 @@
     </nav>
   </aside>
 
-  <main class="flex-1 p-6 md:p-10">
+  <main class="min-w-0 flex-1 p-6 md:p-10">
     <header class="mb-8 flex flex-wrap items-end justify-between gap-4">
       <div>
         <p class="text-xs uppercase tracking-widest text-muted">Octobre 2026</p>
@@ -67,8 +67,8 @@
     data: {
       labels: ['S40', 'S41', 'S42', 'S43'],
       datasets: [
-        { label: 'Encaissé', data: [9800, 14200, 11600, 12660], backgroundColor: HECATE.dataPalette[0], borderRadius: 6 },
-        { label: 'Prévu', data: [11000, 12000, 13000, 12500], backgroundColor: HECATE.dataPalette[1], borderRadius: 6 }
+        { label: 'Encaissé', data: [9800, 14200, 11600, 12660], backgroundColor: NAOS.dataPalette[0], borderRadius: 6 },
+        { label: 'Prévu', data: [11000, 12000, 13000, 12500], backgroundColor: NAOS.dataPalette[1], borderRadius: 6 }
       ]
     },
     options: { maintainAspectRatio: false, animation: false, plugins: { legend: { position: 'bottom' } }, scales: { x: { grid: { display: false } } } }

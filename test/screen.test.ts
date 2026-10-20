@@ -8,6 +8,7 @@ import { applyOverrides } from '../src/dna/overrides.js';
 import { extractBody, readMeta, tailwindConfig, wrapScreen } from '../src/screen/wrap.js';
 import { retheme } from '../src/screen/retheme.js';
 import { safeScreenName, saveScreen } from '../src/screen/output.js';
+import { DnaSchema } from '../src/dna/schema.js';
 
 const lib = loadLibrary().dnas;
 const linen = lib.get('linen-ledger')!;
@@ -46,7 +47,7 @@ test('retheme : nouveau head, corps conservé, couleurs littérales converties',
   assert.equal(r.from, 'linen-ledger');
   assert.equal(r.to, 'graphite-console');
   assert.equal(r.hexReplaced, 1);
-  assert.match(r.html, /<meta name="hecate-dna" content="graphite-console">/);
+  assert.match(r.html, /<meta name="naos-dna" content="graphite-console">/);
   assert.match(r.html, /family=Manrope/);
   assert.match(r.html, /chart\.js@4\.4\.9/, 'les libs sont conservées');
   assert.match(r.html, /<title>Solde<\/title>/);
@@ -83,7 +84,7 @@ test('noms de fichiers de sortie assainis', () => {
 });
 
 test('saveScreen écrit dans le dossier demandé', () => {
-  const dir = mkdtempSync(path.join(tmpdir(), 'hecate-'));
+  const dir = mkdtempSync(path.join(tmpdir(), 'naos-'));
   try {
     const file = saveScreen('demo', '<p>x</p>', dir);
     assert.equal(file, path.join(dir, 'demo.html'));
@@ -91,4 +92,33 @@ test('saveScreen écrit dans le dossier demandé', () => {
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
+});
+
+test('DNA de produit : couleurs métier, racine 15 px et police système', () => {
+  const artefact = lib.get('artefact-dark')!;
+  const html = wrapScreen('<p class="text-sev-critical">x</p>', artefact);
+  assert.match(html, /html\{font-size:15px\}/);
+  assert.match(html, /"sev-critical":"#/, 'couleur métier dans la config Tailwind');
+  assert.doesNotMatch(html, /family=ui-monospace/, 'police système jamais demandée à Google Fonts');
+  assert.match(html, /family=Jost/);
+  assert.match(html, /family=Kufam/);
+});
+
+test('couleurs métier : noms réservés refusés', () => {
+  const base = { ...lib.get('artefact-dark')! };
+  assert.equal(DnaSchema.safeParse({ ...base, extraColors: { red: '#FF0000' } }).success, false);
+  assert.equal(DnaSchema.safeParse({ ...base, extraColors: { muted: '#888888' } }).success, false);
+  assert.equal(DnaSchema.safeParse({ ...base, extraColors: { 'sev-x': '#FF577B' } }).success, true);
+});
+
+test('pages produites avant le renommage (Hecate) : toujours relues et rethémées', () => {
+  const legacy = wrapScreen('<h1>Ancienne</h1><script>new Chart(c, { data: { datasets: [{ backgroundColor: HECATE.dataPalette[0] }] } })</script>', linen, { title: 'Ancienne' })
+    .replace(/naos:body:/g, 'hecate:body:')
+    .replace(/name="naos-/g, 'name="hecate-');
+  assert.equal(readMeta(legacy).dnaId, 'linen-ledger');
+  assert.match(extractBody(legacy), /^<h1>Ancienne<\/h1>/);
+  const r = retheme(legacy, graphite, resolve);
+  assert.equal(r.from, 'linen-ledger');
+  assert.match(r.html, /<meta name="naos-dna" content="graphite-console">/);
+  assert.match(r.html, /window\.HECATE = window\.NAOS/, 'les anciens scripts de graphique fonctionnent');
 });

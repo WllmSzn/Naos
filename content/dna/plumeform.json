@@ -1,0 +1,107 @@
+{
+  "id": "plumeform",
+  "name": "Plumeform",
+  "version": 1,
+  "theme": "light",
+  "summary": "SaaS chaleureux et soigné : crème cassé, encre vert-noir, sarcelle profonde pour l'action, menthe pâle en halos diffus, Manrope très gras serré, tout en pilules et grands arrondis, ouverture sur un hero vert nuit.",
+  "bestFor": [
+    "saas landing page",
+    "form builder",
+    "survey tool",
+    "product marketing",
+    "onboarding",
+    "pricing page",
+    "feature showcase",
+    "lightweight dashboard"
+  ],
+  "mood": [
+    "warm",
+    "friendly",
+    "polished",
+    "airy",
+    "modern"
+  ],
+  "tokens": {
+    "base": "#FBFAF6",
+    "surface": "#F5F3EE",
+    "raised": "#F0EFEB",
+    "line": "#E0DED8",
+    "ink": "#151F21",
+    "muted": "#464F50",
+    "accent": "#005B54",
+    "accentInk": "#FFFFFF",
+    "accent2": "#CBF0E7",
+    "accentText": "#005B54",
+    "success": "#2B6C47",
+    "warning": "#815A1E",
+    "danger": "#A73D2E"
+  },
+  "extraColors": {
+    "night": "#021716",
+    "night-raised": "#0A2423",
+    "teal-strong": "#004640"
+  },
+  "dataPalette": [
+    "#005B54",
+    "#72C2B5",
+    "#A4DFD3",
+    "#FEE3C5",
+    "#C4E3F9"
+  ],
+  "fonts": {
+    "display": "Manrope",
+    "body": "Manrope",
+    "mono": "JetBrains Mono",
+    "displayWeights": [
+      700,
+      800
+    ],
+    "bodyWeights": [
+      400,
+      500,
+      600,
+      700
+    ]
+  },
+  "headings": {
+    "weight": 700,
+    "tracking": "-0.025em",
+    "leading": "1.05"
+  },
+  "shape": {
+    "radius": "9999px",
+    "radiusLarge": "28px",
+    "borderWidth": "1px"
+  },
+  "elevation": {
+    "card": "inset 1px 1px 0 rgba(255,255,255,0.85), inset -1px -1px 0 rgba(114,194,181,0.2), 0 1px 2px rgba(21,31,33,0.05), 0 8px 24px -12px rgba(21,31,33,0.12)",
+    "overlay": "inset 0 1px 0 rgba(251,250,246,0.12), 0 20px 50px -30px rgba(2,23,22,0.9)"
+  },
+  "modes": {
+    "website": {
+      "signature": "Hero vert nuit (bg-night) traversé de rideaux de lumière sarcelle verticaux (bandes en dégradé bg-accent/30 → transparent, flous), titre géant text-inverse Manrope 800 serré, CTA pilule crème ; puis un grand cadre produit crème arrondi à 50 px, liseré lumineux menthe (ring-accent2), qui chevauche la bascule du sombre vers le crème. Sous les démos produit, halos menthe diffus qui débordent des cartes.",
+      "rules": {
+        "do": [
+          "Fond de page bg-base (crème) ; seuls le hero et éventuellement le footer passent en bg-night, texte en text-inverse et text-inverse/70 pour le secondaire (text-base est une taille, pas une couleur).",
+          "Action principale en pilule pleine : bg-accent text-accent-ink rounded-full px-4 py-2 text-sm font-semibold. Sur fond night ou en CTA de hero : pilule bg-base text-ink. Action secondaire : pilule bg-surface text-ink ou bg-ink text-base.",
+          "Titres en Manrope gras et serrés : h1 text-6xl md:text-7xl font-extrabold leading-[0.98] tracking-tight ; h2 text-4xl md:text-5xl font-bold leading-[1.05] tracking-tight ; h3 text-xl font-bold.",
+          "Corps text-base leading-relaxed text-muted ; interface dense en text-sm et text-xs. Surtitre de section : text-xs font-semibold uppercase tracking-widest text-muted.",
+          "Sections en alternance texte / démo produit sur deux colonnes, beaucoup d'air vertical (py-24 à py-32).",
+          "Cartes de démo : bg-base rounded-card shadow-card border border-line, posées sur un halo flou (div absolu bg-accent2 blur-3xl opacity-60) qui déborde.",
+          "Contrôles de formulaire en pilules ou rounded-xl ; état sélectionné en bg-accent2 border-accent text-ink avec coche bg-accent.",
+          "Liens textuels en text-accent font-semibold underline underline-offset-4 suivis d'une flèche →.",
+          "Menthe (accent2) réservée aux aplats décoratifs, puces sélectionnées, tags et halos — jamais pour du texte.",
+          "Graphiques : barres arrondies en sarcelles dégradées (dataPalette), valeurs au-dessus en text-xs font-semibold."
+        ],
+        "dont": [
+          "Pas de couleur codée en dur ni de couleur Tailwind nommée : uniquement les tokens et extraColors.",
+          "Pas de bouton à angles vifs ni rounded-md : tout bouton est une pilule.",
+          "Pas de texte sur menthe en couleur claire, ni de menthe en texte : contraste insuffisant.",
+          "Pas d'ombre lourde et sombre sur fond crème : shadow-card uniquement ; shadow-overlay pour les cadres posés sur bg-night.",
+          "Pas de police serif ou décorative : tout est en Manrope.",
+          "Pas plus d'une action pleine bg-accent par bloc."
+        ]
+      }
+    }
+  }
+}

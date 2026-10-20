@@ -38,7 +38,22 @@ export interface LintOptions {
   theme?: Theme;
   /** false : rapport seul, le HTML est renvoyé tel quel. */
   autofix?: boolean;
+  /** Profil du mode : ce qui relève d'un site (formules marketing) n'est pas exigé d'un écran produit. */
+  profile?: LintProfile;
 }
+
+export interface LintProfile {
+  bannedWords: boolean;
+  genericCta: string[];
+  requireH1: boolean;
+}
+
+/** Profil par défaut (mode site web), utilisé quand aucun mode n'est connu. */
+export const DEFAULT_LINT_PROFILE: LintProfile = {
+  bannedWords: true,
+  genericCta: ['ok', 'valider', 'envoyer', 'submit', 'click here', 'cliquez ici', 'ici', 'here', 'go', 'lien', 'link'],
+  requireH1: true,
+};
 
 // ── Collecte ───────────────────────────────────────────────────────────────
 
@@ -251,9 +266,8 @@ const BANNED_WORDS = [
 ];
 const BANNED_RE = new RegExp(`(?:^|[^a-z])(${BANNED_WORDS.map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})(?![a-z])`, 'i');
 
-const GENERIC_CTA = new Set(['ok', 'valider', 'envoyer', 'submit', 'click here', 'cliquez ici', 'ici', 'here', 'go', 'lien', 'link']);
-
-function lintText($: cheerio.CheerioAPI, out: Collector, autofix: boolean) {
+function lintText($: cheerio.CheerioAPI, out: Collector, autofix: boolean, profile: LintProfile) {
+  const genericCta = new Set(profile.genericCta.map(normalizeText));
   $('*')
     .not('script, style')
     .contents()
@@ -275,13 +289,13 @@ function lintText($: cheerio.CheerioAPI, out: Collector, autofix: boolean) {
       const placeholder = text.match(PLACEHOLDER_RE);
       if (placeholder) out.violation('content.placeholder', 'error', 'Texte de remplissage : écrire du contenu réaliste.', snippet(text));
 
-      const banned = normalizeText(text).match(BANNED_RE);
+      const banned = profile.bannedWords ? normalizeText(text).match(BANNED_RE) : null;
       if (banned?.[1]) out.violation('content.banned-word', 'warning', 'Formule creuse à remplacer par un bénéfice concret.', `« ${banned[1]} » dans « ${snippet(text, 60)} »`);
     });
 
   $('button, a, [role="button"]').each((_, el) => {
     const label = normalizeText($(el).text().trim()).replace(/[.!…]+$/, '');
-    if (GENERIC_CTA.has(label)) out.violation('content.generic-cta', 'warning', 'Libellé d’action générique : dire ce que fait l’action (« Envoyer la facture »).', $(el).text().trim());
+    if (genericCta.has(label)) out.violation('content.generic-cta', 'warning', 'Libellé d’action générique : dire ce que fait l’action (« Envoyer la facture »).', $(el).text().trim());
   });
 }
 
@@ -330,7 +344,7 @@ function lintImages($: cheerio.CheerioAPI, out: Collector, autofix: boolean) {
   });
 }
 
-function lintA11y($: cheerio.CheerioAPI, out: Collector) {
+function lintA11y($: cheerio.CheerioAPI, out: Collector, profile: LintProfile) {
   $('img').each((_, el) => {
     if ($(el).attr('alt') === undefined) out.violation('a11y.img-alt', 'error', 'Image sans attribut alt (alt="" si décorative).', $(el).attr('src') ?? '<img>');
   });
@@ -361,7 +375,7 @@ function lintA11y($: cheerio.CheerioAPI, out: Collector) {
     .toArray()
     .map((el) => Number(el.tagName.slice(1)));
   const h1 = levels.filter((l) => l === 1).length;
-  if (h1 === 0) out.violation('a11y.h1', 'warning', 'Aucun h1 : chaque écran a un titre principal.');
+  if (h1 === 0 && profile.requireH1) out.violation('a11y.h1', 'warning', 'Aucun h1 : chaque écran a un titre principal.');
   if (h1 > 1) out.violation('a11y.h1', 'warning', `${h1} h1 : un seul titre principal par écran.`);
   for (let i = 1; i < levels.length; i++) {
     const prev = levels[i - 1]!;
@@ -409,7 +423,7 @@ function lintStructure($: cheerio.CheerioAPI, out: Collector, autofix: boolean) 
   $('script:not([src])').each((_, el) => {
     const code = $(el).text();
     const hexes = code.match(/['"`]#[0-9a-fA-F]{3,8}['"`]/g);
-    if (hexes?.length) out.violation('tokens.script-hex', 'warning', 'Couleur en dur dans un script : utiliser HECATE.dataPalette[i] ou HECATE.tokens.*.', hexes.slice(0, 3).join(', '));
+    if (hexes?.length) out.violation('tokens.script-hex', 'warning', 'Couleur en dur dans un script : utiliser NAOS.dataPalette[i] ou NAOS.tokens.*.', hexes.slice(0, 3).join(', '));
   });
 }
 
@@ -428,9 +442,10 @@ export function lintScreen(input: string, options: LintOptions = {}): LintReport
   const $ = cheerio.load(body, null, false);
   lintStructure($, out, opts.autofix);
   lintClasses($, out, opts);
-  lintText($, out, opts.autofix);
+  const profile = opts.profile ?? DEFAULT_LINT_PROFILE;
+  lintText($, out, opts.autofix, profile);
   lintImages($, out, opts.autofix);
-  lintA11y($, out);
+  lintA11y($, out, profile);
 
   return out.report(opts.autofix ? $.html().trim() : input);
 }
