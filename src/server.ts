@@ -8,6 +8,7 @@ import { defaultMode, dnaSummary, getLibrary, googleFontsUrl, reloadLibrary, sav
 import { getModes, getMode, modeSummary, readModeRules, reloadModes, type Mode } from './modes/modes.js';
 import { scanUrl } from './scan/scan.js';
 import { previewScreen } from './preview/preview.js';
+import { exportPdf } from './preview/pdf.js';
 import { findPatterns, getPatterns, patternMeta, reloadPatterns } from './patterns/library.js';
 import { getWorkflow, WORKFLOWS } from './workflows.js';
 import { suggestDna } from './dna/suggest.js';
@@ -376,7 +377,7 @@ export function createServer(): McpServer {
       title: 'Voir le rendu d’un écran',
       description:
         'Rend une page dans un vrai navigateur, aux largeurs du mode de la page (site : desktop et mobile ; produit desktop : 1280, 1440, 1920), ' +
-        'et renvoie des captures en tranches plus des contrôles du rendu réel : défilement horizontal, contraste du texte sur son fond effectif, ' +
+        'et renvoie des captures en tranches plus des contrôles du rendu réel : défilement horizontal, contenu qui dépasse le cadre du mode (diapos), contraste du texte sur son fond effectif, ' +
         'cibles selon les seuils du mode, images cassées, polices non chargées, erreurs JavaScript. Regarder les captures : elles montrent ce que ' +
         'le lint ne voit pas. Fournir file (page du dossier de sortie) ou html.',
       inputSchema: {
@@ -415,6 +416,33 @@ export function createServer(): McpServer {
   );
 
   // ── Sections ─────────────────────────────────────────────────────────────
+
+  server.registerTool(
+    'export_pdf',
+    {
+      title: 'Exporter un écran en PDF',
+      description:
+        'Imprime une page en PDF avec le Chromium installé (Edge) : une page par cadre du mode (une diapo par page quand le mode ' +
+        'déclare preview.frameSelector), à la taille réelle du cadre, fonds et emplacements d’image compris. ' +
+        'Le fichier est écrit dans le dossier de sortie. Fournir file (page du dossier de sortie) ou html, et le mode de la page.',
+      inputSchema: {
+        file: z.string().optional().describe('Nom d’une page enregistrée, ex. "deck-daylight-product"'),
+        html: z.string().optional().describe('Document complet produit par wrap_screen'),
+        mode: modeInput,
+        save_as: z.string().optional().describe('Nom du fichier PDF, sans extension'),
+      },
+      annotations: { readOnlyHint: false },
+    },
+    guarded(async ({ file, html, mode, save_as }: { file?: string; html?: string; mode?: string; save_as?: string }) => {
+      const source = readSource(html, file);
+      if (!/<html[\s>]/i.test(source)) throw new ToolError('export_pdf attend un document complet : passer d’abord le corps dans wrap_screen.');
+      const modeId = mode ?? readMeta(source).mode;
+      if (!modeId) throw new ToolError('Mode inconnu : préciser mode (voir list_modes).');
+      const m = requireMode(modeId);
+      const r = await exportPdf(source, { name: save_as ?? file ?? `export-${Date.now()}`, mode: m });
+      return json({ ...r, mode: m.id, frames: r.frames, pagesExpected: r.frames || 1 });
+    }),
+  );
 
   server.registerTool(
     'list_patterns',

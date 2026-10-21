@@ -1,0 +1,24 @@
+{
+  "id": "presentation",
+  "name": "Présentation",
+  "description": "Diapositives projetées ou lues en plein écran (conférence, comité, cours, pitch) : une idée par diapo, une typographie qui se lit de loin, un fil narratif qui tient sans commentaire.",
+  "viewports": [
+    { "name": "slide", "width": 1920, "height": 1080, "mobile": false, "scale": 0.5, "slice": 1080 }
+  ],
+  "preview": { "controlMinHeight": 40, "linkMinHeight": 24, "tapTargetViewports": [], "frameSelector": "[data-slide]" },
+  "wrap": { "runtime": "slides" },
+  "lint": {
+    "bannedWords": true,
+    "genericCta": ["ok", "suivant", "suivante", "continuer", "next", "go", "ici", "cliquez ici", "click here", "lien", "link"],
+    "requireH1": false
+  },
+  "dnaRequires": ["signature", "typeScale"],
+  "patternKinds": ["title", "agenda", "statement", "split", "chart", "quote", "comparison", "closing"],
+  "workflow": {
+    "unit": "une présentation",
+    "frame": "Résume en cinq lignes : le public et ce qu'il sait déjà ; le message clé, en une phrase que l'audience doit retenir ; la durée de l'intervention et le nombre de diapositives que cela autorise ; ce que l'audience doit décider ou faire en sortant ; le ton et la langue.",
+    "structure": "Écris le fil narratif avant les diapositives : une idée par diapo, chacune nommée par son type (title, agenda, statement, split, chart, quote, comparison, closing). L'ouverture annonce le message, l'agenda pose le trajet, les diapos du milieu apportent preuve et nuance, la clôture ramène au message et à la décision attendue. Une idée qui demande deux diapositives en mérite deux ; deux idées sur une diapositive n'en font aucune.",
+    "compose": "Chaque diapo tient dans un écran de 1920×1080, sans défilement : un titre court, au plus six lignes de texte, l'échelle typeScale de la DNA (text-display pour une affirmation ou un chiffre, text-title pour le titre de diapo, text-subtitle, text-body, text-caption), jamais de valeurs arbitraires. Le moment fort défini par la « signature » de la DNA revient une seule fois, sur la diapo qui porte le message. Les chiffres sont seuls sur leur diapo quand ils comptent, les citations sont attribuées, les emplacements data-image sont décrits (sujet, cadrage).",
+    "review": "Sur les captures au format 1920×1080 : le titre se lit-il à 3 m, et le corps à la distance où l'on projette ? Rien ne déborde et rien n'est masqué par l'`overflow-hidden` ? Chaque diapo porte-t-elle une seule idée, avec un titre qui l'affirme ? Le fil se suit-il à la seule lecture des titres ? Les contrastes tiennent-ils sur un vidéoprojecteur, y compris en salle éclairée ?"
+  }
+}

@@ -43,6 +43,8 @@ export function isSystemFont(family: string): boolean {
 // sémantique ou une famille de couleurs Tailwind (et le lint les refuserait).
 const RESERVED_COLOR_NAMES = new Set([
   'base', 'surface', 'raised', 'line', 'ink', 'muted', 'accent', 'accent-ink', 'accent2', 'success', 'warning', 'danger', 'inverse',
+  // Rôles de l'échelle typographique : text-<rôle> ne doit pas désigner une couleur.
+  'display', 'title', 'subtitle', 'body', 'caption',
   'white', 'black', 'transparent', 'current', 'inherit',
   'slate', 'gray', 'zinc', 'neutral', 'stone', 'red', 'orange', 'amber', 'yellow', 'lime', 'green', 'emerald', 'teal', 'cyan',
   'sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose',
@@ -71,11 +73,30 @@ export const SizesSchema = z
   })
   .partial();
 
+/**
+ * Échelle typographique d'un mode : des tailles nommées, rendues en classes
+ * text-display, text-title, text-subtitle, text-body, text-caption.
+ *
+ * Une diapo se lit de loin et exige des titres très grands ; un site ou un écran
+ * produit se contente des tailles Tailwind. Le réglage est donc générique : il ne
+ * dépend pas de l'id du mode, seulement du fait que sa DNA le déclare.
+ */
+export const TypeScaleSchema = z
+  .object({
+    display: cssLength.describe('Titre le plus grand, pour une affirmation ou un chiffre → text-display'),
+    title: cssLength.describe('Titre de diapo ou de section → text-title'),
+    subtitle: cssLength.describe('Sous-titre, chapô, unité d’un chiffre → text-subtitle'),
+    body: cssLength.describe('Texte courant → text-body'),
+    caption: cssLength.describe('Source, mention, numéro de diapo → text-caption'),
+  })
+  .partial();
+
 /** Ce qu'une DNA apporte à un mode donné. Les champs exigés dépendent du mode (dnaRequires). */
 export const ModeBlockSchema = z.object({
   signature: z.string().min(10).optional().describe('Le moment fort de l’écran'),
   density: z.enum(['compact', 'comfortable', 'spacious']).optional(),
   sizes: SizesSchema.optional(),
+  typeScale: TypeScaleSchema.optional().describe('Tailles de texte du mode (text-display, text-title…)'),
   states: z.record(z.string(), z.string()).optional().describe('Classes des états récurrents (selected, hover…)'),
   rules: RulesSchema.optional(),
   patterns: z.array(z.string()).optional().describe('Sections propres à cette DNA, à privilégier dans ce mode'),

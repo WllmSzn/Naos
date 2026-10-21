@@ -95,6 +95,16 @@ function toIssues(c: RenderChecks, viewport: ViewportName, mode: Mode): PreviewI
   if (c.brokenImages.length) {
     issues.push({ rule: 'render.broken-image', severity: 'error', viewport, message: 'Images qui ne se chargent pas.', samples: c.brokenImages });
   }
+  // Cadres du mode : le contenu est rogné, donc perdu à la projection.
+  if (c.frames.length) {
+    issues.push({
+      rule: 'render.frame-overflow',
+      severity: 'error',
+      viewport,
+      message: `Contenu plus haut que son cadre (${mode.preview.frameSelector}, ${c.frameCount} élément(s) contrôlé(s)) : la fin est rognée par overflow-hidden. Réduire le texte, la taille de police ou les marges de l’élément concerné.`,
+      samples: c.frames.map((f) => `n° ${f.index} · ${f.overflow}px de trop dans un cadre de ${f.height}px`),
+    });
+  }
   const missing = c.fonts.filter((f) => !f.loaded).map((f) => f.family);
   if (missing.length) {
     issues.push({
@@ -112,7 +122,7 @@ function toIssues(c: RenderChecks, viewport: ViewportName, mode: Mode): PreviewI
 function mergeIssues(list: PreviewIssue[]): PreviewIssue[] {
   const out: PreviewIssue[] = [];
   for (const issue of list) {
-    const twin = out.find((o) => o.rule === issue.rule && o.rule !== 'layout.overflow-x' && o.rule !== 'render.tap-target');
+    const twin = out.find((o) => o.rule === issue.rule && o.rule !== 'layout.overflow-x' && o.rule !== 'render.tap-target' && o.rule !== 'render.frame-overflow');
     if (twin) {
       twin.viewport = 'all';
       twin.samples = [...new Set([...twin.samples, ...issue.samples])].slice(0, 12);
@@ -151,13 +161,17 @@ export async function previewScreen(html: string, opts: PreviewOptions): Promise
       });
       page.on('requestfailed', (r) => failedRequests.add(`${r.url().slice(0, 100)} (${r.failure()?.errorText ?? 'échec'})`));
 
+      // Le runtime de présentation mettrait une diapo en plein écran : la capture doit
+      // empiler les diapos pour les mesurer et les photographier. Le flag double
+      // navigator.webdriver, qui couvre les pages relues sans ce drapeau.
+      await page.evaluateOnNewDocument('window.__NAOS_NO_RUNTIME__ = true;');
       await page.setViewport({ width: vp.width, height: vp.height, deviceScaleFactor: vp.scale, isMobile: vp.mobile, hasTouch: vp.mobile });
       await page.setContent(html, { waitUntil: 'load', timeout: 30000 });
       // Tailwind CDN, polices et icônes arrivent après « load » : on attend le calme réseau.
       await page.waitForNetworkIdle({ idleTime: 500, timeout: 15000 }).catch(() => undefined);
       await settle(page);
 
-      const checks = (await page.evaluate(renderChecksScript(mode.preview.controlMinHeight, mode.preview.linkMinHeight))) as RenderChecks;
+      const checks = (await page.evaluate(renderChecksScript(mode.preview.controlMinHeight, mode.preview.linkMinHeight, mode.preview.frameSelector))) as RenderChecks;
       issues.push(...toIssues(checks, vpName, mode));
 
       const height = (await page.evaluate('document.documentElement.scrollHeight')) as number;

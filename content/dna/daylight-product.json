@@ -92,6 +92,32 @@
           "Pas de texte d'appui de plus de deux ou trois lignes sous un titre."
         ]
       }
+    },
+    "presentation": {
+      "signature": "Une diapo d'affirmation pleine page sur fond base : titre en text-title (96px) sur deux lignes très serrées, un seul mot en text-accent, une ligne d'appui en text-subtitle (40px), et le chiffre qui prouve en text-display (144px) avec son unité en text-subtitle — aucune ombre, aucune carte flottante.",
+      "typeScale": {
+        "display": "144px",
+        "title": "96px",
+        "subtitle": "40px",
+        "body": "32px",
+        "caption": "22px"
+      },
+      "rules": {
+        "do": [
+          "Une idée par diapo : un titre en text-title qui l'affirme, au plus six lignes au total en text-body (32px).",
+          "Un chiffre qui compte seul sur sa diapo, en text-display, avec son unité et sa période en text-subtitle.",
+          "Un seul mot-clé du titre en text-accent, jamais une phrase entière ; le reste du titre en text-ink.",
+          "Sources, dates et numéros de diapo en text-caption text-muted : 22px, jamais plus petit.",
+          "Fond base, séparation par bg-surface et par l'espace ; beaucoup de vide autour du titre."
+        ],
+        "dont": [
+          "Pas de paragraphe ni de liste de phrases : une ligne courte par idée, sans prosa.",
+          "Pas de titre de diapo sous 96px ni de corps sous 32px : la diapo se lit à trois mètres.",
+          "Pas d'ombres, pas de cartes flottantes, pas de dégradé décoratif : la hiérarchie fait tout.",
+          "Pas plus d'une couleur vive, l'accent, et jamais en aplat plein sur une diapo de texte.",
+          "Pas de texte d'appui de plus d'une ligne sous un titre de diapo."
+        ]
+      }
     }
   }
 }

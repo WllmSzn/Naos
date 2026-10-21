@@ -34,6 +34,11 @@ export const ModeSchema = z.object({
     controlMinHeight: z.number().min(0).describe('Hauteur minimale d’un contrôle (px)'),
     linkMinHeight: z.number().min(0).describe('Hauteur minimale d’un lien isolé (px)'),
     tapTargetViewports: z.array(z.string()).default([]).describe('Viewports où contrôler les cibles ; vide = tous'),
+    frameSelector: z
+      .string()
+      .min(1)
+      .optional()
+      .describe('Cadres à contenu borné (ex. "[data-slide]") : le rendu signale ceux dont le contenu dépasse la hauteur'),
   }),
   lint: z.object({
     bannedWords: z.boolean().describe('Signaler les formules marketing creuses'),
@@ -42,6 +47,18 @@ export const ModeSchema = z.object({
   }),
   dnaRequires: z.array(z.string()).describe('Champs obligatoires du bloc de mode dans une DNA'),
   patternKinds: z.array(kebab).min(1).describe('Types de sections propres au mode, dans l’ordre de lecture'),
+  /**
+   * Comportement de la page produite. Générique : n'importe quel mode peut demander
+   * un runtime ; le code ne teste jamais un id de mode.
+   */
+  wrap: z
+    .object({
+      runtime: z
+        .enum(['none', 'slides'])
+        .default('none')
+        .describe('Script injecté par l’enveloppe : "slides" = navigation clavier, plein écran, diapo mise à l’échelle en 16:9'),
+    })
+    .optional(),
   workflow: z.object({
     unit: z.string().describe('Ce qu’on produit, avec son article : « une page », « un écran »…'),
     frame: z.string().describe('Questions de cadrage'),

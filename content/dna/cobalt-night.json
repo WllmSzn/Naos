@@ -92,6 +92,32 @@
           "Pas d'emoji ni de pictogrammes colorés : icônes au trait, text-muted."
         ]
       }
+    },
+    "presentation": {
+      "signature": "Une diapo d'ouverture sur fond base où le titre en text-display (160px) tient sur deux lignes avec un seul mot en font-accent (serif, poids normal), une ligne d'appui en text-subtitle, et les preuves chiffrées d'une diapo de résultats posées sur un aplat bg-accent plein en text-accent-ink.",
+      "typeScale": {
+        "display": "160px",
+        "title": "104px",
+        "subtitle": "44px",
+        "body": "34px",
+        "caption": "24px"
+      },
+      "rules": {
+        "do": [
+          "Un titre en text-title (104px) par diapo, qui dit la thèse ; le chiffre ou l'affirmation qui la prouve en text-display (160px).",
+          "Un seul mot par titre en font-accent (serif, poids normal), jamais deux, et jamais dans le corps.",
+          "Au plus six lignes de texte par diapo, en text-body (34px), une idée par ligne.",
+          "Une diapo de résultats sur aplat bg-accent plein, chiffres et libellés en text-accent-ink, alternée avec des diapos de texte sur bg-base.",
+          "Sources, dates et numéros de diapo en font-mono text-caption text-muted (24px), capitales espacées."
+        ],
+        "dont": [
+          "Pas de paragraphe, pas de liste de phrases : la diapo porte une thèse, pas un texte.",
+          "Pas de titre sous 104px ni de corps sous 34px : lisibilité à trois mètres d'abord.",
+          "Pas de fond clair, même pour une diapo de citation ou de clôture.",
+          "Pas de dégradés violets ni de halos flous : la couleur vient des aplats cobalt.",
+          "Pas d'ombre portée sur les cartes ni sur les images : bordures fines uniquement."
+        ]
+      }
     }
   }
 }

@@ -1,6 +1,7 @@
 import type { Dna } from '../dna/schema.js';
 import { googleFontsUrl } from '../dna/library.js';
 import { DnaOverridesSchema, hasOverrides, type DnaOverrides } from '../dna/overrides.js';
+import { getMode } from '../modes/modes.js';
 
 /**
  * Enveloppe déterministe d'un écran.
@@ -46,6 +47,22 @@ function sizeScale(dna: Dna, mode?: string) {
   return { ctl: s.control, 'ctl-sm': s.controlSm, row: s.row, sidebar: s.sidebar, header: s.header, icon: s.icon };
 }
 
+/**
+ * Échelle typographique du mode → classes text-display, text-title, text-subtitle,
+ * text-body, text-caption. L'interlignage est inclus dans la classe : un grand titre
+ * se sert, un texte courant respire, et le corps n'a pas à choisir leading-*.
+ * Aucune échelle quand la DNA n'en déclare pas pour le mode (les tailles Tailwind restent).
+ */
+const TYPE_LEADING: Record<string, string> = { display: '1.02', title: '1.1', subtitle: '1.28', body: '1.4', caption: '1.4' };
+
+function typeScale(dna: Dna, mode?: string) {
+  const scale = mode ? dna.modes[mode]?.typeScale : undefined;
+  if (!scale || !Object.keys(scale).length) return undefined;
+  return Object.fromEntries(
+    Object.entries(scale).map(([role, size]) => [role, [size, { lineHeight: TYPE_LEADING[role] ?? '1.4' }]]),
+  );
+}
+
 function escapeHtml(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
@@ -61,6 +78,7 @@ function unescapeHtml(s: string): string {
  */
 export function tailwindConfig(dna: Dna, mode?: string) {
   const t = dna.tokens;
+  const scale = typeScale(dna, mode);
   return {
     theme: {
       extend: {
@@ -94,6 +112,7 @@ export function tailwindConfig(dna: Dna, mode?: string) {
         boxShadow: { card: dna.elevation.card, overlay: dna.elevation.overlay },
         borderWidth: { DEFAULT: dna.shape.borderWidth },
         spacing: sizeScale(dna, mode),
+        ...(scale ? { fontSize: scale } : {}),
       },
     },
   };
@@ -108,6 +127,96 @@ function runtimeData(dna: Dna) {
     extraColors: dna.extraColors ?? {},
     fonts: { display: dna.fonts.display, body: dna.fonts.body, mono: dna.fonts.mono, accent: dna.fonts.accent ?? dna.fonts.display },
   };
+}
+
+/**
+ * Runtime « slides » : chaîne JS autonome, sans dépendance ni appel réseau.
+ * Chaque [data-slide] est affichée seule, mise à l'échelle de la fenêtre en gardant
+ * le 16:9 défini par sa hauteur, avec flèches et espace pour naviguer, F pour le plein
+ * écran, et un compteur discret.
+ *
+ * Deux garde-fous : le drapeau __NAOS_NO_RUNTIME__ posé par preview_screen, et
+ * navigator.webdriver, pour qu'un rendu headless conservé dans un fichier (ou rejoué
+ * sans le drapeau) empile toujours les diapos et reste mesurable.
+ */
+export const SLIDES_RUNTIME = `/* naos:slides */
+(() => {
+  if (window.__NAOS_NO_RUNTIME__ || navigator.webdriver) return;
+
+  // Le script vit dans le <head> : au moment où il s'exécute, les diapos du <body>
+  // ne sont pas encore analysées. On attend donc DOMContentLoaded.
+  const boot = () => {
+    const slides = Array.from(document.querySelectorAll('[data-slide]'));
+    if (!slides.length) return;
+
+    // La hauteur d'une diapo est fixée par le mode (1080px) ; la largeur s'en déduit en 16:9.
+    // On fige cette largeur avant de positionner, sinon la mise en page se reflowe à la fenêtre.
+    const H = Math.round(slides[0].getBoundingClientRect().height) || 1080;
+    const W = Math.round((H * 16) / 9);
+    let index = 0;
+
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.margin = '0';
+    document.body.style.overflow = 'hidden';
+    document.body.style.height = '100vh';
+
+    for (const s of slides) {
+      s.style.position = 'fixed';
+      s.style.left = '0';
+      s.style.top = '0';
+      s.style.margin = '0';
+      s.style.width = W + 'px';
+      s.style.height = H + 'px';
+      s.style.transformOrigin = '0 0';
+    }
+
+    const counter = document.createElement('div');
+    counter.setAttribute('aria-live', 'polite');
+    counter.style.cssText =
+      'position:fixed;right:20px;bottom:16px;z-index:50;pointer-events:none;' +
+      'padding:4px 10px;border-radius:9999px;background:var(--naos-surface);color:var(--naos-muted);' +
+      'font:500 13px/1.4 ui-monospace,monospace;letter-spacing:.04em;font-variant-numeric:tabular-nums';
+    document.body.appendChild(counter);
+
+    const show = (next) => {
+      index = Math.max(0, Math.min(slides.length - 1, next));
+      const k = Math.min(window.innerWidth / W, window.innerHeight / H);
+      const x = (window.innerWidth - W * k) / 2;
+      const y = (window.innerHeight - H * k) / 2;
+      slides.forEach((s, n) => {
+        s.style.display = n === index ? '' : 'none';
+        s.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + k + ')';
+      });
+      counter.textContent = index + 1 + ' / ' + slides.length;
+    };
+
+    const toggleFullscreen = () => {
+      if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+      else document.documentElement.requestFullscreen().catch(() => {});
+    };
+
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      const target = e.target;
+      if (target && /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName)) return;
+      if (['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Spacebar'].includes(e.key)) { e.preventDefault(); show(index + 1); }
+      else if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); show(index - 1); }
+      else if (e.key === 'Home') { e.preventDefault(); show(0); }
+      else if (e.key === 'End') { e.preventDefault(); show(slides.length - 1); }
+      else if (e.key === 'f' || e.key === 'F') { e.preventDefault(); toggleFullscreen(); }
+    });
+
+    window.addEventListener('resize', () => show(index));
+    show(0);
+  };
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();`;
+
+/** Runtime demandé par le mode (wrap.runtime), sinon aucun. */
+function modeRuntime(mode?: string): 'none' | 'slides' {
+  return (mode ? getMode(mode)?.wrap?.runtime : undefined) ?? 'none';
 }
 
 export function buildHead(dna: Dna, opts: WrapOptions = {}): string {
@@ -143,6 +252,7 @@ export function buildHead(dna: Dna, opts: WrapOptions = {}): string {
     );
   }
   if (libs.includes('alpine')) lines.push(`<script defer src="${CDN.alpine}"></script>`);
+  if (modeRuntime(opts.mode) === 'slides') lines.push(`<script>${SLIDES_RUNTIME}</script>`);
   const t = dna.tokens;
   lines.push(
     `<style>:root{color-scheme:${dna.theme};--naos-raised:${t.raised};--naos-line:${t.line};--naos-muted:${t.muted};--naos-surface:${t.surface}}[x-cloak]{display:none!important}` +

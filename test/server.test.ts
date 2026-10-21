@@ -22,7 +22,7 @@ test('le serveur expose les outils attendus', async () => {
   const client = await connect();
   const { tools } = await client.listTools();
   assert.deepEqual(tools.map((t) => t.name).sort(), [
-    'get_dna', 'get_patterns', 'get_rules', 'get_workflow', 'lint_screen', 'list_dna', 'list_modes', 'list_patterns', 'preview_screen', 'read_screen',
+    'export_pdf', 'get_dna', 'get_patterns', 'get_rules', 'get_workflow', 'lint_screen', 'list_dna', 'list_modes', 'list_patterns', 'preview_screen', 'read_screen',
     'reload_library', 'retheme', 'save_dna', 'scan_url', 'suggest_dna', 'wrap_screen',
   ]);
 });

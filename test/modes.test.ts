@@ -17,8 +17,10 @@ test('les modes livrés se chargent', () => {
   assert.deepEqual(errors, []);
   assert.ok(modes.has('website'));
   assert.ok(modes.has('product-desktop'));
+  assert.ok(modes.has('presentation'));
   assert.match(readModeRules('product-desktop'), /densité/i);
   assert.match(readModeRules('website'), /moment fort/i);
+  assert.match(readModeRules('presentation'), /data-slide/);
 });
 
 test('un nouveau mode s’ajoute par un simple dossier', () => {
@@ -69,6 +71,18 @@ test('dimensions sémantiques : générées depuis le bloc de mode, neutres sino
   assert.equal(product.sidebar, '224px');
   const neutral = tailwindConfig(lib.get('field-notes')!, 'website').theme.extend.spacing;
   assert.equal(neutral.ctl, '2.5rem');
+});
+
+test('échelle typographique : générée depuis le bloc de mode, absente ailleurs', () => {
+  type Scale = Record<string, [string, { lineHeight: string }]>;
+  const scaleOf = (id: string, mode: string) =>
+    tailwindConfig(lib.get(id)!, mode).theme.extend.fontSize as Scale | undefined;
+  const slide = scaleOf('daylight-product', 'presentation')!;
+  assert.equal(slide.display?.[0], '144px');
+  assert.equal(slide.title?.[0], '96px');
+  assert.ok(Number(slide.display?.[1].lineHeight) < Number(slide.body?.[1].lineHeight), 'un grand titre se sert plus qu’un corps de texte');
+  assert.equal(scaleOf('daylight-product', 'website'), undefined, 'hors mode déclaré, les tailles Tailwind restent seules');
+  assert.equal(scaleOf('cobalt-night', 'presentation')?.display?.[0], '160px');
 });
 
 test('le mode est inscrit dans la page et relu', () => {

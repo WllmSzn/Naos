@@ -54,6 +54,23 @@ test('retheme : nouveau head, corps conservé, couleurs littérales converties',
   assert.match(extractBody(r.html), /--c:#F2A93B/);
 });
 
+test('runtime « slides » : injecté par le mode, conservé au retheme, absent ailleurs', () => {
+  const daylight = lib.get('daylight-product')!;
+  const cobalt = lib.get('cobalt-night')!;
+  const deck = '<section data-slide class="h-[1080px]"><h1>Une</h1></section>';
+  const withRuntime = wrapScreen(deck, daylight, { mode: 'presentation', title: 'Deck' });
+  assert.match(withRuntime, /naos:slides/);
+  assert.match(withRuntime, /\[data-slide\]/);
+  assert.doesNotMatch(wrapScreen(deck, cobalt, { mode: 'website' }), /naos:slides/, 'pas de runtime sans réglage de mode');
+  assert.doesNotMatch(wrapScreen(deck, cobalt), /naos:slides/, 'pas de mode, pas de runtime');
+
+  // Le retheme réenveloppe le corps : le script doit être reconstruit, pas perdu.
+  const rethemed = retheme(withRuntime, cobalt, resolve).html;
+  assert.equal(rethemed.match(/naos:slides/g)?.length, 1, 'un seul runtime après retheme');
+  assert.match(rethemed, /<meta name="naos-mode" content="presentation">/);
+  assert.equal(extractBody(rethemed), extractBody(withRuntime));
+});
+
 test('retheme aller-retour : on retrouve le document d\u2019origine', () => {
   const original = wrapScreen(BODY, linen, { title: 'Solde' });
   const back = retheme(retheme(original, graphite, resolve).html, linen, resolve).html;

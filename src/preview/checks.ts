@@ -12,11 +12,16 @@ export interface RenderChecks {
   smallTargets: Array<{ el: string; text: string; w: number; h: number; min: number }>;
   brokenImages: string[];
   fonts: Array<{ family: string; loaded: boolean }>;
+  /** Cadres du mode (preview.frameSelector) dont le contenu dépasse la hauteur. */
+  frames: Array<{ index: number; overflow: number; height: number }>;
+  frameCount: number;
 }
 
-/** Script des contrôles, avec les seuils de cibles du mode (px). */
-export const renderChecksScript = (controlMin: number, linkMin: number): string => String.raw`(() => {
+/** Script des contrôles, avec les seuils de cibles du mode (px) et, s'il existe, son sélecteur de cadres. */
+export const renderChecksScript = (controlMin: number, linkMin: number, frameSelector?: string): string => String.raw`(() => {
   const CONTROL_MIN = ${controlMin}, LINK_MIN = ${linkMin};
+  // Sélecteur fourni par le mode : passé en littéral JSON, la chaîne reste autonome.
+  const FRAME_SELECTOR = ${JSON.stringify(frameSelector ?? '')};
   const canvas = document.createElement('canvas');
   canvas.width = canvas.height = 1;
   const ctx = canvas.getContext('2d', { willReadFrequently: true });
@@ -132,5 +137,28 @@ export const renderChecksScript = (controlMin: number, linkMin: number): string 
   const families = H ? [...new Set([H.fonts.display, H.fonts.body, H.fonts.mono, H.fonts.accent].filter((f) => f && used.has(f) && !system.test(f)))] : [];
   const fonts = families.map((family) => ({ family, loaded: document.fonts.check('16px "' + family + '"') && [...document.fonts].some((f) => f.family.replace(/["']/g, '') === family && f.status === 'loaded') }));
 
-  return { viewportWidth: vw, overflowX, overflowing, lowContrast, smallTargets, brokenImages, fonts };
+  // Cadres à contenu borné (diapos) : overflow-hidden rogne sans que le débordement
+  // horizontal ni le contraste ne le voient. scrollHeight couvre le contenu en flux ;
+  // on y ajoute les descendants positionnés, qui peuvent lui échapper (absolus, transforms).
+  const frames = [];
+  let frameCount = 0;
+  if (FRAME_SELECTOR) {
+    const nodes = [...document.querySelectorAll(FRAME_SELECTOR)];
+    frameCount = nodes.length;
+    nodes.forEach((el, i) => {
+      const cs = getComputedStyle(el);
+      if (cs.display === 'none') return;
+      const box = el.getBoundingClientRect();
+      const bottom = box.top + (parseFloat(cs.borderTopWidth) || 0) + el.clientHeight;
+      let over = Math.max(0, el.scrollHeight - el.clientHeight);
+      for (const child of el.querySelectorAll('*')) {
+        const r = child.getBoundingClientRect();
+        if (r.height) over = Math.max(over, r.bottom - bottom);
+      }
+      // Tolérance d'un pixel : les arrondis sous-pixel déclenchent sinon de faux positifs.
+      if (over > 1) frames.push({ index: i + 1, overflow: Math.round(over), height: Math.round(box.height) });
+    });
+  }
+
+  return { viewportWidth: vw, overflowX, overflowing, lowContrast, smallTargets, brokenImages, fonts, frames, frameCount };
 })()`;

@@ -18,6 +18,7 @@ const EXAMPLES: Array<{ prefix: string; file: string; title: string; mode: strin
   { prefix: 'landing', file: 'landing.body.html', title: 'Orée', mode: 'website', libs: [] },
   { prefix: 'demo', file: 'invoices-dashboard.body.html', title: 'Factures', mode: 'product-desktop', libs: ['chartjs'] },
   { prefix: 'soc', file: 'soc-alerts.body.html', title: 'Alertes', mode: 'product-desktop', libs: [] },
+  { prefix: 'deck', file: 'deck.body.html', title: 'Revue du support', mode: 'presentation', libs: [] },
 ];
 
 const { dnas, errors } = loadLibrary();
