@@ -1,7 +1,7 @@
 {
   "id": "lilac-dusk",
   "name": "Lilac Dusk",
-  "version": 1,
+  "version": 2,
   "theme": "dark",
   "summary": "Fintech nocturne et feutrée inspirée de Fey : noir bleuté profond, titres centrés en grotesque semi-grasse traversés d'un dégradé lilas → abricot, halo de lumière diffus derrière l'unique bloc d'action, pilules claires, keycaps inline et palette de commandes ⌘K. En produit : panneaux sombres très arrondis, données en ticks vert/rose, dock flottant en bas d'écran.",
   "bestFor": [
@@ -147,6 +147,32 @@
           "Pas d'action sans raccourci clavier accessible depuis la palette.",
           "Pas de couleur codée en dur ni de couleur Tailwind nommée.",
           "Pas de texte sous text-xs ni de muted sur raised pour une information essentielle."
+        ]
+      }
+    },
+    "presentation": {
+      "signature": "Une diapo centrée sur le noir bleuté : titre Hanken Grotesk font-semibold en text-display traversé du dégradé lilas → abricot (bg-gradient-to-r from-grad-from via-grad-mid to-grad-to bg-clip-text text-transparent), au-dessus d'un unique bloc baigné d'un halo vertical flou ; les chiffres de marché en ticks text-gain / text-loss.",
+      "typeScale": {
+        "display": "144px",
+        "title": "92px",
+        "subtitle": "40px",
+        "body": "32px",
+        "caption": "22px"
+      },
+      "rules": {
+        "do": [
+          "Un titre en text-title (92px) par diapo, qui affirme ; au plus six lignes en text-body (32px) ; sources, dates et numéros en text-caption text-muted (22px), jamais plus petit.",
+          "Un seul titre en dégradé par diapo, et seulement sur les diapos d'affirmation.",
+          "Panneaux bg-surface très arrondis rounded-card shadow-overlay pour les preuves.",
+          "Hausses en text-gain, baisses en text-loss, toujours avec le signe et le pourcentage.",
+          "Raccourcis et invitations en keycap claire bg-accent text-accent-ink rounded px-3."
+        ],
+        "dont": [
+          "Pas de titre de diapo sous 92px ni de corps sous 32px : la diapo se lit à trois mètres.",
+          "Pas de dégradé sur un fond, une carte ou une forme : réservé au texte des titres.",
+          "Pas de titre en capitales, en serif ou ultra-serré.",
+          "Pas de fond clair.",
+          "Pas de couleur codée en dur."
         ]
       }
     }

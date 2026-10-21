@@ -1,7 +1,7 @@
 {
   "id": "artefact-light",
   "name": "Artefact Light",
-  "version": 1,
+  "version": 2,
   "theme": "light",
   "summary": "Le thème clair d’ARTEFACT, « éditorial froid » : blanc pur et blanc bleuté, encre quasi-noire, bordures recalibrées à 3:1, la même hiérarchie dense en Jost et la criticité portée par des points et des badges.",
   "bestFor": [
@@ -142,6 +142,55 @@
         "artefact-backend-error",
         "artefact-question-card"
       ]
+    },
+    "website": {
+      "signature": "Le hero en « éditorial froid » : blanc pur, grille fine et diagonales à peine visibles, titre Jost font-semibold (text-5xl md:text-7xl tracking-tight) en encre quasi-noire aligné à gauche, une action en encre, et l'orbe SIEM sans glow dont le contour violet porte l'affordance ; dessous, une capture du tableau d'alertes en clair, cadre border-line à 3:1.",
+      "rules": {
+        "do": [
+          "Hiérarchie du produit, agrandie pour une page : sur-titre text-xs font-medium uppercase tracking-wide text-muted, titre font-display font-semibold (text-4xl md:text-6xl, tracking-tight), phrase d'appui text-base text-muted max-w-xl, puis l'action.",
+          "Action principale en encre : bg-accent text-accent-ink rounded-ui h-10 px-4 text-sm font-medium (jamais de bouton de couleur) ; secondaire en contour border border-line text-ink ; liens en text-accent.",
+          "Cartes au fond neutre bg-surface border border-line rounded-card p-6 ; captures de l'application dans un cadre rounded-card border border-line qui montrent de vraies alertes, IP et horodatages en font-mono.",
+          "Preuves concrètes : rangée de chiffres opérationnels (MTTR, alertes triées, sources connectées) en text-4xl font-semibold tabular-nums avec une légende text-sm text-muted.",
+          "La criticité garde son code sur la page : point h-1.5 w-1.5 rounded-full bg-sev-* ou badge compact devant le mot, jamais un fond de section teinté.",
+          "Conteneur max-w-6xl px-6, sections py-20 à py-24, alternance texte et capture en deux colonnes sur desktop, une colonne en mobile.",
+          "Fond technique (grille et diagonales à 3–4 % d'opacité) réservé au hero ; sections alternant bg-base et bg-surface, sans halo ni glow."
+        ],
+        "dont": [
+          "Pas de rouge, d'orange, d'ambre ni de beige décoratifs : ils sont réservés à la sévérité.",
+          "Pas de bouton en couleur de marque : l'action est en encre.",
+          "Pas d'illustration générique de cybersécurité (cadenas, hacker à capuche, bouclier) : des captures du produit ou des emplacements data-image décrits.",
+          "Pas de couleur codée en dur ni de couleur Tailwind nommée : tokens et extraColors uniquement.",
+          "Pas de halo ni d'effet lumineux : rien à éclairer sur blanc.",
+          "Pas de font-accent : Kufam est réservée au wordmark ARTEFACT. Le mot-clé d’un titre passe en text-accent, pas dans une autre police."
+        ]
+      }
+    },
+    "presentation": {
+      "signature": "Une diapo d'« éditorial froid » pour un comité : blanc pur, titre Jost font-semibold en text-title en encre quasi-noire, un seul chiffre en text-display tabular-nums précédé d'un point bg-sev-critical, sa période en text-subtitle text-muted, et l'orbe SIEM sans glow au contour violet sur la seule diapo d'ouverture.",
+      "typeScale": {
+        "display": "144px",
+        "title": "88px",
+        "subtitle": "40px",
+        "body": "32px",
+        "caption": "22px"
+      },
+      "rules": {
+        "do": [
+          "Un titre en text-title (88px) par diapo, qui affirme ; au plus six lignes en text-body (32px) ; sources, dates et numéros en text-caption text-muted (22px), jamais plus petit.",
+          "La criticité garde son code : point bg-sev-* ou badge devant le mot écrit ; le chiffre reste en text-ink.",
+          "Statuts du workflow d'alerte en point status-*, libellé en text-ink.",
+          "Identifiants, IP, hash et horodatages en font-mono text-caption text-ink-soft.",
+          "Diapos sur bg-base, encarts de comparaison sur bg-surface border border-line rounded-card."
+        ],
+        "dont": [
+          "Pas de titre de diapo sous 88px ni de corps sous 32px : la diapo se lit à trois mètres.",
+          "Pas de fond de diapo teinté par la sévérité.",
+          "Pas de halo ni de glow : rien à éclairer sur blanc.",
+          "Pas de bouton ni de bloc en couleur : l'accent est l'encre.",
+          "Pas de gris plus pâle que text-muted, même pour une source.",
+          "Pas de font-accent : Kufam est réservée au wordmark ARTEFACT. Le mot-clé d’un titre passe en text-accent, pas dans une autre police."
+        ]
+      }
     }
   }
 }

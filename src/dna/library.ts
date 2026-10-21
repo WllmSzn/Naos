@@ -89,13 +89,13 @@ export function modeBlock(dna: Dna, mode: string): ModeBlock | undefined {
 
 /**
  * Mode à utiliser quand l'appelant n'en précise pas : celui demandé s'il est servi,
- * sinon le seul mode de la DNA, sinon « website » s'il existe, sinon le premier.
+ * sinon le premier bloc déclaré. L'ordre des blocs dans le JSON porte donc le mode
+ * principal : une DNA produit (ARTEFACT) sert aussi le site et la présentation, mais
+ * reste d'abord un thème d'application.
  */
 export function defaultMode(dna: Dna, requested?: string): string {
   if (requested && supportsMode(dna, requested)) return requested;
-  const modes = dnaModes(dna);
-  if (modes.length === 1) return modes[0]!;
-  return modes.includes('website') ? 'website' : modes[0]!;
+  return dnaModes(dna)[0]!;
 }
 
 /**

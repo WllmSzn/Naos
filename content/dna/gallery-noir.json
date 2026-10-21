@@ -1,6 +1,7 @@
 {
   "id": "gallery-noir",
   "name": "Gallery Noir",
+  "version": 2,
   "theme": "dark",
   "summary": "Une galerie après la fermeture : noir chaud, serif de caractère, beaucoup de vide et des images qui portent tout.",
   "bestFor": [
@@ -84,6 +85,67 @@
           "Pas d'arrière-plans clairs ni de couleurs saturées.",
           "Pas de texte dense ni de listes à puces longues.",
           "Pas plus d'un appel à l'action visible à la fois."
+        ]
+      }
+    },
+    "product-desktop": {
+      "signature": "Une table de travail de galerie : à gauche la liste des œuvres en lignes sobres, au centre la fiche ouverte avec une grande image sans bordure et le titre en Cormorant Garamond léger text-4xl, à droite les métadonnées en petites capitales espacées text-muted ; un seul filet doré (border-accent) marque l'élément sélectionné.",
+      "density": "comfortable",
+      "sizes": {
+        "control": "2.5rem",
+        "controlSm": "2rem",
+        "row": "3rem",
+        "sidebar": "15rem",
+        "header": "3.5rem",
+        "icon": "1.125rem"
+      },
+      "states": {
+        "selected": "bg-surface text-ink border-l-2 border-accent",
+        "hover": "hover:bg-surface",
+        "focus": "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent",
+        "disabled": "opacity-40 cursor-not-allowed"
+      },
+      "rules": {
+        "do": [
+          "Fond bg-base partout, panneaux séparés par des filets border-line ; beaucoup de vide autour de la zone principale.",
+          "Libellés, onglets et en-têtes de colonne en text-xs uppercase tracking-[0.2em] text-muted ; corps en Hanken Grotesk text-sm.",
+          "Titres de fiche et de page en serif léger (font-display font-light) très grands, jamais en gras.",
+          "Images data-image en grand format, sans bordure, recadrage assumé ; vignettes de liste carrées.",
+          "Action principale en bg-accent text-accent-ink rounded-ui h-ctl px-5 text-sm ; secondaires en lien text-ink souligné au survol.",
+          "Métadonnées (dimensions, année, inventaire) en font-mono text-xs text-muted tabular-nums.",
+          "États : squelettes bg-raised sans animation vive ; vide en une phrase serif text-muted ; erreur en encart role=\"alert\" border border-danger/40 text-danger."
+        ],
+        "dont": [
+          "Pas de cartes à ombre, de pastilles colorées ni d'icônes décoratives.",
+          "Pas de gras sur les titres serif.",
+          "Pas de fond clair ni de couleur saturée, y compris pour les badges d'état.",
+          "Pas de densité de tableur : moins de colonnes, plus d'air."
+        ]
+      }
+    },
+    "presentation": {
+      "signature": "Une image plein cadre au ratio cinéma qui occupe la diapo, un titre Cormorant Garamond léger en text-display aligné en bas à gauche sur un dégradé noir discret, et une ligne en capitales très espacées text-caption text-muted.",
+      "typeScale": {
+        "display": "160px",
+        "title": "104px",
+        "subtitle": "44px",
+        "body": "34px",
+        "caption": "24px"
+      },
+      "rules": {
+        "do": [
+          "Un titre en text-title (104px) par diapo, qui affirme ; au plus six lignes en text-body (34px) ; sources, dates et numéros en text-caption text-muted (24px), jamais plus petit.",
+          "Beaucoup de vide : une image ou une phrase par diapo, marges de 128px.",
+          "Titres en serif léger (font-display font-light), jamais en gras.",
+          "Mentions en capitales tracking-[0.2em] text-muted.",
+          "Images data-image en grand format, sans bordure, recadrage assumé."
+        ],
+        "dont": [
+          "Pas de titre de diapo sous 104px ni de corps sous 34px : la diapo se lit à trois mètres.",
+          "Pas de carte à ombre, de pastille colorée ni d'icône décorative.",
+          "Pas de gras sur les serifs.",
+          "Pas de fond clair ni de couleur saturée.",
+          "Pas de graphique chargé : un seul chiffre, en serif."
         ]
       }
     }

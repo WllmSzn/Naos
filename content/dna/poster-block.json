@@ -1,6 +1,7 @@
 {
   "id": "poster-block",
   "name": "Poster Block",
+  "version": 2,
   "theme": "light",
   "summary": "L'énergie d'une affiche imprimée : aplats francs, contours noirs épais, ombres décalées dures et typographie massive.",
   "bestFor": [
@@ -84,6 +85,67 @@
           "Pas plus de trois couleurs vives sur un même écran, en plus de ink.",
           "Pas de petit texte gris : le muted reste foncé et lisible.",
           "Pas d'images de banque génériques : préférer aplats, formes géométriques ou photos détourées."
+        ]
+      }
+    },
+    "product-desktop": {
+      "signature": "Un tableau de bord imprimé : cartes blanches à contour ink de 2px et ombre décalée dure, titre de page en Archivo Black capitales serrées, une carte KPI principale en aplat bg-accent légèrement mise en avant, et des boutons « tampon » qui se décalent vers leur ombre au survol.",
+      "density": "comfortable",
+      "sizes": {
+        "control": "2.75rem",
+        "controlSm": "2rem",
+        "row": "3rem",
+        "sidebar": "16rem",
+        "header": "3.5rem",
+        "icon": "1.125rem"
+      },
+      "states": {
+        "selected": "bg-raised text-ink font-bold",
+        "hover": "hover:bg-raised",
+        "focus": "focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-accent2 focus-visible:ring-offset-2",
+        "disabled": "opacity-50 cursor-not-allowed"
+      },
+      "rules": {
+        "do": [
+          "Contours de 2px border-line (ink) sur cartes, boutons, champs et tableaux ; ombre décalée dure shadow-card ; aucun arrondi.",
+          "Boutons h-ctl px-5 font-bold uppercase : principal bg-accent text-accent-ink border-2 border-line shadow-card, au survol translate-x-0.5 translate-y-0.5 shadow-none.",
+          "Barre latérale w-sidebar bg-raised border-r-2 border-line : items h-ctl px-3 font-bold uppercase text-sm ; l'actif en bg-base.",
+          "Titres de page et de carte en Archivo Black capitales tracking-tight ; corps et cellules en Archivo text-sm, lisible.",
+          "Tableaux : en-tête bg-ink text-inverse font-bold uppercase text-xs, lignes h-row border-b-2 border-line, chiffres en font-mono tabular-nums.",
+          "Badges en aplat franc : bg-success text-inverse, bg-warning text-inverse, bg-danger text-inverse, border-2 border-line px-2 text-xs font-bold uppercase.",
+          "États : squelettes bg-raised sans animation ; vide en carte contour avec un titre capitales et l'action ; erreur en carte border-danger text-danger role=\"alert\"."
+        ],
+        "dont": [
+          "Pas d'ombre floue, de dégradé ni de transparence.",
+          "Pas de coin arrondi.",
+          "Pas plus de trois couleurs vives à l'écran en plus de ink.",
+          "Pas de texte coloré posé sur une teinte : badges en aplat plein."
+        ]
+      }
+    },
+    "presentation": {
+      "signature": "Une diapo affiche : titre Archivo Black en capitales serrées en text-display sur deux ou trois lignes, un mot encadré dans un aplat bg-accent légèrement pivoté (-2°), contours ink de 2px et ombre décalée dure sur la carte de preuve.",
+      "typeScale": {
+        "display": "160px",
+        "title": "104px",
+        "subtitle": "44px",
+        "body": "34px",
+        "caption": "24px"
+      },
+      "rules": {
+        "do": [
+          "Un titre en text-title (104px) par diapo, qui affirme ; au plus six lignes en text-body (34px) ; sources, dates et numéros en text-caption text-muted (24px), jamais plus petit.",
+          "Aplats francs pleine diapo : alterner bg-base, bg-raised, bg-accent (text-accent-ink) et bg-ink (text-inverse).",
+          "Contours 2px border-line et ombre shadow-card sur les cartes ; aucun arrondi.",
+          "Titres en capitales tracking-tight ; corps en Archivo, lisible.",
+          "Un mot du titre pivoté dans un aplat, une seule fois par diapo."
+        ],
+        "dont": [
+          "Pas de titre de diapo sous 104px ni de corps sous 34px : la diapo se lit à trois mètres.",
+          "Pas d'ombre floue, de dégradé ni de transparence.",
+          "Pas de coin arrondi.",
+          "Pas plus de trois couleurs vives sur une diapo, en plus de ink.",
+          "Pas de corps en capitales."
         ]
       }
     }

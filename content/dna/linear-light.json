@@ -1,0 +1,181 @@
+{
+  "id": "linear-light",
+  "name": "Linear Light",
+  "version": 2,
+  "theme": "light",
+  "summary": "Le système visuel de Linear en clair, tel qu'on le voit à l'inscription, à l'onboarding et dans l'app : gris très pâle, encre graphite, Inter medium sobre, une seule action pleine en pilule indigo, cartes blanches à ombre douce, étapes centrées dans une colonne étroite avec pastilles de progression. En produit : barre latérale posée sur le fond, zone de travail en panneau blanc inset, composeur « Ask … » et cartes d'exemples.",
+  "bestFor": [
+    "saas onboarding",
+    "sign up flow",
+    "authentication",
+    "project management",
+    "issue tracker",
+    "developer tools",
+    "b2b saas",
+    "ai assistant",
+    "settings",
+    "keyboard-first product"
+  ],
+  "mood": [
+    "clean",
+    "calm",
+    "precise",
+    "minimal",
+    "light"
+  ],
+  "tokens": {
+    "base": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "raised": "#F0F0F1",
+    "line": "#E4E4E7",
+    "ink": "#1F2023",
+    "muted": "#696D74",
+    "accent": "#5E6AD2",
+    "accentInk": "#FFFFFF",
+    "accent2": "#4F5BC4",
+    "accentText": "#4F5BC4",
+    "success": "#1A6342",
+    "warning": "#7D4C06",
+    "danger": "#A3231F"
+  },
+  "extraColors": {
+    "brand": "#5E6AD2",
+    "focus": "#5E6AD2",
+    "ink-strong": "#111113",
+    "progress": "#B07F00",
+    "done": "#5E6AD2",
+    "urgent": "#A3231F",
+    "workspace": "#23955A"
+  },
+  "dataPalette": [
+    "#5E6AD2",
+    "#1A6342",
+    "#B07F00",
+    "#1A8FA6",
+    "#696D74"
+  ],
+  "fonts": {
+    "display": "Inter",
+    "body": "Inter",
+    "mono": "JetBrains Mono",
+    "displayWeights": [
+      500,
+      600
+    ],
+    "bodyWeights": [
+      400,
+      500,
+      600
+    ]
+  },
+  "headings": {
+    "weight": 500,
+    "tracking": "-0.02em",
+    "leading": "1.15"
+  },
+  "shape": {
+    "radius": "8px",
+    "radiusLarge": "12px",
+    "borderWidth": "1px"
+  },
+  "elevation": {
+    "card": "0 0 0 1px rgba(0,0,0,0.04), 0 6px 24px rgba(0,0,0,0.06)",
+    "overlay": "0 0 0 1px rgba(0,0,0,0.06), 0 16px 48px rgba(0,0,0,0.12)"
+  },
+  "modes": {
+    "website": {
+      "signature": "Pages d'authentification et d'onboarding centrées sur bg-base dans une colonne étroite : logo monochrome rond size-14 en haut, question en titre text-xl font-medium text-ink (« What's your email address? »), actions empilées en pilules pleine largeur h-14 rounded-full — la principale bg-accent text-accent-ink, les autres bg-surface border border-line —, lien « Back to login » en dessous ; pour l'onboarding, une carte blanche shadow-card par étape et sept pastilles de progression fixées en bas.",
+      "rules": {
+        "do": [
+          "Fond bg-base uni ; tout est centré ; colonne max-w-sm pour l'authentification, max-w-2xl pour les étapes d'onboarding, max-w-5xl pour l'écran final à trois colonnes.",
+          "Logo monochrome text-ink size-14 au-dessus du titre ; sur l'écran d'accueil, icône d'app size-32 rounded-[28%] et titre text-6xl font-semibold tracking-[-0.03em].",
+          "Titre d'étape text-2xl font-medium text-ink-strong, sous-titre text-base text-muted sur une ligne, puis le contenu à mt-10.",
+          "Action principale en pilule bg-accent text-accent-ink rounded-full h-14 w-full max-w-md text-base font-medium ; secondaires en pilules bg-surface text-ink border border-line shadow-sm ; une seule pilule indigo par écran.",
+          "Le bouton « Continue » reste un simple lien text-ink tant que l'utilisateur n'a rien choisi, puis devient la pilule indigo dès qu'une option est activée ; « I'll do this later » toujours en lien text-muted sous l'action.",
+          "Champs h-14 rounded-ui bg-surface border border-line px-4 text-base, placeholder text-muted finissant par « … » ; code de connexion en font-mono text-lg tracking-[0.15em] centré.",
+          "Erreur de champ en text-xs text-danger juste sous le champ (« Required ») ; préfixe d'URL en text-muted dans le champ (« linear.app/ ») suivi de la saisie en text-ink.",
+          "Cartes d'étape bg-surface rounded-card shadow-card p-8 ; lignes internes séparées par border-t border-line ; chaque ligne : titre text-base font-medium text-ink-strong, description text-sm text-muted, contrôle à droite (interrupteur bg-accent quand actif, bg-line sinon ; ou pilule contour avec icône).",
+          "Listes d'avantages avec coche text-accent2 size-4 à gauche, texte text-base text-ink, mots forts en font-semibold.",
+          "Choix visuel (thème) en tuiles côte à côte dans un cadre border border-line rounded-card : tuile choisie bg-raised avec miniature cerclée ring-2 ring-accent, libellé text-sm font-medium.",
+          "Keycaps pédagogiques : size-24 bg-surface border border-line border-b-4 rounded-card text-5xl text-ink ; keycaps inline dans un texte en font-mono text-xs border border-line rounded px-1.",
+          "Pastilles de progression en bas d'écran : sept points size-2 rounded-full bg-line, l'étape courante en bg-muted, gap-6.",
+          "Coin supérieur : « Log out » text-sm text-ink à gauche, « Logged in as » text-xs text-muted + email text-sm text-ink à droite."
+        ],
+        "dont": [
+          "Pas de navigation de site, de pied de page ni d'illustration sur ces pages : uniquement le logo, la question et les actions.",
+          "Pas d'indigo pour autre chose que l'action principale, les interrupteurs actifs, les coches et la sélection.",
+          "Pas de boutons à coins carrés : toutes les actions sont des pilules.",
+          "Pas de titres en gras 700, en capitales ou en serif ; pas de texte aligné à gauche hors des cartes.",
+          "Pas de couleur codée en dur ni de couleur Tailwind nommée : tokens et extraColors uniquement.",
+          "Pas d'emoji ni d'ombre forte : shadow-card reste diffuse."
+        ]
+      }
+    },
+    "product-desktop": {
+      "signature": "Une application claire où la barre latérale est posée directement sur bg-base sans bordure (espace avec avatar d'initiales en pastille colorée, recherche, bouton nouveau, groupes « Workspace ▾ », « Your teams ▾ », « Try ▾ ») et où la zone de travail est un grand panneau inset bg-surface rounded-card border border-line shadow-card ; écran d'accueil avec un composeur « Ask Linear… » centré et trois cartes d'exemples.",
+      "density": "compact",
+      "sizes": {
+        "control": "2rem",
+        "controlSm": "1.75rem",
+        "row": "2.25rem",
+        "sidebar": "15rem",
+        "header": "3rem",
+        "icon": "1rem"
+      },
+      "states": {
+        "selected": "bg-raised text-ink",
+        "hover": "hover:bg-raised/70",
+        "focus": "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus",
+        "disabled": "opacity-40 cursor-not-allowed"
+      },
+      "rules": {
+        "do": [
+          "Mise en page : barre latérale w-sidebar bg-base p-3 sans bordure ; zone de travail en panneau inset m-2 ml-0 bg-surface rounded-card border border-line shadow-card qui remplit le reste.",
+          "En-tête de barre latérale : pastille d'initiales size-6 rounded-full bg-workspace text-accent-ink text-xs + nom font-medium + chevron, puis loupe et bouton « nouveau » size-8 rounded-full bg-surface border border-line shadow-sm.",
+          "Items de navigation h-row px-2 rounded-ui text-sm text-ink avec icône size-icon text-muted ; sous-items d'équipe indentés pl-6 ; groupes titrés text-xs font-medium text-muted suivis d'un ▾ ; actif en bg-raised.",
+          "Accueil vide : titre text-2xl font-medium text-ink centré avec sous-titre text-sm text-muted, filigrane du logo en très faible opacité derrière ; composeur bg-surface rounded-card border border-line shadow-card max-w-3xl, placeholder text-lg text-muted, barre d'outils en bas (sélecteur « Skills ▾ » à gauche, trombone et bouton envoyer rond border border-line à droite).",
+          "Cartes d'exemples en grille de trois sous le composeur : bg-surface border border-line rounded-ui p-5 h-44, icône text-muted en haut, titre text-base font-medium text-ink et description text-sm text-muted en bas ; rangée titrée « Get started with some examples » text-sm text-muted avec fermer à droite.",
+          "Accès rapides en bas d'écran : bouton aide « ? » size-8 rounded-full border border-line en bas à gauche, « Ask Linear » text-sm text-muted avec icône et historique en bas à droite.",
+          "Vue d'issue et listes reprennent la grammaire Linear : icônes d'état circulaires (backlog pointillé text-muted, todo cercle vide, en cours demi-disque text-progress, terminé disque text-done avec coche), priorité en trois barres text-muted, identifiants text-muted tabular-nums, labels en pilules border border-line rounded-full px-2 text-xs avec point coloré.",
+          "Fil d'activité en text-sm text-muted, acteurs et objets en text-ink font-medium, horodatage « · 2min ago » ; commentaires en cartes bg-surface border border-line rounded-card p-4.",
+          "Palette de commandes (⌘K) : dialog bg-surface rounded-card shadow-overlay max-w-xl, champ h-12 sans bordure, groupes text-xs text-muted, item actif bg-raised, raccourcis en keycaps font-mono text-xs border border-line rounded px-1.",
+          "États : chargement en squelettes bg-raised animate-pulse ; vide avec l'action et son raccourci en keycap ; erreur en encart role=\"alert\" border border-danger/30 text-danger avec Réessayer."
+        ],
+        "dont": [
+          "Pas de bordure ni de fond distinct pour la barre latérale : elle se fond dans bg-base, seul le panneau de travail est élevé.",
+          "Pas de pilule indigo dans l'app hors action principale d'un dialogue ; la navigation reste neutre.",
+          "Pas de fond de ligne teinté par l'état ou la priorité.",
+          "Pas de libellés en capitales ni de texte sous text-xs.",
+          "Pas d'action sans raccourci clavier accessible depuis la palette.",
+          "Pas de couleur codée en dur ni de couleur Tailwind nommée."
+        ]
+      }
+    },
+    "presentation": {
+      "signature": "Une diapo centrée sur le gris très pâle : logo monochrome rond en haut, une question ou une affirmation en text-title font-medium text-ink-strong, une ligne d'appui en text-subtitle text-muted, et une carte blanche shadow-card qui porte la preuve ; des pastilles de progression marquent l'avancée dans le deck.",
+      "typeScale": {
+        "display": "136px",
+        "title": "88px",
+        "subtitle": "40px",
+        "body": "32px",
+        "caption": "22px"
+      },
+      "rules": {
+        "do": [
+          "Un titre en text-title (88px) par diapo, qui affirme ; au plus six lignes en text-body (32px) ; sources, dates et numéros en text-caption text-muted (22px), jamais plus petit.",
+          "Diapos sur bg-base uni, contenu centré dans une colonne étroite.",
+          "Preuves dans des cartes bg-surface rounded-card shadow-card p-12.",
+          "Indigo réservé à une seule pilule ou à la pastille de progression active.",
+          "Titres font-medium tracking-tight, jamais plus gras."
+        ],
+        "dont": [
+          "Pas de titre de diapo sous 88px ni de corps sous 32px : la diapo se lit à trois mètres.",
+          "Pas d'illustration ni de décor : logo, phrase, preuve.",
+          "Pas d'indigo pour autre chose qu'un signal.",
+          "Pas de diapo sombre.",
+          "Pas de bouton à coins carrés."
+        ]
+      }
+    }
+  }
+}

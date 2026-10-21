@@ -1,0 +1,179 @@
+{
+  "id": "linear-dark",
+  "name": "Linear Dark",
+  "version": 2,
+  "theme": "dark",
+  "summary": "Le système visuel de linear.app en sombre : noir presque pur, grotesque Inter medium très serrée en titres géants alignés à gauche, gris froids pour tout le reste, un bouton clair comme seule action et un indigo réservé à de minuscules signaux. En produit : trois volets séparés par des filets, icônes d'état circulaires, propriétés en liste, panneau d'agent flottant en mono.",
+  "bestFor": [
+    "saas landing",
+    "developer tools",
+    "project management",
+    "issue tracker",
+    "product launch",
+    "ai agents product",
+    "b2b saas",
+    "keyboard-first product",
+    "internal tools",
+    "engineering workflow"
+  ],
+  "mood": [
+    "technical",
+    "precise",
+    "minimal",
+    "dark",
+    "confident"
+  ],
+  "tokens": {
+    "base": "#08090A",
+    "surface": "#0F1011",
+    "raised": "#1A1B1E",
+    "line": "#23252A",
+    "ink": "#F7F8F8",
+    "muted": "#8A8F98",
+    "accent": "#E6E6E6",
+    "accentInk": "#08090A",
+    "accent2": "#5E6AD2",
+    "accentText": "#F7F8F8",
+    "success": "#4CB782",
+    "warning": "#F2C94C",
+    "danger": "#EB5757"
+  },
+  "extraColors": {
+    "brand": "#5E6AD2",
+    "brand-soft": "#828FFF",
+    "focus": "#5E6AD2",
+    "ink-soft": "#B4BCD0",
+    "progress": "#F2C94C",
+    "done": "#5E6AD2",
+    "urgent": "#EB5757"
+  },
+  "dataPalette": [
+    "#828FFF",
+    "#4CB782",
+    "#F2C94C",
+    "#26B5CE",
+    "#8A8F98"
+  ],
+  "fonts": {
+    "display": "Inter",
+    "body": "Inter",
+    "mono": "JetBrains Mono",
+    "displayWeights": [
+      500,
+      600
+    ],
+    "bodyWeights": [
+      400,
+      500,
+      600
+    ]
+  },
+  "headings": {
+    "weight": 500,
+    "tracking": "-0.035em",
+    "leading": "1.05"
+  },
+  "shape": {
+    "radius": "6px",
+    "radiusLarge": "12px",
+    "borderWidth": "1px"
+  },
+  "elevation": {
+    "card": "0 0 0 1px rgba(255,255,255,0.05), 0 8px 32px rgba(0,0,0,0.4)",
+    "overlay": "0 0 0 1px rgba(255,255,255,0.08), 0 24px 64px rgba(0,0,0,0.6)"
+  },
+  "modes": {
+    "website": {
+      "signature": "Hero aligné à gauche sur fond bg-base : titre géant en Inter medium très serré sur deux lignes (text-6xl md:text-7xl font-medium tracking-[-0.035em] leading-[1.05] text-ink), sous-titre text-lg text-muted sur une seule ligne, annonce alignée à droite sur la même ligne (point bg-brand size-1.5 avec halo ring-4 ring-brand/20, titre text-ink font-medium, lien text-muted suivi d'une flèche), puis une capture du produit dans un cadre bg-surface border border-line rounded-card qui sort par le bas de l'écran et se fond dans bg-base.",
+      "rules": {
+        "do": [
+          "Fond bg-base partout ; conteneur max-w-6xl px-6 ; tout est aligné à gauche, jamais centré sauf le bandeau d'appel final.",
+          "Navigation h-16 border-b border-line : logo monochrome + nom font-medium à gauche ; à droite liens text-sm text-muted hover:text-ink, un séparateur vertical h-4 w-px bg-line, « Log in » en lien text-muted, puis le seul bouton plein.",
+          "Action principale : bouton clair bg-accent text-accent-ink rounded-ui h-9 px-4 text-sm font-medium ; secondaire : bg-raised text-ink border border-line rounded-ui ; jamais plus d'un bouton clair par vue.",
+          "Titres de section text-4xl md:text-5xl font-medium tracking-[-0.03em] text-ink, avec une seconde phrase en text-muted dans le même titre pour nuancer (« Built for speed. Designed for focus. »).",
+          "Paragraphes text-base text-muted leading-relaxed, max-w-xl ; les mots clés peuvent passer en text-ink font-medium.",
+          "Petits repères techniques en mono : labels text-xs font-mono text-muted (« FIG 0.2 », « 1.0 Intake → ») au-dessus des sections et des visuels.",
+          "Grilles de fonctionnalités séparées par des filets border-line (divide-x divide-y) plutôt que par des cartes : chaque cellule p-8 avec icône text-muted size-5, titre text-sm font-medium text-ink, description text-sm text-muted.",
+          "Captures produit : vraies interfaces sombres dans un cadre rounded-card border border-line, dégradé de masque vers bg-base sur les 20 % du bas ; jamais d'illustration.",
+          "Bandeau logos clients en monochrome text-muted opacity-70, sur une ligne, sans titre ou avec un label mono.",
+          "Pied de page en colonnes de liens text-sm text-muted, titres de colonne text-sm text-ink font-medium, logo en haut à gauche."
+        ],
+        "dont": [
+          "Pas de dégradé coloré ni de halo lumineux derrière les titres ; seuls des fondus noirs vers bg-base sont permis.",
+          "Pas d'indigo en aplat : bg-brand ne sert qu'à de minuscules signaux (point d'annonce, puce, focus).",
+          "Pas de titres en gras 700, en capitales, en serif ou centrés.",
+          "Pas de cartes à ombre portée sur la page : la structure vient des filets border-line.",
+          "Pas de couleur codée en dur ni de couleur Tailwind nommée : tokens et extraColors uniquement.",
+          "Pas d'emoji, d'illustration colorée ni de photo d'ambiance."
+        ]
+      }
+    },
+    "product-desktop": {
+      "signature": "Une application en trois volets sur bg-base séparés par des filets border-line : barre latérale compacte (sélecteur d'espace, recherche, bouton nouveau, Inbox/My issues, groupes repliables « Workspace ▾ »), vue de l'issue centrée (titre text-2xl font-semibold, description text-ink-soft avec code inline encadré, fil d'activité en text-sm où les acteurs sont en text-ink et le reste en text-muted), volet de propriétés à droite (identifiant ENG-2703 en text-muted, état, priorité, assigné, agent rattaché par un trait) ; icônes d'état circulaires colorées et palette ⌘K pour toute action.",
+      "density": "compact",
+      "sizes": {
+        "control": "2rem",
+        "controlSm": "1.75rem",
+        "row": "2.25rem",
+        "sidebar": "15rem",
+        "header": "3rem",
+        "icon": "1rem"
+      },
+      "states": {
+        "selected": "bg-raised text-ink",
+        "hover": "hover:bg-raised/60",
+        "focus": "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus",
+        "disabled": "opacity-40 cursor-not-allowed"
+      },
+      "rules": {
+        "do": [
+          "Barre latérale w-sidebar bg-base p-2 : en tête logo + nom de l'espace font-medium + chevron, puis à droite loupe et bouton « nouveau » size-8 rounded-ui border border-line ; items h-row px-2 rounded-ui text-sm text-ink avec icône size-icon text-muted ; groupes titrés text-xs font-medium text-muted suivis d'un ▾.",
+          "Favoris et projets dans la barre latérale précédés de leur icône d'état ou de leur pastille de couleur ; l'élément actif en bg-raised.",
+          "Barre d'en-tête h-header border-b border-line px-4 : titre de l'élément text-sm font-medium, étoile de favori text-progress, menu « … » ; à droite compteur « 02 / 145 » text-sm text-muted tabular-nums et flèches haut/bas size-7 rounded-ui.",
+          "Vue de l'issue : colonne max-w-3xl px-12 py-10 ; titre text-2xl font-semibold tracking-tight ; description text-base text-ink-soft leading-relaxed ; code inline font-mono text-sm bg-raised border border-line rounded px-1.5.",
+          "Fil d'activité : lignes text-sm text-muted avec avatar ou icône size-4, acteur et objets en text-ink font-medium, horodatage « · 2min ago » ; commentaires en cartes bg-surface border border-line rounded-card p-4 avec auteur text-ink font-medium et heure text-muted.",
+          "Volet de propriétés w-80 border-l border-line p-4 : identifiant text-sm text-muted en tête avec icônes copier-lien / copier / branche ; propriétés en lignes h-row avec icône et valeur text-sm text-ink, sans libellé quand l'icône suffit ; labels de groupe text-xs text-muted (« Labels »).",
+          "Icônes d'état circulaires size-3.5 : backlog en cercle pointillé text-muted, todo en cercle vide text-muted, en cours en cercle à moitié plein text-progress, terminé en disque plein text-done avec coche, annulé en disque text-muted avec croix ; priorité en trois barres croissantes text-muted (remplies selon le niveau), urgent en carré text-urgent avec « ! ».",
+          "Agent rattaché sous l'assigné, indenté, relié par un trait en L border-line ; son panneau s'ouvre en flottant bg-raised rounded-card shadow-overlay w-[30rem] : en-tête logo + nom + fermer, journal en font-mono text-xs text-muted, étapes en text-sm text-ink-soft avec termes techniques en mono, séparateur « Worked for 2min » suivi d'un filet.",
+          "Palette de commandes (⌘K) : dialog bg-raised rounded-card shadow-overlay max-w-xl, champ h-12 text-base sans bordure, groupes titrés text-xs text-muted, item actif bg-surface, raccourcis en keycaps font-mono text-xs border border-line rounded px-1 à droite.",
+          "Listes d'issues : lignes h-row text-sm border-b border-line/60, priorité, identifiant text-muted tabular-nums w-20, état, titre text-ink, labels en pilules border border-line rounded-full px-2 text-xs avec point coloré, avatar size-5 à droite.",
+          "États : chargement en squelettes bg-raised animate-pulse qui gardent la forme des lignes ; vide en texte text-muted centré avec l'action et son raccourci en keycap ; erreur en encart role=\"alert\" border border-danger/40 text-danger avec Réessayer."
+        ],
+        "dont": [
+          "Pas de fond de ligne teinté par l'état ou la priorité : la couleur vit uniquement dans les icônes.",
+          "Pas d'ombre sur les volets : seuls les éléments flottants (menus, palette, panneau d'agent) ont shadow-overlay.",
+          "Pas d'indigo en aplat hors état terminé, sélection de case à cocher et focus.",
+          "Pas de libellés en capitales ni de texte sous text-xs.",
+          "Pas d'action sans raccourci clavier accessible depuis la palette.",
+          "Pas de couleur codée en dur ni de couleur Tailwind nommée."
+        ]
+      }
+    },
+    "presentation": {
+      "signature": "Une diapo alignée à gauche sur le noir presque pur : titre Inter font-medium très serré en text-title, avec une seconde phrase en text-muted dans le même titre pour nuancer, puis une capture produit dans un cadre bg-surface border border-line rounded-card qui sort par le bas de la diapo et se fond dans bg-base.",
+      "typeScale": {
+        "display": "144px",
+        "title": "92px",
+        "subtitle": "40px",
+        "body": "32px",
+        "caption": "22px"
+      },
+      "rules": {
+        "do": [
+          "Un titre en text-title (92px) par diapo, qui affirme ; au plus six lignes en text-body (32px) ; sources, dates et numéros en text-caption text-muted (22px), jamais plus petit.",
+          "Tout est aligné à gauche, sauf la diapo de clôture.",
+          "Titres font-medium tracking-[-0.035em] ; la nuance en text-muted dans la même phrase.",
+          "Repères techniques en font-mono text-caption text-muted (« FIG 0.2 »).",
+          "Grilles de points séparées par des filets border-line plutôt que par des cartes."
+        ],
+        "dont": [
+          "Pas de titre de diapo sous 92px ni de corps sous 32px : la diapo se lit à trois mètres.",
+          "Pas de dégradé coloré ni de halo lumineux.",
+          "Pas d'indigo en aplat : bg-brand pour un minuscule signal.",
+          "Pas de titre en gras 700, en capitales ou en serif.",
+          "Pas d'emoji ni d'illustration colorée."
+        ]
+      }
+    }
+  }
+}

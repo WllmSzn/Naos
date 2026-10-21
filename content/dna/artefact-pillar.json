@@ -1,7 +1,7 @@
 {
   "id": "artefact-pillar",
   "name": "Artefact Pillar",
-  "version": 2,
+  "version": 3,
   "theme": "dark",
   "summary": "La structure Room & Pillar aux couleurs d'ARTEFACT : noir graphite, sections papier, un indigo lumineux pour l'unique action, dégradé de marque rouge → prune → indigo porté par une sphère (l'icône) ; grotesque gras ultra-serré en titres géants, labels mono en capitales. En produit : console graphite à angles vifs, labels mono et grilles filaires.",
   "bestFor": [
@@ -154,6 +154,32 @@
           "Pas de shadow-card ni de cartes flottantes espacées : la structure vient des lignes.",
           "Pas de fond de carte, de ligne ou de KPI teinté par la sévérité.",
           "Pas de badge d'état tronqué ni de label mono en text-[10px] dans un tableau : 12 px minimum.",
+          "Pas de couleur codée en dur ni de couleur Tailwind nommée."
+        ]
+      }
+    },
+    "presentation": {
+      "signature": "Une diapo d'ouverture monumentale : titre Inter Tight font-bold tracking-[-0.06em] en text-display sur toute la largeur, la sphère de marque (disque net bg-gradient-to-b from-brand-red via-brand-plum to-brand-indigo) incrustée entre deux mots, label mono en capitales en haut à gauche ; les diapos de preuve alternent fond bg-base et fond bg-paper (texte text-inverse).",
+      "typeScale": {
+        "display": "176px",
+        "title": "104px",
+        "subtitle": "44px",
+        "body": "34px",
+        "caption": "24px"
+      },
+      "rules": {
+        "do": [
+          "Un titre en text-title (104px) par diapo, qui affirme ; au plus six lignes en text-body (34px) ; sources, dates et numéros en text-caption text-muted (24px), jamais plus petit.",
+          "Alternance de diapos sombres bg-base et claires bg-paper (text-inverse, et text-inverse/70 pour le secondaire).",
+          "Labels, sources et numéros en font-mono text-caption uppercase tracking-wider.",
+          "Contraste d'échelle : un chiffre géant en text-display à côté d'une ligne courte en text-body.",
+          "La sphère de marque au plus deux fois dans tout le deck : ouverture et clôture."
+        ],
+        "dont": [
+          "Pas de titre de diapo sous 104px ni de corps sous 34px : la diapo se lit à trois mètres.",
+          "Pas de brand-red en texte, badge ou aplat : seulement dans le dégradé de la sphère.",
+          "Pas de sphère floue ni d'orbe en arrière-plan.",
+          "Pas d'ombre douce ni de carte arrondie flottante.",
           "Pas de couleur codée en dur ni de couleur Tailwind nommée."
         ]
       }

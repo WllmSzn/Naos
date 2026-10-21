@@ -1,6 +1,7 @@
 {
   "id": "linen-ledger",
   "name": "Linen Ledger",
+  "version": 2,
   "theme": "light",
   "summary": "La sobriété d'un registre bien tenu : papier chaud, titres en serif, vert profond. Inspire confiance sans être austère.",
   "bestFor": [
@@ -83,6 +84,67 @@
           "Pas de rayons supérieurs à 12px.",
           "Pas de graphiques en 3D, en camembert éclaté ou avec plus de cinq séries.",
           "Pas de serif dans les boutons, champs ou menus."
+        ]
+      }
+    },
+    "product-desktop": {
+      "signature": "Un registre de facturation : en tête d'écran un grand montant en Instrument Serif (text-5xl, tabular-nums, devise plus petite en text-muted) avec une ligne de contexte en petites capitales espacées, puis un tableau sur carte blanche posée sur le papier, montants alignés à droite, en-têtes en petites capitales muted.",
+      "density": "comfortable",
+      "sizes": {
+        "control": "2.5rem",
+        "controlSm": "2rem",
+        "row": "2.75rem",
+        "sidebar": "16rem",
+        "header": "3.5rem",
+        "icon": "1.125rem"
+      },
+      "states": {
+        "selected": "bg-raised text-ink",
+        "hover": "hover:bg-base",
+        "focus": "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-1",
+        "disabled": "opacity-45 cursor-not-allowed"
+      },
+      "rules": {
+        "do": [
+          "Fond papier bg-base ; cartes blanches bg-surface border border-line rounded-card, ombre à peine perceptible ; barre latérale w-sidebar bg-base border-r border-line.",
+          "Titres de page en serif régulier (font-display font-normal) ; tout le texte d'interface en Instrument Sans.",
+          "Montants alignés à droite en tabular-nums, devise text-muted plus petite ; totaux en font-semibold séparés par un filet double border-t-2 border-line.",
+          "Tableaux aérés : lignes h-row séparées par border-line, pas de zébrage, en-têtes text-xs uppercase tracking-wider text-muted.",
+          "Action principale bg-accent text-accent-ink rounded-ui h-ctl px-4 text-sm font-medium ; secondaire en contour.",
+          "Statuts de facture en badges : text-success bg-success/10, text-warning bg-warning/10, text-danger bg-danger/10, rounded px-2 text-xs font-medium.",
+          "États : squelettes bg-raised animate-pulse ; vide avec l'action (« Émettre la première facture ») ; erreur en encart role=\"alert\" border border-danger/40 text-danger, jamais un total à zéro."
+        ],
+        "dont": [
+          "Pas de couleur vive : l'accent vert reste profond et rare, accent2 (ocre) seulement pour un repère de graphique.",
+          "Pas de titre serif en gras.",
+          "Pas de rayon supérieur à 12px.",
+          "Pas d'emoji ni d'illustration."
+        ]
+      }
+    },
+    "presentation": {
+      "signature": "Une diapo de résultat financier sur le papier bg-base : un grand montant en Instrument Serif en text-display tabular-nums, la devise plus petite en text-subtitle text-muted, et une ligne de contexte en petites capitales espacées text-caption.",
+      "typeScale": {
+        "display": "136px",
+        "title": "88px",
+        "subtitle": "40px",
+        "body": "32px",
+        "caption": "22px"
+      },
+      "rules": {
+        "do": [
+          "Un titre en text-title (88px) par diapo, qui affirme ; au plus six lignes en text-body (32px) ; sources, dates et numéros en text-caption text-muted (22px), jamais plus petit.",
+          "Titres en serif régulier, jamais en gras ; texte d'appui en Instrument Sans.",
+          "Montants alignés à droite en tabular-nums, devise en text-muted.",
+          "Tableaux de chiffres sur carte blanche bg-surface border border-line, en-têtes en petites capitales text-muted.",
+          "Accent vert profond pour un seul chiffre ou une seule barre par diapo."
+        ],
+        "dont": [
+          "Pas de titre de diapo sous 88px ni de corps sous 32px : la diapo se lit à trois mètres.",
+          "Pas de couleur vive.",
+          "Pas d'emoji ni d'illustration.",
+          "Pas de rayon supérieur à 12px.",
+          "Pas de titre serif en gras."
         ]
       }
     }

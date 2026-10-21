@@ -1,6 +1,7 @@
 {
   "id": "signal-clinic",
   "name": "Signal Clinic",
+  "version": 2,
   "theme": "light",
   "summary": "Clair, apaisé, lisible par tout le monde : un bleu-vert soignant, de grandes cibles tactiles et une hiérarchie sans ambiguïté.",
   "bestFor": [
@@ -85,6 +86,67 @@
           "Pas d'animations rapides ou clignotantes.",
           "Pas de tableaux denses : préférer des listes de cartes lisibles.",
           "Pas de majuscules pour des phrases entières."
+        ]
+      }
+    },
+    "product-desktop": {
+      "signature": "Un espace soignant lisible par tous : en tête la carte « prochaine étape » bg-raised rounded-card avec la date et l'heure en grand (text-3xl font-semibold tabular-nums) et une seule action claire, puis des listes aux lignes hautes et aux cibles de 44px, chaque icône accompagnée de son libellé.",
+      "density": "spacious",
+      "sizes": {
+        "control": "2.75rem",
+        "controlSm": "2.25rem",
+        "row": "3.25rem",
+        "sidebar": "17rem",
+        "header": "4rem",
+        "icon": "1.25rem"
+      },
+      "states": {
+        "selected": "bg-raised text-ink font-semibold",
+        "hover": "hover:bg-raised/70",
+        "focus": "focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-accent focus-visible:ring-offset-2",
+        "disabled": "opacity-50 cursor-not-allowed"
+      },
+      "rules": {
+        "do": [
+          "Texte courant text-base (16px) minimum, y compris dans les tableaux ; cibles de 44px minimum (h-ctl).",
+          "Une seule action principale par écran, formulée avec un verbe : bg-accent text-accent-ink rounded-ui h-ctl px-5 font-semibold.",
+          "Barre latérale w-sidebar bg-surface border-r border-line p-3 : items h-ctl px-4 rounded-ui text-base, icône au trait + libellé ; l'actif en bg-raised text-ink font-semibold.",
+          "Formulaires en une colonne, libellé au-dessus, aide sous le champ en text-sm text-muted, erreur en text-danger avec la solution.",
+          "Cartes bg-surface border border-line rounded-card shadow-card p-6 ; listes aux lignes h-row séparées par border-line.",
+          "Focus épais et visible partout (ring 3px accent avec décalage).",
+          "États : chargement annoncé en texte (« Chargement de vos rendez-vous… ») avec squelettes ; vide rassurant avec l'action ; erreur en encart role=\"alert\" qui explique et propose Réessayer."
+        ],
+        "dont": [
+          "Pas de rouge hors des erreurs réelles.",
+          "Pas de texte sous le niveau muted ni sous 14px.",
+          "Pas d'icône seule sans libellé, même dans une barre d'outils.",
+          "Pas d'animation rapide, clignotante ni de squelette qui pulse vite."
+        ]
+      }
+    },
+    "presentation": {
+      "signature": "Une diapo claire et apaisée : titre Figtree font-semibold en text-title, une carte « prochaine étape » bg-raised rounded-card qui porte la date en text-display tabular-nums et une seule action formulée avec un verbe ; chaque icône accompagnée de son libellé.",
+      "typeScale": {
+        "display": "136px",
+        "title": "88px",
+        "subtitle": "42px",
+        "body": "34px",
+        "caption": "24px"
+      },
+      "rules": {
+        "do": [
+          "Un titre en text-title (88px) par diapo, qui affirme ; au plus six lignes en text-body (34px) ; sources, dates et numéros en text-caption text-muted (24px), jamais plus petit.",
+          "Phrases simples, une idée par ligne, sans jargon.",
+          "Icônes au trait toujours accompagnées d'un libellé.",
+          "Cartes bg-surface rounded-card shadow-card p-12 sur bg-base.",
+          "Accent bleu-vert pour l'action attendue ; corail accent2 pour un seul détail chaleureux."
+        ],
+        "dont": [
+          "Pas de titre de diapo sous 88px ni de corps sous 34px : la diapo se lit à trois mètres.",
+          "Pas de rouge hors erreur réelle.",
+          "Pas de texte sur image.",
+          "Pas d'animation ni de transition rapide entre diapos.",
+          "Pas de gris plus pâle que text-muted."
         ]
       }
     }

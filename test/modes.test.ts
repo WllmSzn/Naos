@@ -57,10 +57,17 @@ test('une DNA doit fournir les champs exigés par ses modes', () => {
   assert.match(checkDnaModes(unknown).join(), /mode inconnu/);
 });
 
+// Toutes les DNA livrées servent tous les modes : les cas « mode non servi » passent par une copie réduite.
+const websiteOnly = (id: string) => {
+  const dna = lib.get(id)!;
+  return DnaSchema.parse({ ...dna, modes: { website: dna.modes.website } });
+};
+
 test('mode par défaut d’une DNA', () => {
-  assert.equal(defaultMode(lib.get('artefact-dark')!), 'product-desktop');
+  assert.equal(defaultMode(lib.get('artefact-dark')!), 'product-desktop', 'le premier bloc déclaré est le mode principal');
   assert.equal(defaultMode(lib.get('field-notes')!), 'website');
-  assert.equal(defaultMode(lib.get('field-notes')!, 'product-desktop'), 'website', 'mode non servi ignoré');
+  assert.equal(defaultMode(lib.get('field-notes')!, 'presentation'), 'presentation');
+  assert.equal(defaultMode(websiteOnly('field-notes'), 'product-desktop'), 'website', 'mode non servi ignoré');
 });
 
 test('dimensions sémantiques : générées depuis le bloc de mode, neutres sinon', () => {
@@ -103,7 +110,7 @@ test('profil de lint : libellés et formules marketing selon le mode', () => {
 
 test('retheme : refuse une DNA qui ne sert pas le mode de la page', () => {
   const page = wrapScreen('<h1>x</h1>', lib.get('artefact-dark')!, { mode: 'product-desktop' });
-  assert.throws(() => retheme(page, lib.get('field-notes')!, (id) => lib.get(id)), /ne sert pas le mode « product-desktop »/);
+  assert.throws(() => retheme(page, websiteOnly('field-notes'), (id) => lib.get(id)), /ne sert pas le mode « product-desktop »/);
   const ok = retheme(page, lib.get('artefact-light')!, (id) => lib.get(id));
   assert.equal(ok.mode, 'product-desktop');
   assert.equal(readMeta(ok.html).mode, 'product-desktop');

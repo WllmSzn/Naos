@@ -1,0 +1,185 @@
+{
+  "id": "height-light",
+  "name": "Height Light",
+  "version": 2,
+  "theme": "light",
+  "summary": "Le système visuel de Height : blanc pur, encre graphite, Inter, un seul bouton plein noir pour l'action, et la couleur réservée au logo et à quelques mots-clés en arc-en-ciel lettre par lettre (vert, ambre, rose, magenta, violet, bleu). Authentification en carte flottante à deux tons (haut blanc, bas gris clair). En produit : barre latérale graphite sombre contre un plan de travail blanc, documents de tâche aux titres généreux, chips d'attributs teintés et panneau de discussion avec agent IA.",
+  "bestFor": [
+    "project management",
+    "task tracker",
+    "ai assistant",
+    "collaboration",
+    "product team workspace",
+    "issue tracker",
+    "saas onboarding",
+    "sign up flow",
+    "chat-centric workspace",
+    "b2b saas"
+  ],
+  "mood": [
+    "clean",
+    "playful",
+    "minimal",
+    "light",
+    "confident"
+  ],
+  "tokens": {
+    "base": "#FFFFFF",
+    "surface": "#FFFFFF",
+    "raised": "#F1F1F1",
+    "line": "#E2E2E2",
+    "ink": "#222222",
+    "muted": "#6B6B6B",
+    "accent": "#262626",
+    "accentInk": "#FFFFFF",
+    "accent2": "#2A52D8",
+    "accentText": "#2A52D8",
+    "success": "#2F6E15",
+    "warning": "#94500A",
+    "danger": "#B8202F"
+  },
+  "extraColors": {
+    "night": "#141414",
+    "sidebar": "#2B2B2B",
+    "sidebar-raised": "#3A3A3A",
+    "spectrum-green": "#5E9412",
+    "spectrum-amber": "#B07A00",
+    "spectrum-rose": "#E2445C",
+    "spectrum-magenta": "#C21FD6",
+    "spectrum-violet": "#8B2BE2",
+    "spectrum-blue": "#1F4BFF",
+    "tag-design": "#B8202F",
+    "tag-engineering": "#2A52D8",
+    "tag-marketing": "#2F6E15",
+    "tag-product": "#94500A",
+    "progress": "#94500A",
+    "presence": "#D0334B",
+    "focus": "#2A52D8"
+  },
+  "dataPalette": [
+    "#2A52D8",
+    "#B8202F",
+    "#2F6E15",
+    "#94500A",
+    "#8B2BE2"
+  ],
+  "fonts": {
+    "display": "Inter",
+    "body": "Inter",
+    "mono": "JetBrains Mono",
+    "displayWeights": [
+      600,
+      700
+    ],
+    "bodyWeights": [
+      400,
+      500,
+      600
+    ]
+  },
+  "headings": {
+    "weight": 600,
+    "tracking": "-0.025em",
+    "leading": "1.1"
+  },
+  "shape": {
+    "radius": "6px",
+    "radiusLarge": "12px",
+    "borderWidth": "1px"
+  },
+  "elevation": {
+    "card": "0 0 0 1px rgba(0,0,0,0.05), 0 16px 48px rgba(0,0,0,0.10)",
+    "overlay": "0 0 0 1px rgba(0,0,0,0.06), 0 24px 64px rgba(0,0,0,0.16)"
+  },
+  "modes": {
+    "website": {
+      "signature": "Hero sur bg-night où l'interface du produit (listes de tâches, chips, bulles de discussion, curseurs nommés) apparaît en fantôme à 25–35 % d'opacité derrière un titre géant blanc text-accent-ink centré (text-7xl md:text-8xl font-bold tracking-[-0.04em]) dont un seul mot est coloré lettre par lettre en arc-en-ciel (text-spectrum-green → amber → rose → magenta → violet → blue) ; ailleurs, pages blanches et carte d'authentification flottante à deux tons.",
+      "rules": {
+        "do": [
+          "Navigation du hero : logo + wordmark à gauche, liens text-accent-ink/85, « Log in » en lien et « Sign up » en bouton contour border border-sidebar-raised bg-sidebar rounded-ui à droite.",
+          "Arc-en-ciel uniquement sur un mot-clé de très grand titre (≥ 64px, font-bold) ou sur le mot « Welcome », une couleur spectrum par lettre ou un dégradé bg-gradient-to-r from-spectrum-green via-spectrum-magenta to-spectrum-blue bg-clip-text text-transparent ; jamais dans le texte courant.",
+          "Authentification : carte max-w-md centrée sur bg-base, rounded-card shadow-card overflow-hidden, moitié haute bg-surface (logo size-14, titre text-3xl font-semibold text-ink, sous-titre text-base text-muted), moitié basse bg-raised p-12 avec boutons fournisseurs bg-surface h-11 rounded-ui pleine largeur (icône à gauche, libellé centré), label « Email » text-sm font-medium text-ink, champ bg-surface border border-line h-11, bouton principal bg-accent text-accent-ink h-11 rounded-ui ; option secondaire en text-sm text-muted centré (« or continue with SAML SSO »).",
+          "Mentions légales sous la carte, text-xs text-muted centré, max-w-md.",
+          "Étapes suivantes dans la même carte avec un bandeau d'en-tête bg-raised h-16 : flèche retour text-muted à gauche, titre d'étape text-base text-muted centré ; corps bg-surface p-12.",
+          "Champs groupés (prénom/nom) empilés et collés, le premier rounded-t-ui, le second rounded-b-ui ; code de vérification au format « 000-000 » en tabular-nums.",
+          "Transition : logo seul centré sur blanc pendant le chargement, puis « Welcome » géant en arc-en-ciel et un bouton noir « Get started » w-80 h-11 dessous.",
+          "Boutons pleins toujours noirs (bg-accent) et rectangles adoucis rounded-ui ; un seul par vue."
+        ],
+        "dont": [
+          "Pas de bouton coloré ni de bouton arc-en-ciel : la couleur est réservée au logo et aux mots-clés géants.",
+          "Pas de fond teinté, de dégradé de fond ou de halo sur les pages claires.",
+          "Pas de pilules pour les actions principales.",
+          "Pas plus d'un mot arc-en-ciel par écran.",
+          "Pas d'illustration ni d'emoji.",
+          "Pas de couleur codée en dur ni de couleur Tailwind nommée : tokens et extraColors uniquement."
+        ]
+      }
+    },
+    "product-desktop": {
+      "signature": "Une barre latérale graphite bg-sidebar (recherche sombre, Inbox/Assigned to me/Created by me, groupe « Teams » avec sous-vues, item actif en pastille blanche inversée bg-surface text-ink) contre un plan de travail blanc ; vue tâche en document (carte d'attributs bordée avec identifiant T-1, chip de statut et chips d'équipes teintés, puis titres de document text-3xl) à côté d'un panneau de discussion en carte où l'agent IA, signalé par un chip « height », propose des résumés et des sous-tâches à valider.",
+      "density": "comfortable",
+      "sizes": {
+        "control": "2.25rem",
+        "controlSm": "1.75rem",
+        "row": "2.5rem",
+        "sidebar": "17.5rem",
+        "header": "3.5rem",
+        "icon": "1.125rem"
+      },
+      "states": {
+        "selected": "bg-raised text-ink",
+        "hover": "hover:bg-raised/70",
+        "focus": "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus",
+        "disabled": "opacity-40 cursor-not-allowed"
+      },
+      "rules": {
+        "do": [
+          "Barre latérale w-sidebar bg-sidebar p-3 : logo + historique et flèches en haut, recherche h-ctl bg-sidebar-raised rounded-ui text-accent-ink/65, items h-ctl px-2 rounded-ui text-base text-accent-ink/90 avec icône text-accent-ink/65, sous-vues indentées pl-8 avec icônes teintées text-spectrum-violet ; item actif en bg-surface text-ink (pastille blanche) ; survol hover:bg-sidebar-raised ; titre de groupe text-sm text-accent-ink/65 avec « … ».",
+          "Pied de barre latérale : boutons empilés border border-sidebar-raised rounded-ui h-ctl text-accent-ink/90 (« Invite people », « Show intro video »), puis bouton « + » size-8 bg-surface text-ink rounded-ui, réglages, aide et avatar d'initiale.",
+          "En-tête de vue h-header : flèches retour/avance text-muted, titre text-lg text-ink ; à droite avatar d'initiales size-6 rounded-full bg-presence text-accent-ink, chip de l'agent « height » border border-line rounded-ui px-2 text-sm, « Share » avec icône, cloche et « … ».",
+          "Onglets de tâche : actif en bg-raised rounded-ui px-3 h-ctl text-ink, inactifs text-muted, compteur en pastille bg-raised text-xs.",
+          "Carte d'attributs : border border-line rounded-card p-3 ; identifiant « T-1 » text-sm text-muted et « Created Today » à droite ; chips h-7 px-2 rounded-ui text-sm avec icône : statut « In progress » text-progress bg-progress/10, équipes text-tag-design bg-tag-design/10, text-tag-engineering bg-tag-engineering/10, etc. ; « Add attribute » en text-muted.",
+          "Corps de document max-w-3xl : sections en text-3xl font-semibold text-ink (Overview, Owners, Scope and features, Open questions), paragraphes text-lg text-ink, puces simples ; sous-tâches proposées avec cercle pointillé et actions « Create » (bouton contour h-ctl-sm) / « Discard » (lien text-muted).",
+          "Panneau de discussion : carte border border-line rounded-card à droite (w-[30rem] à 40 %), bulles bg-raised rounded-2xl px-4 py-2 text-base avec nom de l'auteur text-sm text-muted au-dessus et avatar size-9 ; événements système en text-sm text-muted ; séparateur « New » centré sur filet ; message de l'agent dans une carte border border-line rounded-card avec en-tête « height drafted … · only visible to you » text-sm text-muted, actions « Review & send » bg-accent et « Skip this week » contour, puis « Rate this result » text-muted ; composeur en bas h-ctl border border-line rounded-ui avec emoji, « + » et bouton envoyer carré bg-raised.",
+          "Vues filtrées : barre de filtres bg-raised rounded-card p-2 de chips segmentées (clé text-ink | valeur dans un bloc bg-surface), opérateurs « AND » / « NOT » en text-xs text-muted ; à droite sélecteurs « Completed Never ▾ » et « Spreadsheet » ; tableau à en-têtes text-sm text-muted, lignes h-row, « New task » avec icône en text-muted, total « 0 tasks ▾ » en bas.",
+          "Présence collaborative : curseurs fléchés text-presence avec étiquette du nom en bg-presence text-accent-ink text-sm rounded-ui px-2.",
+          "États : chargement en squelettes bg-raised animate-pulse ; vide avec « New task » et raccourci clavier ; erreur en encart role=\"alert\" border border-danger/30 text-danger avec Réessayer."
+        ],
+        "dont": [
+          "Pas de barre latérale claire : le contraste graphite / blanc structure l'app.",
+          "Pas de couleur sur les fonds de ligne ; la couleur vit dans les chips d'attributs, les icônes de vue et la présence.",
+          "Pas de bouton plein coloré : l'action principale reste bg-accent (noir).",
+          "Pas d'arc-en-ciel dans l'app hors logo.",
+          "Pas de libellés en capitales hors opérateurs de filtre, ni de texte sous text-xs.",
+          "Pas de couleur codée en dur ni de couleur Tailwind nommée."
+        ]
+      }
+    },
+    "presentation": {
+      "signature": "Une diapo d'ouverture sur bg-night où l'interface du produit apparaît en fantôme à 25–35 % d'opacité derrière un titre géant text-accent-ink centré en text-display font-bold, dont un seul mot est coloré lettre par lettre en arc-en-ciel (text-spectrum-green → amber → rose → magenta → violet → blue) ; le reste du deck sur blanc pur.",
+      "typeScale": {
+        "display": "152px",
+        "title": "96px",
+        "subtitle": "42px",
+        "body": "32px",
+        "caption": "22px"
+      },
+      "rules": {
+        "do": [
+          "Un titre en text-title (96px) par diapo, qui affirme ; au plus six lignes en text-body (32px) ; sources, dates et numéros en text-caption text-muted (22px), jamais plus petit.",
+          "Arc-en-ciel uniquement sur un mot-clé de titre géant, une fois dans tout le deck.",
+          "Diapos de contenu sur bg-base blanc, titre text-ink font-semibold tracking-tight.",
+          "Attributs et catégories en chips teintés (bg-tag-*/10, texte text-ink) avec un point coloré.",
+          "Captures produit dans des cartes rounded-card shadow-card."
+        ],
+        "dont": [
+          "Pas de titre de diapo sous 96px ni de corps sous 32px : la diapo se lit à trois mètres.",
+          "Pas de bouton ni de bloc coloré : la couleur reste au logo et au mot arc-en-ciel.",
+          "Pas de fond teinté ni de halo sur les diapos claires.",
+          "Pas d'arc-en-ciel dans le corps de texte.",
+          "Pas de couleur codée en dur."
+        ]
+      }
+    }
+  }
+}

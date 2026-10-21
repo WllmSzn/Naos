@@ -1,7 +1,7 @@
 {
   "id": "artefact-plume",
   "name": "Artefact Plume",
-  "version": 1,
+  "version": 2,
   "theme": "light",
   "summary": "La structure Plumeform aux couleurs d'ARTEFACT : blanc lavande, encre indigo-noir, action indigo profond, lavande pâle en halos, dégradé de marque rouge → prune → indigo réservé au logo, au hero nuit et au bandeau final ; Manrope très gras serré, pilules et grands arrondis.",
   "bestFor": [
@@ -100,6 +100,68 @@
           "Pas de bouton à angles vifs : tout bouton est une pilule.",
           "Pas d'ombre lourde sur fond clair : shadow-card uniquement.",
           "Pas plus d'une action pleine bg-accent par bloc."
+        ]
+      }
+    },
+    "product-desktop": {
+      "signature": "Le portail client ARTEFACT en clair lavande : barre latérale bg-surface aux items en pilule, en-tête de page avec un titre Manrope text-2xl font-bold serré et l'unique pilule indigo à droite, puis une grande carte bg-base rounded-card shadow-card qui porte le tableau ; le disque de marque en dégradé (from-brand-red via-brand-plum to-brand-indigo) n'existe qu'en logo, en tête de barre latérale.",
+      "density": "comfortable",
+      "sizes": {
+        "control": "2.5rem",
+        "controlSm": "2rem",
+        "row": "2.75rem",
+        "sidebar": "16.5rem",
+        "header": "3.5rem",
+        "icon": "1.125rem"
+      },
+      "states": {
+        "selected": "bg-accent2 text-ink font-semibold",
+        "hover": "hover:bg-raised",
+        "focus": "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2",
+        "disabled": "opacity-45 cursor-not-allowed"
+      },
+      "rules": {
+        "do": [
+          "Barre latérale w-sidebar bg-surface p-3 : logo (disque en dégradé de marque size-7 + wordmark font-bold) en tête, items h-ctl px-4 rounded-ui text-sm font-medium text-muted avec icône size-icon ; l'item actif en pilule bg-accent2 text-ink.",
+          "Action principale en pilule pleine bg-accent text-accent-ink rounded-ui h-ctl px-5 text-sm font-semibold ; secondaire en pilule contour border border-line text-ink ; une seule pilule indigo par écran.",
+          "Titre de page text-2xl font-bold tracking-tight text-ink, contexte text-sm text-muted ; surtitres de groupe text-xs font-semibold uppercase tracking-widest text-muted.",
+          "Tableaux et listes dans une carte bg-base border border-line rounded-card shadow-card overflow-hidden ; lignes h-row text-sm séparées par border-line, en-têtes text-xs font-semibold text-muted.",
+          "Badges d'état en pilule : text-success bg-success/10, text-warning bg-warning/10, text-danger bg-danger/10, rounded-full px-2.5 text-xs font-semibold ; neutre en bg-raised text-muted.",
+          "Champs en pilule h-ctl bg-base border border-line rounded-ui px-4 ; zones de texte en rounded-card ; libellé text-sm font-semibold au-dessus.",
+          "États : chargement en squelettes bg-raised animate-pulse arrondis ; vide en carte bg-surface rounded-card avec une phrase text-muted et la pilule d'action ; erreur en encart role=\"alert\" border border-danger/40 text-danger avec Réessayer."
+        ],
+        "dont": [
+          "Pas de brand-red en badge, texte ou aplat : il se confondrait avec la criticité. Le dégradé de marque reste au logo.",
+          "Pas de bg-night dans l'application : le fond nuit est réservé au site.",
+          "Pas de bouton à angles vifs : tout contrôle est une pilule, toute carte un grand arrondi.",
+          "Pas d'ombre sur les lignes ni sur les items : seules les cartes de premier niveau et les menus flottants en portent.",
+          "Pas de couleur codée en dur ni de couleur Tailwind nommée : tokens et extraColors uniquement."
+        ]
+      }
+    },
+    "presentation": {
+      "signature": "Une diapo d'ouverture bg-night traversée de rideaux de lumière verticaux aux couleurs de l'icône (from-brand-red/40 via-brand-plum/25 to-brand-indigo/40, flous), titre Manrope font-extrabold serré en text-display text-inverse ; les diapos suivantes passent sur le blanc lavande bg-base avec des cartes rounded-card à liseré ring-accent2.",
+      "typeScale": {
+        "display": "152px",
+        "title": "96px",
+        "subtitle": "42px",
+        "body": "32px",
+        "caption": "22px"
+      },
+      "rules": {
+        "do": [
+          "Un titre en text-title (96px) par diapo, qui affirme ; au plus six lignes en text-body (32px) ; sources, dates et numéros en text-caption text-muted (22px), jamais plus petit.",
+          "Seules l'ouverture et la clôture passent en bg-night (text-inverse, text-inverse/70 pour le secondaire) ; le reste du deck sur bg-base.",
+          "Titres Manrope font-bold à font-extrabold, tracking-tight ; un mot-clé au plus en text-accent.",
+          "Preuves dans des cartes bg-surface rounded-card shadow-card p-12, chiffre en text-display tabular-nums.",
+          "Surtitres en text-caption font-semibold uppercase tracking-widest text-muted."
+        ],
+        "dont": [
+          "Pas de titre de diapo sous 96px ni de corps sous 32px : la diapo se lit à trois mètres.",
+          "Pas de brand-red en aplat, texte ou badge : uniquement dans le dégradé de marque.",
+          "Pas de dégradé de marque sur les cartes ou le texte.",
+          "Pas de coins vifs : pilules et grands arrondis.",
+          "Pas de texte clair sur lavande pâle."
         ]
       }
     }

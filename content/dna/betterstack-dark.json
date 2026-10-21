@@ -1,0 +1,175 @@
+{
+  "id": "betterstack-dark",
+  "name": "Better Stack Dark",
+  "version": 2,
+  "theme": "dark",
+  "summary": "Le système visuel de Better Stack : nuit bleu-marine presque noire (bg-base) pour la landing et l'authentification, ardoise marine plus claire (bg-surface) pour l'onboarding et l'app, un seul indigo plein pour l'action, Inter semi-grasse, titres d'étape bicolores (mots gris-lavande, mot-clé en blanc), tuiles sélectionnables à pastille cochée. En produit : rail d'icônes nuit + barre de section ardoise, tableaux en cartes bordées, checklist d'onboarding à cercles pointillés.",
+  "bestFor": [
+    "observability",
+    "monitoring",
+    "uptime monitoring",
+    "incident management",
+    "on-call",
+    "status page",
+    "log management",
+    "devops",
+    "saas onboarding",
+    "developer tools"
+  ],
+  "mood": [
+    "technical",
+    "calm",
+    "polished",
+    "dark",
+    "confident"
+  ],
+  "tokens": {
+    "base": "#0B0D18",
+    "surface": "#1D2231",
+    "raised": "#262C3E",
+    "line": "#363C52",
+    "ink": "#F3F4F8",
+    "muted": "#9CA2B8",
+    "accent": "#5B63D6",
+    "accentInk": "#FFFFFF",
+    "accent2": "#7B83EE",
+    "accentText": "#8E95F2",
+    "success": "#3FB97B",
+    "warning": "#E5B54A",
+    "danger": "#F47A7A"
+  },
+  "extraColors": {
+    "focus": "#8E95F2",
+    "beam": "#7B83EE",
+    "check": "#7B83EE",
+    "ongoing": "#F47A7A"
+  },
+  "dataPalette": [
+    "#7B83EE",
+    "#3FB97B",
+    "#E5B54A",
+    "#4FC3D9",
+    "#9CA2B8"
+  ],
+  "fonts": {
+    "display": "Inter",
+    "body": "Inter",
+    "mono": "JetBrains Mono",
+    "displayWeights": [
+      500,
+      600
+    ],
+    "bodyWeights": [
+      400,
+      500,
+      600
+    ]
+  },
+  "headings": {
+    "weight": 600,
+    "tracking": "-0.02em",
+    "leading": "1.12"
+  },
+  "shape": {
+    "radius": "8px",
+    "radiusLarge": "12px",
+    "borderWidth": "1px"
+  },
+  "elevation": {
+    "card": "inset 0 1px 0 rgba(255,255,255,0.03), 0 8px 24px rgba(0,0,0,0.25)",
+    "overlay": "0 0 0 1px #363C52, 0 24px 60px -16px rgba(0,0,0,0.7)"
+  },
+  "modes": {
+    "website": {
+      "signature": "Hero centré sur bg-base (nuit) : petit wordmark au-dessus, titre géant sur deux lignes (text-7xl md:text-8xl font-semibold tracking-[-0.035em]) rempli d'un dégradé vertical argenté (bg-gradient-to-b from-ink to-muted bg-clip-text text-transparent), deux faisceaux diagonaux en trame de points indigo (text-beam, opacité dégressive) qui entrent par les bords gauche et droit, puis un champ e-mail et un bouton indigo côte à côte, et une rangée de logos clients en gris dont les extrémités s'estompent.",
+      "rules": {
+        "do": [
+          "Landing et authentification sur bg-base (nuit) ; onboarding après connexion sur bg-surface (ardoise), plus clair : le changement de fond marque l'entrée dans le produit.",
+          "Fond discret : très fines étoiles/points text-muted à 10–20 % d'opacité et un halo radial bg-surface/60 flou derrière la colonne centrale ; jamais de couleur vive en fond.",
+          "Capture d'e-mail en ligne : champ h-14 bg-surface/60 border border-line rounded-ui px-5 text-base placeholder text-muted (« Your work e-mail ») + bouton bg-accent text-accent-ink h-14 px-8 font-medium rounded-ui ; dessous, text-sm text-muted avec un lien souligné text-ink (« book a demo »).",
+          "Authentification : colonne max-w-md centrée, glyphe du logo size-12, titre text-4xl font-semibold text-ink, ligne « Already have an account? » text-muted avec lien text-accent ; label text-sm text-muted au-dessus du champ ; bouton bg-accent pleine largeur h-14 ; mentions légales text-xs text-muted en bas d'écran, liens en text-ink.",
+          "Lien de retour en haut à gauche : flèche + « Back to … » text-sm text-muted.",
+          "Confirmation « Check your inbox » : adresse en font-semibold text-ink dans la phrase, raccourcis vers les clients mail en tuiles size-24 bg-surface border border-line rounded-card encadrées de deux filets dégradés horizontaux (from-transparent via-line to-transparent).",
+          "Onboarding : en-tête avec wordmark à gauche et « Sign out (email) » text-sm à droite (email text-muted) ; colonne max-w-xl alignée à gauche ; « ← Back » text-muted ; titre d'étape text-4xl font-semibold bicolore : les mots de liaison text-muted, le mot-clé en text-ink (« Where can we call you when things break? »).",
+          "Premier écran d'onboarding : sur-titre text-sm text-accent centré (« Thanks for joining ») + titre centré, formulaire dans une carte bg-raised/40 border border-line rounded-card shadow-card p-10, champs h-12 bg-surface border border-line, astérisque des champs requis dans le label.",
+          "Tuiles sélectionnables (usages, intégrations, plans) : bg-raised/40 border border-line rounded-card p-5, titre text-base font-semibold text-ink, description text-sm text-muted ; pastille ronde size-5 border border-line en haut à droite qui devient bg-accent avec coche blanche, et bordure border-accent2 ring-1 ring-accent2 quand la tuile est choisie.",
+          "Bouton principal pleine largeur h-14 bg-accent sous la carte ; désactivé en bg-accent/60 text-accent-ink/70 tant qu'aucun choix n'est fait ; action d'évitement en dessous en lien text-muted centré (« Continue without a test call »).",
+          "Écrans d'attente : glyphe dans une tuile size-16 bg-raised rounded-card, titre text-3xl, phrase text-muted, barre de progression h-1 rounded-full bg-line avec remplissage bg-accent2."
+        ],
+        "dont": [
+          "Pas de fond clair ni de section blanche, même pour le pied de page.",
+          "Pas d'indigo hors de l'action principale, des liens, des coches et de la sélection ; pas de deuxième couleur d'accent.",
+          "Pas de pilules : boutons et champs gardent rounded-ui (8px).",
+          "Pas de titre entièrement en text-ink dans l'onboarding : le contraste muted/ink porte l'emphase.",
+          "Pas d'illustration ni d'emoji : glyphes au trait et logos monochromes uniquement.",
+          "Pas de couleur codée en dur ni de couleur Tailwind nommée : tokens et extraColors uniquement."
+        ]
+      }
+    },
+    "product-desktop": {
+      "signature": "Une console ardoise marine en deux étages : rail d'icônes w-14 bg-base (nuit ; logo en haut, produits au milieu, cloche/aide/profil en bas) puis barre de section bg-surface titrée (« Uptime ») avec items à icône au trait ; zone de travail bg-surface aérée centrée max-w-6xl avec salutation en H1 (« Have a great day, Alex! »), recherche à keycap « / », bouton indigo à droite, tableau dans une carte bordée et checklist d'onboarding à cercles pointillés.",
+      "density": "comfortable",
+      "sizes": {
+        "control": "2.5rem",
+        "controlSm": "2rem",
+        "row": "3.5rem",
+        "sidebar": "16rem",
+        "header": "4rem",
+        "icon": "1.125rem"
+      },
+      "states": {
+        "selected": "bg-raised text-ink",
+        "hover": "hover:bg-raised/60",
+        "focus": "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus",
+        "disabled": "opacity-50 cursor-not-allowed"
+      },
+      "rules": {
+        "do": [
+          "Coque : rail w-14 bg-base border-r border-line avec icônes size-icon text-muted, l'actif en tuile size-9 bg-raised text-ink et barre bg-accent2 de 2px à gauche ; barre de section w-sidebar bg-surface border-r border-line p-4, titre text-lg font-semibold + bouton replier ; zone de travail bg-surface.",
+          "Items de navigation h-ctl px-3 rounded-ui text-base text-ink avec icône au trait text-muted ; actif en bg-raised ; compteur à droite en pastille bg-line text-xs tabular-nums ; sous-menu indiqué par un chevron.",
+          "En-tête de page : H1 text-3xl font-semibold text-ink, à droite un champ de recherche h-ctl bg-surface border border-line rounded-ui avec loupe et keycap « / » font-mono text-xs border border-line rounded px-1.5, puis le bouton principal bg-accent text-accent-ink h-ctl px-4.",
+          "Onglets secondaires sous le titre : icône + libellé text-base text-muted, actif text-ink, sans fond ni soulignement épais.",
+          "Tableaux dans une carte bg-surface border border-line rounded-card : en-tête h-12 text-sm text-muted, lignes h-row séparées par border-t border-line ; première colonne avec tuile d'icône size-9 rounded-ui bg-danger/15 text-danger pour un incident, nom text-ink font-medium et sous-ligne text-sm text-muted ; dates relatives text-muted ; menu « … » en fin de ligne.",
+          "Statut par point + texte : point size-2 rounded-full bg-ongoing puis « Ongoing » text-muted ; résolu en bg-success ; jamais de ligne teintée.",
+          "Checklist d'onboarding : carte bg-surface border border-line rounded-card, en-tête avec titre font-semibold et compteur « 5 out of 6 steps left » (chiffres text-ink, reste text-muted) précédé d'un anneau de progression ; étapes h-16 séparées par filets, cercle pointillé border-dashed border-muted à faire, disque bg-check avec coche et libellé text-accent une fois fait ; l'étape dépliée devient une carte bg-raised/50 border border-line avec description text-muted, bouton secondaire bg-raised border border-line et illustration de connexion à droite (deux tuiles size-20 bg-raised rounded-card reliées par des flèches text-muted).",
+          "Boutons secondaires bg-raised border border-line text-ink h-ctl px-4 rounded-ui ; tertiaires en lien text-muted hover:text-ink.",
+          "États : chargement en squelettes bg-raised animate-pulse ; vide avec glyphe, phrase text-muted et l'action indigo ; erreur en encart role=\"alert\" border border-danger/40 bg-danger/10 text-danger avec Réessayer."
+        ],
+        "dont": [
+          "Pas de grande zone bg-base dans l'app : la nuit est réservée au rail, au site et à l'authentification.",
+          "Pas plus d'un bouton indigo par écran.",
+          "Pas de fond de ligne teinté par la sévérité ou le statut.",
+          "Pas de libellés en capitales ni de texte sous text-xs.",
+          "Pas d'ombre forte sur les cartes : la bordure border-line fait la séparation.",
+          "Pas de couleur codée en dur ni de couleur Tailwind nommée."
+        ]
+      }
+    },
+    "presentation": {
+      "signature": "Une diapo d'ouverture centrée sur la nuit bg-base : titre en text-display font-semibold rempli d'un dégradé vertical argenté (bg-gradient-to-b from-ink to-muted bg-clip-text text-transparent), deux faisceaux diagonaux en trame de points indigo (text-beam) qui entrent par les bords ; les diapos de contenu passent sur l'ardoise bg-surface.",
+      "typeScale": {
+        "display": "152px",
+        "title": "96px",
+        "subtitle": "42px",
+        "body": "32px",
+        "caption": "22px"
+      },
+      "rules": {
+        "do": [
+          "Un titre en text-title (96px) par diapo, qui affirme ; au plus six lignes en text-body (32px) ; sources, dates et numéros en text-caption text-muted (22px), jamais plus petit.",
+          "Titres bicolores : les mots de liaison en text-muted, le mot-clé en text-ink.",
+          "Ouverture et clôture sur bg-base (nuit), diapos de contenu sur bg-surface (ardoise) : le changement de fond marque l'entrée dans le sujet.",
+          "Listes d'étapes avec cercles pointillés border-dashed border-muted et coches bg-check pleines pour ce qui est fait.",
+          "Chiffres en text-display tabular-nums, unité en text-subtitle text-muted."
+        ],
+        "dont": [
+          "Pas de titre de diapo sous 96px ni de corps sous 32px : la diapo se lit à trois mètres.",
+          "Pas de fond clair.",
+          "Pas d'indigo hors de l'action, des coches et des faisceaux.",
+          "Pas de dégradé argenté ailleurs que sur le titre d'ouverture.",
+          "Pas de pilules."
+        ]
+      }
+    }
+  }
+}

@@ -52,7 +52,7 @@ test('googleFontsUrl fusionne les familles identiques', () => {
 
 const cases: Array<[string, Parameters<typeof suggestDna>[1]]> = [
   ['linen-ledger', { product: 'tableau de bord de facturation pour cabinet comptable' }],
-  ['graphite-console', { product: 'console de monitoring pour équipe devops' }],
+  ['betterstack-dark', { product: 'console de monitoring pour équipe devops' }],
   ['signal-clinic', { product: 'portail patient de téléconsultation', mood: 'rassurant' }],
   ['poster-block', { product: 'landing page pour un festival de musique', mood: 'audacieux' }],
   ['gallery-noir', { product: 'portfolio de photographe', theme: 'dark' }],

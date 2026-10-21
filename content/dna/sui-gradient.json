@@ -1,7 +1,7 @@
 {
   "id": "sui-gradient",
   "name": "Sui Gradient",
-  "version": 1,
+  "version": 2,
   "theme": "dark",
   "summary": "Base noire et grotesque fine inspirées de sui.io, réchauffées par un dégradé rouge, violet, bleu réservé au moment fort.",
   "bestFor": [
@@ -27,7 +27,7 @@
     "raised": "#1F2124",
     "line": "#242424",
     "ink": "#FFFFFF",
-    "muted": "#78808E",
+    "muted": "#838A97",
     "accent": "#D93A3F",
     "accentInk": "#FFFFFF",
     "accent2": "#2276D6",
@@ -88,6 +88,67 @@
           "Pas de section à fond clair.",
           "Ne pas employer le rouge accent pour signaler une erreur : les erreurs utilisent danger avec une icône et un libellé.",
           "Pas d'ombres portées sur les cartes : bordures border-line uniquement."
+        ]
+      }
+    },
+    "product-desktop": {
+      "signature": "Une console noire à angles droits : en-tête de page avec un titre Inter text-4xl font-normal très serré dont un seul mot porte le dégradé rouge → bleu (bg-gradient-to-r from-accent to-accent2 bg-clip-text text-transparent), un filet dégradé de 1px sous l'en-tête, puis des panneaux bg-surface carrés bordés de border-line et l'action principale en aplat rouge.",
+      "density": "compact",
+      "sizes": {
+        "control": "2rem",
+        "controlSm": "1.75rem",
+        "row": "2.25rem",
+        "sidebar": "15rem",
+        "header": "3rem",
+        "icon": "1rem"
+      },
+      "states": {
+        "selected": "bg-raised text-ink",
+        "hover": "hover:bg-surface",
+        "focus": "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent2",
+        "disabled": "opacity-40 cursor-not-allowed"
+      },
+      "rules": {
+        "do": [
+          "Le dégradé from-accent to-accent2 n'apparaît qu'une fois par écran : un mot du titre de page ou un filet de 1px sous l'en-tête.",
+          "Barre latérale w-sidebar bg-surface border-r border-line p-2 : pictogrammes au trait dans des carrés bg-raised size-6, items h-row px-2 rounded-ui text-sm text-ink ; l'actif en bg-raised.",
+          "Panneaux et cartes à angles droits (rounded-card = 0) bg-surface border border-line ; contrôles légèrement arrondis (rounded-ui).",
+          "Titres en poids normal très serrés (font-normal tracking-tight) ; labels et chiffres en font-mono text-xs tabular-nums text-muted.",
+          "Action principale bg-accent text-accent-ink rounded-ui h-ctl px-4 ; secondaires en contour border border-line text-ink.",
+          "Tableaux : lignes h-row border-b border-line text-sm, survol bg-surface.",
+          "États : squelettes bg-raised animate-pulse ; vide en text-muted avec l'action ; erreur en encart role=\"alert\" border border-danger/40 text-danger."
+        ],
+        "dont": [
+          "Pas de dégradé en fond de carte, de bouton ou de panneau.",
+          "Pas d'orbe floue ni de verre dépoli.",
+          "Pas de fond clair.",
+          "Pas de titre en gras : le poids normal fait l'identité."
+        ]
+      }
+    },
+    "presentation": {
+      "signature": "Une diapo noire au titre Inter font-normal très serré en text-display, dont un seul mot est rempli par le dégradé rouge → bleu (bg-gradient-to-r from-accent to-accent2 bg-clip-text text-transparent), au-dessus d'un visuel de rayons lumineux (data-image) aux mêmes teintes ; les autres diapos à angles droits, sans dégradé.",
+      "typeScale": {
+        "display": "160px",
+        "title": "100px",
+        "subtitle": "44px",
+        "body": "34px",
+        "caption": "24px"
+      },
+      "rules": {
+        "do": [
+          "Un titre en text-title (100px) par diapo, qui affirme ; au plus six lignes en text-body (34px) ; sources, dates et numéros en text-caption text-muted (24px), jamais plus petit.",
+          "Le dégradé une seule fois par diapo, sur un mot ou un filet de 2px.",
+          "Titres font-normal tracking-[-0.045em] ; labels en font-mono text-caption uppercase text-muted.",
+          "Encarts à angles droits bg-surface border border-line.",
+          "Chiffres en text-display font-normal tabular-nums."
+        ],
+        "dont": [
+          "Pas de titre de diapo sous 100px ni de corps sous 34px : la diapo se lit à trois mètres.",
+          "Pas de dégradé en fond de diapo, de carte ou de forme.",
+          "Pas d'orbe floue ni de verre.",
+          "Pas de fond clair.",
+          "Pas de titre en gras."
         ]
       }
     }

@@ -1,6 +1,7 @@
 {
   "id": "daylight-product",
   "name": "Daylight Product",
+  "version": 2,
   "theme": "light",
   "summary": "Le site produit sûr de lui : fond blanc, grands titres grotesques serrés, un seul bleu franc et beaucoup d'air. La hiérarchie fait tout le travail.",
   "bestFor": [
@@ -116,6 +117,41 @@
           "Pas d'ombres, pas de cartes flottantes, pas de dégradé décoratif : la hiérarchie fait tout.",
           "Pas plus d'une couleur vive, l'accent, et jamais en aplat plein sur une diapo de texte.",
           "Pas de texte d'appui de plus d'une ligne sous un titre de diapo."
+        ]
+      }
+    },
+    "product-desktop": {
+      "signature": "Un tableau de bord blanc et aéré : titre de page Inter Tight text-3xl font-semibold serré avec un mot-clé en text-accent, rangée de trois statistiques sur bg-surface rounded-card sans ombre (chiffre text-4xl font-semibold tabular-nums, légende text-sm text-muted), puis un tableau sur fond blanc aux lignes généreuses ; l'action principale est une pilule bleue avec sa flèche dans un petit cercle.",
+      "density": "comfortable",
+      "sizes": {
+        "control": "2.5rem",
+        "controlSm": "2rem",
+        "row": "2.75rem",
+        "sidebar": "16rem",
+        "header": "3.5rem",
+        "icon": "1.125rem"
+      },
+      "states": {
+        "selected": "bg-surface text-ink font-medium",
+        "hover": "hover:bg-surface",
+        "focus": "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2",
+        "disabled": "opacity-45 cursor-not-allowed"
+      },
+      "rules": {
+        "do": [
+          "Barre latérale w-sidebar bg-base border-r border-line p-4 : items h-ctl px-4 rounded-ui (pilule) text-sm text-muted ; l'actif en bg-surface text-ink font-medium.",
+          "Boutons en pilule : principal bg-accent text-accent-ink h-ctl px-5 avec flèche dans un cercle bg-accent-ink/20 ; secondaire en contour border border-line text-ink ; champs en pilule aussi.",
+          "Hiérarchie : titre de page text-3xl font-semibold tracking-tight, sur-titre text-xs uppercase tracking-widest text-muted, titres de carte text-base font-semibold.",
+          "Cartes bg-surface rounded-card p-6 sans bordure ni ombre ; le contenu dense (tableau, liste) sur bg-base pour garder du contraste.",
+          "Tableaux : lignes h-row border-b border-line text-sm, en-têtes text-xs text-muted, montants à droite en tabular-nums.",
+          "Graphiques : série principale en accent, comparaison en accent2 ; légendes text-sm text-muted.",
+          "États : squelettes bg-raised animate-pulse arrondis ; vide en carte bg-surface avec une phrase et la pilule d'action ; erreur en encart role=\"alert\" border border-danger/40 text-danger."
+        ],
+        "dont": [
+          "Pas d'ombres sur les cartes : bg-surface et l'espace séparent.",
+          "Pas de deuxième couleur vive dans l'interface : accent2 reste aux graphiques.",
+          "Pas de densité serrée : l'écran respire, une zone de travail principale à la fois.",
+          "Pas de titres en gras extrême."
         ]
       }
     }

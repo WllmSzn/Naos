@@ -1,6 +1,7 @@
 {
   "id": "field-notes",
   "name": "Field Notes",
+  "version": 2,
   "theme": "light",
   "summary": "Chaleureux et tactile, comme un carnet de marché : terracotta, vert sauge, typographie ronde et généreuse.",
   "bestFor": [
@@ -86,6 +87,67 @@
           "Pas de coins carrés sur les images et les cartes.",
           "Pas d'images génériques de bureau ou de personnes en costume.",
           "Pas de graphiques complexes : chiffres simples et visuels."
+        ]
+      }
+    },
+    "product-desktop": {
+      "signature": "Un back-office de boutique chaleureux : fond papier bg-base, cartes blanches à l'ombre plate (shadow-card), en-tête de page en Bricolage Grotesque text-3xl, et une grille de fiches produit avec vignette photo arrondie, prix en display semi-gras et une étiquette « coup de cœur » teintée accent2 sur la meilleure vente.",
+      "density": "comfortable",
+      "sizes": {
+        "control": "2.75rem",
+        "controlSm": "2rem",
+        "row": "3rem",
+        "sidebar": "16rem",
+        "header": "3.5rem",
+        "icon": "1.125rem"
+      },
+      "states": {
+        "selected": "bg-raised text-ink font-semibold",
+        "hover": "hover:bg-raised/70",
+        "focus": "focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-accent/40",
+        "disabled": "opacity-50 cursor-not-allowed"
+      },
+      "rules": {
+        "do": [
+          "Barre latérale w-sidebar bg-base border-r border-line p-3 : items h-ctl px-3 rounded-ui text-sm font-medium text-muted ; l'actif en bg-raised text-ink.",
+          "Boutons pleins et arrondis h-ctl px-5 rounded-ui avec un verbe concret (« Publier la fiche ») : principal bg-accent text-accent-ink, secondaire bg-raised text-ink.",
+          "Cartes bg-surface border border-line rounded-card shadow-card p-5 ; vignettes photo data-image arrondies rounded-ui.",
+          "Prix et montants en font-display font-semibold tabular-nums, alignés à droite ; ancien prix barré text-muted line-through.",
+          "Étiquettes en pilule bg-accent2/15 text-ink ou bg-raised text-ink, text-xs font-medium.",
+          "Tableaux de commandes : lignes h-row border-b border-line, numéro en font-mono text-xs text-muted, statut en étiquette.",
+          "États : squelettes bg-raised animate-pulse arrondis ; vide avec une phrase chaleureuse et l'action ; erreur en encart role=\"alert\" border border-danger/40 text-danger."
+        ],
+        "dont": [
+          "Pas de bleu vif, de violet ni de néon.",
+          "Pas de noir ni de blanc purs en fond de page.",
+          "Pas de coins carrés sur cartes, images et boutons.",
+          "Pas de densité de console : le back-office reste lisible et généreux."
+        ]
+      }
+    },
+    "presentation": {
+      "signature": "Une diapo chaleureuse sur papier bg-base : titre Bricolage Grotesque en text-title à gauche, à droite une grande photo data-image aux coins radiusLarge, et une étiquette manuscrite « coup de cœur » en accent2 posée sur la photo.",
+      "typeScale": {
+        "display": "136px",
+        "title": "88px",
+        "subtitle": "40px",
+        "body": "32px",
+        "caption": "22px"
+      },
+      "rules": {
+        "do": [
+          "Un titre en text-title (88px) par diapo, qui affirme ; au plus six lignes en text-body (32px) ; sources, dates et numéros en text-caption text-muted (22px), jamais plus petit.",
+          "Photos réelles, lumineuses et chaudes, aux grands arrondis rounded-card.",
+          "Prix et chiffres en font-display font-semibold tabular-nums ; ancien prix barré text-muted.",
+          "Étiquettes et puces en bg-accent2/15 ou bg-raised, texte text-ink.",
+          "Cartes blanches bg-surface rounded-card shadow-card p-12 sur le papier."
+        ],
+        "dont": [
+          "Pas de titre de diapo sous 88px ni de corps sous 32px : la diapo se lit à trois mètres.",
+          "Pas de bleu vif, violet ou néon.",
+          "Pas de noir ni de blanc purs en fond.",
+          "Pas de coin carré.",
+          "Pas de photo froide ou de banque d'images générique."
         ]
       }
     }

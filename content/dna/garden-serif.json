@@ -1,6 +1,7 @@
 {
   "id": "garden-serif",
   "name": "Garden Serif",
+  "version": 2,
   "theme": "light",
   "summary": "Une tech qui a de la poésie : blanc cassé, serif légère et élégante, bleu céruléen, et de grandes images-paysages où le texte flotte sur du verre dépoli.",
   "bestFor": [
@@ -89,6 +90,67 @@
           "Pas de densité : jamais plus de trois blocs de contenu visibles en même temps.",
           "Pas de verre dépoli sur fond uni (il ne se voit pas et réduit le contraste).",
           "Pas d'icônes en pastilles colorées ni d'illustrations vectorielles génériques."
+        ]
+      }
+    },
+    "product-desktop": {
+      "signature": "Un espace de travail calme : en-tête de page avec un titre Newsreader text-4xl font-normal dont la fin passe en text-muted, une colonne de contenu étroite (max-w-3xl) au centre, et un panneau latéral de contexte bg-raised rounded-card ; le céruléen ne sert qu'au bouton principal et aux liens.",
+      "density": "comfortable",
+      "sizes": {
+        "control": "2.5rem",
+        "controlSm": "2rem",
+        "row": "2.75rem",
+        "sidebar": "16rem",
+        "header": "3.5rem",
+        "icon": "1.125rem"
+      },
+      "states": {
+        "selected": "bg-raised text-ink",
+        "hover": "hover:bg-raised/70",
+        "focus": "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2",
+        "disabled": "opacity-45 cursor-not-allowed"
+      },
+      "rules": {
+        "do": [
+          "Barre latérale w-sidebar bg-base border-r border-line p-4 : items h-ctl px-3 rounded-ui text-sm text-muted ; l'actif en bg-raised text-ink.",
+          "Titres de page et de section en serif (font-display font-normal), jamais en gras ; texte d'interface en Hanken Grotesk text-sm leading-normal.",
+          "Lecture en deux temps dans les titres : la fin de la phrase en text-muted.",
+          "Cartes bg-surface border border-line rounded-card p-6, ombre presque nulle (shadow-card) ; colonnes de texte max-w-prose.",
+          "Action principale bg-accent text-accent-ink rounded-ui h-ctl px-4 ; secondaire en contour border border-line ; liens text-accent.",
+          "Tableaux aérés : lignes h-row border-b border-line, en-têtes text-xs text-muted, valeurs techniques en font-mono text-xs.",
+          "États : squelettes bg-raised animate-pulse ; vide en une phrase serif et une action ; erreur en encart role=\"alert\" border border-danger/40 text-danger."
+        ],
+        "dont": [
+          "Pas de couleur saturée en aplat : le céruléen reste ponctuel.",
+          "Pas de serif en gras ni en italique décoratif.",
+          "Pas de verre dépoli dans l'application : il est réservé aux cartes posées sur une image du site.",
+          "Pas plus de trois zones de contenu visibles en même temps."
+        ]
+      }
+    },
+    "presentation": {
+      "signature": "Une image-paysage plein cadre sur laquelle est posée une carte en verre dépoli (bg-surface/20 backdrop-blur) portant le titre Newsreader léger en text-title et une ligne d'appui ; la fin du titre passe en text-muted pour une lecture en deux temps.",
+      "typeScale": {
+        "display": "144px",
+        "title": "96px",
+        "subtitle": "42px",
+        "body": "32px",
+        "caption": "22px"
+      },
+      "rules": {
+        "do": [
+          "Un titre en text-title (96px) par diapo, qui affirme ; au plus six lignes en text-body (32px) ; sources, dates et numéros en text-caption text-muted (22px), jamais plus petit.",
+          "Titres en serif légère (font-display font-light ou font-normal), jamais en gras.",
+          "Lecture en deux temps : la fin du titre en text-muted.",
+          "Une idée par diapo, colonne de texte étroite, beaucoup de vide.",
+          "Le verre dépoli seulement pour une carte posée sur une image."
+        ],
+        "dont": [
+          "Pas de titre de diapo sous 96px ni de corps sous 32px : la diapo se lit à trois mètres.",
+          "Pas de couleur saturée en aplat : le céruléen reste aux liens et aux graphiques.",
+          "Pas de serif en gras ni d'italique décoratif.",
+          "Pas plus de trois blocs sur une diapo.",
+          "Pas de texte directement sur une image chargée sans sa carte de verre."
         ]
       }
     }

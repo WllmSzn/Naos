@@ -1,7 +1,7 @@
 {
   "id": "plumeform",
   "name": "Plumeform",
-  "version": 1,
+  "version": 2,
   "theme": "light",
   "summary": "SaaS chaleureux et soigné : crème cassé, encre vert-noir, sarcelle profonde pour l'action, menthe pâle en halos diffus, Manrope très gras serré, tout en pilules et grands arrondis, ouverture sur un hero vert nuit.",
   "bestFor": [
@@ -100,6 +100,67 @@
           "Pas d'ombre lourde et sombre sur fond crème : shadow-card uniquement ; shadow-overlay pour les cadres posés sur bg-night.",
           "Pas de police serif ou décorative : tout est en Manrope.",
           "Pas plus d'une action pleine bg-accent par bloc."
+        ]
+      }
+    },
+    "product-desktop": {
+      "signature": "Une application crème et soignée : barre latérale bg-surface aux items en pilule (l'actif en bg-accent2 text-ink), titre de page Manrope text-2xl font-bold serré, une grande carte bg-base rounded-card shadow-card qui porte la donnée, et un halo menthe diffus sous la carte de démarrage (bg-accent2 blur-3xl) ; une seule pilule sarcelle pleine par écran.",
+      "density": "comfortable",
+      "sizes": {
+        "control": "2.5rem",
+        "controlSm": "2rem",
+        "row": "2.75rem",
+        "sidebar": "16.5rem",
+        "header": "3.5rem",
+        "icon": "1.125rem"
+      },
+      "states": {
+        "selected": "bg-accent2 text-ink font-semibold",
+        "hover": "hover:bg-raised",
+        "focus": "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2",
+        "disabled": "opacity-45 cursor-not-allowed"
+      },
+      "rules": {
+        "do": [
+          "Barre latérale w-sidebar bg-surface p-3 : items h-ctl px-4 rounded-ui text-sm font-medium text-muted ; l'actif en pilule bg-accent2 text-ink.",
+          "Action principale en pilule bg-accent text-accent-ink h-ctl px-5 text-sm font-semibold ; secondaire en pilule bg-surface text-ink border border-line.",
+          "Titres en Manrope gras et serrés : page text-2xl font-bold tracking-tight ; carte text-base font-bold ; surtitres text-xs font-semibold uppercase tracking-widest text-muted.",
+          "Données dans des cartes bg-base border border-line rounded-card shadow-card overflow-hidden ; lignes h-row text-sm border-b border-line.",
+          "Badges en pilule rounded-full px-2.5 text-xs font-semibold : text-success bg-success/10, text-warning bg-warning/10, text-danger bg-danger/10, ou bg-accent2 text-ink pour le neutre positif.",
+          "Champs en pilule h-ctl bg-base border border-line px-4 ; zones de texte rounded-card.",
+          "États : squelettes bg-raised animate-pulse arrondis ; vide en carte avec halo menthe et l'action ; erreur en encart role=\"alert\" border border-danger/40 text-danger."
+        ],
+        "dont": [
+          "Pas de bg-night dans l'application : réservé au site.",
+          "Pas de bouton à angles vifs.",
+          "Pas de texte clair sur menthe, ni de menthe en texte.",
+          "Pas de couleur codée en dur ni de couleur Tailwind nommée."
+        ]
+      }
+    },
+    "presentation": {
+      "signature": "Une diapo d'ouverture vert nuit (bg-night) traversée de rideaux de lumière sarcelle verticaux, titre Manrope font-extrabold serré en text-display text-inverse ; les diapos suivantes sur le crème bg-base, preuves dans des cadres rounded-card au liseré menthe (ring-accent2).",
+      "typeScale": {
+        "display": "152px",
+        "title": "96px",
+        "subtitle": "42px",
+        "body": "32px",
+        "caption": "22px"
+      },
+      "rules": {
+        "do": [
+          "Un titre en text-title (96px) par diapo, qui affirme ; au plus six lignes en text-body (32px) ; sources, dates et numéros en text-caption text-muted (22px), jamais plus petit.",
+          "Seules l'ouverture et la clôture en bg-night (text-inverse, text-inverse/70) ; le reste sur bg-base crème.",
+          "Titres Manrope font-bold à font-extrabold, tracking-tight.",
+          "Halos menthe diffus sous la carte de preuve, jamais derrière du texte.",
+          "Surtitres en text-caption font-semibold uppercase tracking-widest text-muted."
+        ],
+        "dont": [
+          "Pas de titre de diapo sous 96px ni de corps sous 32px : la diapo se lit à trois mètres.",
+          "Pas de texte clair sur menthe ni de menthe en texte.",
+          "Pas de coin vif.",
+          "Pas plus de deux diapos bg-night dans le deck.",
+          "Pas de couleur codée en dur."
         ]
       }
     }

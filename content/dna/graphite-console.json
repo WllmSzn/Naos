@@ -1,6 +1,7 @@
 {
   "id": "graphite-console",
   "name": "Graphite Console",
+  "version": 2,
   "theme": "dark",
   "summary": "Un outil sombre et dense, pensé pour les gens qui le gardent ouvert toute la journée : précision, raccourcis clavier, zéro décoration gratuite.",
   "bestFor": [
@@ -84,6 +85,67 @@
           "Pas d'icônes colorées en pastille : icônes au trait, couleur muted, qui passent en ink au survol.",
           "Pas de titres géants : le titre de page ne dépasse pas 20px.",
           "Pas plus de deux couleurs vives sur un même écran, hors graphiques."
+        ]
+      }
+    },
+    "product-desktop": {
+      "signature": "Une console sombre et dense : barre de commande ⌘K en haut (champ font-mono text-sm avec keycap), bandeau de statut en mono avec un point d'état lumineux (bg-success et halo ring-4 ring-success/20), puis un tableau de lignes h-row où durées, versions et horodatages sont en font-mono tabular-nums ; l'ambre n'apparaît que sur l'action principale.",
+      "density": "compact",
+      "sizes": {
+        "control": "2rem",
+        "controlSm": "1.75rem",
+        "row": "2.25rem",
+        "sidebar": "14rem",
+        "header": "2.75rem",
+        "icon": "1rem"
+      },
+      "states": {
+        "selected": "bg-raised text-ink",
+        "hover": "hover:bg-surface",
+        "focus": "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent",
+        "disabled": "opacity-40 cursor-not-allowed"
+      },
+      "rules": {
+        "do": [
+          "Zones séparées par des filets border-line et des changements de surface (bg-base, bg-surface, bg-raised), jamais par des ombres.",
+          "Barre latérale w-sidebar bg-surface border-r border-line p-2 : items h-row px-2 rounded-ui text-sm text-muted, icônes au trait ; l'actif en bg-raised text-ink.",
+          "Identifiants, durées, versions, horodatages et chiffres en font-mono tabular-nums ; corps text-sm (13 à 14px).",
+          "Raccourcis clavier en keycaps font-mono text-xs border border-line rounded px-1 à côté des actions et dans les menus.",
+          "Action principale bg-accent text-accent-ink rounded-ui h-ctl px-3 text-sm font-semibold ; secondaires bg-raised text-ink border border-line.",
+          "Points d'état size-2 rounded-full bg-success / bg-warning / bg-danger devant le libellé, sans fond de ligne teinté.",
+          "États : squelettes bg-raised animate-pulse aux formes des lignes ; vide avec la commande à taper ; erreur en encart role=\"alert\" border border-danger/40 text-danger avec Réessayer et le code d'erreur en mono."
+        ],
+        "dont": [
+          "Pas de dégradé, de glassmorphism ni d'illustration.",
+          "Pas de fond clair, même pour un encart ou un dialogue.",
+          "Pas d'icônes colorées en pastille : icônes au trait text-muted, text-ink au survol.",
+          "Pas d'ambre en dehors de l'action principale et du focus."
+        ]
+      }
+    },
+    "presentation": {
+      "signature": "Une diapo de démonstration sombre : en haut un bandeau de statut font-mono avec un point d'état lumineux, au centre une commande ⌘K en text-subtitle font-mono et sa keycap, et le résultat chiffré en text-display font-mono tabular-nums ; l'ambre seulement sur le chiffre qui compte.",
+      "typeScale": {
+        "display": "144px",
+        "title": "88px",
+        "subtitle": "40px",
+        "body": "32px",
+        "caption": "22px"
+      },
+      "rules": {
+        "do": [
+          "Un titre en text-title (88px) par diapo, qui affirme ; au plus six lignes en text-body (32px) ; sources, dates et numéros en text-caption text-muted (22px), jamais plus petit.",
+          "Chiffres, durées, versions et horodatages en font-mono tabular-nums.",
+          "Raccourcis en keycaps font-mono border border-line rounded px-3.",
+          "Zones séparées par des filets border-line et des changements de surface.",
+          "Fond bg-base, encarts bg-surface border border-line rounded-card."
+        ],
+        "dont": [
+          "Pas de titre de diapo sous 88px ni de corps sous 32px : la diapo se lit à trois mètres.",
+          "Pas de dégradé, de verre ni d'illustration.",
+          "Pas de fond clair.",
+          "Pas d'ambre décoratif : un seul usage par diapo.",
+          "Pas de capture de terminal entière : la ligne qui prouve, agrandie."
         ]
       }
     }

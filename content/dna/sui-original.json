@@ -1,7 +1,7 @@
 {
   "id": "sui-original",
   "name": "Sui Original",
-  "version": 1,
+  "version": 2,
   "theme": "dark",
   "summary": "Le système visuel de sui.io tel que scanné : noir profond, grotesque fine et très serrée, un seul bleu franc, conteneurs à angles droits.",
   "bestFor": [
@@ -27,7 +27,7 @@
     "raised": "#1F2124",
     "line": "#242424",
     "ink": "#FFFFFF",
-    "muted": "#78808E",
+    "muted": "#838A97",
     "accent": "#2276D6",
     "accentInk": "#FFFFFF",
     "accent2": "#94C6FF",
@@ -85,6 +85,67 @@
           "Pas de section à fond clair.",
           "Pas d'ombres portées sur les cartes : bordures border-line uniquement.",
           "Pas de seconde couleur vive en dehors des états success, warning et danger."
+        ]
+      }
+    },
+    "product-desktop": {
+      "signature": "Une console noire à angles droits et un seul bleu : en-tête de page avec un titre Inter text-4xl font-normal très serré et un sur-titre font-mono text-accent, panneaux bg-surface carrés bordés de border-line, et l'action principale en aplat bleu accolée à une action secondaire en contour.",
+      "density": "compact",
+      "sizes": {
+        "control": "2rem",
+        "controlSm": "1.75rem",
+        "row": "2.25rem",
+        "sidebar": "15rem",
+        "header": "3rem",
+        "icon": "1rem"
+      },
+      "states": {
+        "selected": "bg-raised text-ink",
+        "hover": "hover:bg-surface",
+        "focus": "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent",
+        "disabled": "opacity-40 cursor-not-allowed"
+      },
+      "rules": {
+        "do": [
+          "Un seul bleu : bg-accent pour l'action principale, text-accent pour les sur-titres et l'élément actif ; rien d'autre n'est coloré hors états.",
+          "Barre latérale w-sidebar bg-surface border-r border-line p-2 : pictogrammes au trait dans des carrés bg-raised size-6, items h-row px-2 rounded-ui text-sm text-ink.",
+          "Panneaux à angles droits (rounded-card = 0) bg-surface border border-line ; contrôles rounded-ui.",
+          "Sur-titres, chiffres techniques et labels en font-mono text-xs uppercase tracking-wider text-muted ; titres font-normal tracking-tight.",
+          "Tableaux : lignes h-row border-b border-line text-sm, adresses et hash en font-mono tronqués au milieu avec infobulle.",
+          "Actions accolées : principale bg-accent text-accent-ink rounded-ui h-ctl px-4, secondaire border border-line text-ink juste à côté.",
+          "États : squelettes bg-raised animate-pulse ; vide en text-muted avec l'action ; erreur en encart role=\"alert\" border border-danger/40 text-danger."
+        ],
+        "dont": [
+          "Pas de dégradé de couleur.",
+          "Pas de fond clair.",
+          "Pas d'ombre sur les cartes : bordures border-line uniquement.",
+          "Pas de titre en gras."
+        ]
+      }
+    },
+    "presentation": {
+      "signature": "Une diapo noire au titre blanc Inter font-normal très serré en text-display, centré sur un visuel de rayons lumineux bleus (data-image), avec un sur-titre font-mono text-accent ; le bleu porte l'unique chiffre ou mot qui compte.",
+      "typeScale": {
+        "display": "160px",
+        "title": "100px",
+        "subtitle": "44px",
+        "body": "34px",
+        "caption": "24px"
+      },
+      "rules": {
+        "do": [
+          "Un titre en text-title (100px) par diapo, qui affirme ; au plus six lignes en text-body (34px) ; sources, dates et numéros en text-caption text-muted (24px), jamais plus petit.",
+          "Un seul bleu : sur-titre, chiffre clé ou barre principale d'un graphique.",
+          "Titres font-normal tracking-[-0.045em].",
+          "Encarts à angles droits bg-surface border border-line.",
+          "Labels et sources en font-mono text-caption uppercase text-muted."
+        ],
+        "dont": [
+          "Pas de titre de diapo sous 100px ni de corps sous 34px : la diapo se lit à trois mètres.",
+          "Pas de dégradé de couleur.",
+          "Pas de fond clair.",
+          "Pas d'ombre portée.",
+          "Pas de titre en gras."
         ]
       }
     }

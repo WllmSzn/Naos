@@ -1,6 +1,7 @@
 {
   "id": "cobalt-night",
   "name": "Cobalt Night",
+  "version": 2,
   "theme": "dark",
   "summary": "Un produit sérieux qui ose : noir profond, titres géants, un mot en serif au milieu de la grotesque, et des aplats cobalt pour les preuves.",
   "bestFor": [
@@ -116,6 +117,41 @@
           "Pas de fond clair, même pour une diapo de citation ou de clôture.",
           "Pas de dégradés violets ni de halos flous : la couleur vient des aplats cobalt.",
           "Pas d'ombre portée sur les cartes ni sur les images : bordures fines uniquement."
+        ]
+      }
+    },
+    "product-desktop": {
+      "signature": "Une console noire où le seul aplat de couleur est le cobalt : un rang de trois KPI dont le principal est posé sur bg-accent plein (chiffre text-3xl font-semibold tabular-nums en text-accent-ink), les autres en cartes bg-surface border border-line, au-dessus d'un tableau dense aux identifiants en font-mono ; un seul mot du titre de page en font-accent.",
+      "density": "compact",
+      "sizes": {
+        "control": "2rem",
+        "controlSm": "1.75rem",
+        "row": "2.25rem",
+        "sidebar": "15rem",
+        "header": "3rem",
+        "icon": "1rem"
+      },
+      "states": {
+        "selected": "bg-raised text-ink",
+        "hover": "hover:bg-surface",
+        "focus": "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent",
+        "disabled": "opacity-40 cursor-not-allowed"
+      },
+      "rules": {
+        "do": [
+          "Barre latérale w-sidebar bg-base border-r border-line p-2 : items h-row px-2 rounded-ui text-sm text-muted, icônes au trait ; l'actif en bg-raised text-ink.",
+          "Titre de page text-2xl font-semibold tracking-tight, avec au plus un mot en font-accent (serif, poids normal) ; jamais de font-accent ailleurs dans l'écran.",
+          "Un seul aplat bg-accent par écran : le KPI principal ou le bouton d'action, pas les deux côte à côte.",
+          "Labels, horodatages, identifiants et colonnes chiffrées en font-mono text-xs tabular-nums ; en-têtes de tableau font-mono text-xs uppercase tracking-wider text-muted.",
+          "Tableaux sur bg-base, lignes h-row séparées par border-line, survol en bg-surface ; pas de zébrage.",
+          "Panneaux et dialogues bg-surface border border-line rounded-card ; menus flottants avec shadow-overlay.",
+          "États : squelettes bg-raised animate-pulse ; vide en texte text-muted avec l'action ; erreur en encart role=\"alert\" border border-danger/40 text-danger avec Réessayer."
+        ],
+        "dont": [
+          "Pas de fond clair, même pour un encart ou un dialogue.",
+          "Pas de dégradé violet ni de halo : accent2 sert aux graphiques uniquement.",
+          "Pas d'ombre sur les cartes : bordures fines.",
+          "Pas plus d'un mot en font-accent par écran."
         ]
       }
     }
