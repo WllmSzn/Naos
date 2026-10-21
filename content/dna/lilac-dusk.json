@@ -1,0 +1,154 @@
+{
+  "id": "lilac-dusk",
+  "name": "Lilac Dusk",
+  "version": 1,
+  "theme": "dark",
+  "summary": "Fintech nocturne et feutrée inspirée de Fey : noir bleuté profond, titres centrés en grotesque semi-grasse traversés d'un dégradé lilas → abricot, halo de lumière diffus derrière l'unique bloc d'action, pilules claires, keycaps inline et palette de commandes ⌘K. En produit : panneaux sombres très arrondis, données en ticks vert/rose, dock flottant en bas d'écran.",
+  "bestFor": [
+    "fintech",
+    "investing app",
+    "market research tool",
+    "trading dashboard",
+    "premium saas onboarding",
+    "keyboard-first product",
+    "command palette",
+    "waitlist",
+    "product launch",
+    "ai research assistant"
+  ],
+  "mood": [
+    "premium",
+    "calm",
+    "cinematic",
+    "dark",
+    "polished"
+  ],
+  "tokens": {
+    "base": "#0E0E13",
+    "surface": "#18181E",
+    "raised": "#24242B",
+    "line": "#2C2C34",
+    "ink": "#F2F2F5",
+    "muted": "#8D8D99",
+    "accent": "#E9E9EE",
+    "accentInk": "#111116",
+    "accent2": "#A9A2F2",
+    "accentText": "#F2F2F5",
+    "success": "#4FC596",
+    "warning": "#E4B85C",
+    "danger": "#EE6A7E"
+  },
+  "extraColors": {
+    "grad-from": "#A9A2F2",
+    "grad-mid": "#D9C6E6",
+    "grad-to": "#EDA886",
+    "gain": "#4FC596",
+    "loss": "#EE6A7E",
+    "focus": "#5B8CFF"
+  },
+  "dataPalette": [
+    "#A9A2F2",
+    "#4FC596",
+    "#EDA886",
+    "#8D8D99",
+    "#5B8CFF"
+  ],
+  "fonts": {
+    "display": "Hanken Grotesk",
+    "body": "Hanken Grotesk",
+    "mono": "JetBrains Mono",
+    "displayWeights": [
+      600,
+      700
+    ],
+    "bodyWeights": [
+      400,
+      500,
+      600
+    ]
+  },
+  "headings": {
+    "weight": 600,
+    "tracking": "-0.02em",
+    "leading": "1.1"
+  },
+  "shape": {
+    "radius": "10px",
+    "radiusLarge": "20px",
+    "borderWidth": "1px"
+  },
+  "elevation": {
+    "card": "0 0 0 1px rgba(255,255,255,0.04), 0 24px 60px rgba(0,0,0,0.45)",
+    "overlay": "0 0 0 1px rgba(255,255,255,0.06), 0 20px 60px rgba(0,0,0,0.6)"
+  },
+  "modes": {
+    "website": {
+      "signature": "Titres centrés en grotesque semi-grasse (text-5xl md:text-6xl font-semibold tracking-tight) dont le texte est un dégradé horizontal lilas → abricot (bg-gradient-to-r from-grad-from via-grad-mid to-grad-to bg-clip-text text-transparent), posés au-dessus d'un unique bloc d'action baigné d'un halo vertical flou (bg-raised blur-3xl opacity-60) ; une invitation clavier inline « Press [T] anytime » avec une keycap claire.",
+      "rules": {
+        "do": [
+          "Fond bg-base sur toute la page ; une colonne centrée max-w-md pour les étapes d'onboarding, max-w-6xl pour les sections.",
+          "Le dégradé lilas → abricot habille uniquement le titre principal de chaque écran ou section, en bg-clip-text ; un seul titre en dégradé par vue.",
+          "Sous-titre text-base text-muted leading-relaxed sur deux lignes au plus, centré.",
+          "Action principale en pilule claire : bg-accent text-accent-ink rounded-full px-6 h-11 font-semibold ; secondaire en pilule contour border border-line text-ink rounded-full avec icône à gauche.",
+          "Champ email en pilule bg-surface border border-line rounded-full h-14 px-6, bouton circulaire flèche intégré à droite ; états visibles dans le champ lui-même : chargement (anneau qui tourne), succès (texte et coche en text-success).",
+          "Keycaps inline : kbd en bg-accent text-accent-ink rounded-[4px] px-1.5 text-xs font-medium, ou en contour border border-line text-ink pour les raccourcis dans un texte muted.",
+          "Halo : un seul faisceau vertical diffus (absolute, bg-raised, blur-3xl, opacity-60, pointer-events-none) derrière le bloc d'action, jamais plusieurs orbes.",
+          "Captures produit présentées dans un appareil sombre qui se fond dans le fond par un dégradé vers bg-base en bas.",
+          "Témoignages en cartes bg-surface/80 rounded-card border border-line, avatar rond, nom font-semibold + badge vérifié, rôle text-muted ; rangée qui déborde et s'estompe sur les bords.",
+          "Navigation fine : logo, liens text-muted hover:text-ink, badge « New » en pilule bg-success/15 text-success text-xs."
+        ],
+        "dont": [
+          "Pas de dégradé sur un bouton, un fond ou une carte : il est réservé au texte des titres.",
+          "Pas de couleur codée en dur ni de couleur Tailwind nommée : tokens et extraColors uniquement.",
+          "Pas de titres en capitales, en serif ou ultra-serrés.",
+          "Pas d'action pleine colorée : l'action est claire sur sombre, une seule par vue.",
+          "Pas de sections claires : tout le site reste nocturne.",
+          "Pas d'illustration colorée ni d'emoji ; les visuels sont des rendus sombres du produit ou des objets 3D monochromes."
+        ]
+      }
+    },
+    "product-desktop": {
+      "signature": "Un tableau de bord nocturne en grandes cartes très arrondies sans bordure visible (bg-surface rounded-card), salutation « Hello, Sam » en en-tête avec l'état du marché en texte muted, variations en vert/rose dans des micro-badges et des barres en ticks verticaux, navigation en dock flottant centré en bas (pilule d'icônes + bouton recherche rond séparé) et palette de commandes ⌘K comme point d'entrée de toute action.",
+      "density": "comfortable",
+      "sizes": {
+        "control": "2.5rem",
+        "controlSm": "2rem",
+        "row": "2.5rem",
+        "sidebar": "0px",
+        "header": "4rem",
+        "icon": "1.125rem"
+      },
+      "states": {
+        "selected": "bg-raised text-ink",
+        "hover": "hover:bg-raised/70",
+        "focus": "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus",
+        "disabled": "opacity-40 cursor-not-allowed"
+      },
+      "rules": {
+        "do": [
+          "Pas de barre latérale : navigation principale dans un dock fixe bottom-6 centré, pilule bg-surface rounded-full shadow-overlay p-1.5 d'icônes size-10 rounded-full (actif en bg-raised), suivie d'un bouton recherche rond séparé ; chaque icône a un aria-label et une infobulle avec son raccourci en keycap.",
+          "En-tête h-header : logo + « Hello, Prénom » text-xl font-semibold à gauche, état contextuel en text-muted avec le mot clé en text-ink à droite.",
+          "Cartes bg-surface rounded-card p-8 sans bordure ni ombre ; sous-zones imbriquées en bg-raised/40 rounded-ui.",
+          "Titres de carte : date ou contexte en text-sm text-muted, puis phrase en text-lg font-semibold où le mot d'état est en text-muted (« The markets are neutral »).",
+          "Variations : texte text-gain ou text-loss tabular-nums, ou micro-badge rounded px-1.5 text-xs bg-loss/15 text-loss inline dans une phrase ; barres de répartition en ticks verticaux fins (gain à droite du centre, loss à gauche), jamais de fond de ligne teinté.",
+          "Tickers en pilule bg-raised rounded-full px-2 h-7 : logo rond size-5 + symbole text-xs font-semibold.",
+          "Fil d'actualités en cartes empilées : tickers en haut à gauche, horodatage « Today · 10m ago » text-xs text-muted (Today en text-ink) à droite, texte text-base leading-relaxed.",
+          "Carte de synthèse IA : bg-surface avec dégradé sombre vers bg-base, label « Daily recap » en pilule, texte text-xl font-semibold leading-snug, lien Read more souligné.",
+          "Palette de commandes (dialog) : bg-raised rounded-ui shadow-overlay, en-tête avec pilule de contexte et consigne « Type … and hit [return] », groupes titrés text-sm text-muted, item actif bg-surface, raccourcis en keycaps à droite, champ de recherche séparé en dessous h-14 text-lg.",
+          "Sélecteurs de période (1M 3M YTD 1Y 2Y) en text-sm font-medium text-muted, actif en bg-raised text-ink rounded-ui px-2.",
+          "Graphiques en ligne fine 1px couleur ink sans grille, série secondaire en dataPalette[0] ; séries suivantes dans l'ordre de dataPalette.",
+          "Toasts en haut centrés : bg-base border border-line rounded-ui shadow-overlay, icône ticker, texte text-sm, bouton fermer.",
+          "États : chargement en squelette bg-raised animate-pulse qui garde la forme des cartes ; vide expliqué avec une commande proposée ; erreur en encart role=\"alert\" text-danger avec Réessayer."
+        ],
+        "dont": [
+          "Pas de dégradé de titre lilas → abricot dans un écran de travail, sauf l'écran d'accueil d'onboarding.",
+          "Pas de bordures de carte visibles ni de grilles filaires : la structure vient des surfaces et de l'espace.",
+          "Pas de vert ou de rose pour autre chose que des variations à la hausse ou à la baisse.",
+          "Pas d'action sans raccourci clavier accessible depuis la palette.",
+          "Pas de couleur codée en dur ni de couleur Tailwind nommée.",
+          "Pas de texte sous text-xs ni de muted sur raised pour une information essentielle."
+        ]
+      }
+    }
+  }
+}
