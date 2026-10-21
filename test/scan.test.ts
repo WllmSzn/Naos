@@ -1,15 +1,15 @@
+import './setup.js';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { analyzeScan } from '../src/scan/analyze.js';
 import type { RawElement, RawScan } from '../src/scan/collect.js';
 import { scanSlug, validateScanUrl } from '../src/scan/scan.js';
-import { saveDna } from '../src/dna/library.js';
+import { loadLibrary, saveDna } from '../src/dna/library.js';
 import { DnaSchema } from '../src/dna/schema.js';
 import { contrastRatio } from '../src/color.js';
-import { DNA_DIR } from '../src/paths.js';
 
 function el(partial: Partial<RawElement>): RawElement {
   return { tag: 'div', role: 'other', area: 1000, top: 0, textLen: 0, ...partial };
@@ -99,16 +99,42 @@ test('URL de scan : validation et nom de dossier', () => {
   assert.equal(scanSlug(new URL('https://www.exemple.com/fr/produit/')), 'exemple.com-fr-produit');
 });
 
-test('saveDna : valide, enregistre, refuse d\u2019écraser sans overwrite', () => {
-  const dir = mkdtempSync(path.join(tmpdir(), 'naos-dna-'));
+test('saveDna : range une nouvelle DNA dans sa famille, réécrit sur place, refuse sans overwrite', () => {
+  const root = mkdtempSync(path.join(tmpdir(), 'naos-library-'));
   try {
-    const dna = JSON.parse(readFileSync(path.join(DNA_DIR, 'daylight-product.json'), 'utf8'));
-    const first = saveDna({ ...dna, id: 'copie-test' }, { dir });
+    const dna = JSON.parse(readFileSync(loadLibrary().locations.get('daylight-product')!.file, 'utf8'));
+    assert.throws(() => saveDna({ ...dna, id: 'copie-test' }, { root }), /Préciser la famille/);
+    const first = saveDna({ ...dna, id: 'copie-test' }, { root, family: 'clients/acme' });
     assert.equal(first.replaced, false);
-    assert.throws(() => saveDna({ ...dna, id: 'copie-test' }, { dir }), /existe déjà/);
-    assert.equal(saveDna({ ...dna, id: 'copie-test' }, { dir, overwrite: true }).replaced, true);
-    assert.throws(() => saveDna({ ...dna, id: 'invalide', tokens: { ...dna.tokens, muted: '#EEEEEE' } }, { dir }), /contraste/);
+    assert.equal(first.file, path.join(root, 'clients', 'acme', 'copie-test', 'dna.json'));
+    assert.equal(loadLibrary([root]).locations.get('copie-test')?.family, 'clients/acme');
+    assert.throws(() => saveDna({ ...dna, id: 'copie-test' }, { root, family: 'inspirations' }), /existe déjà/);
+    const again = saveDna({ ...dna, id: 'copie-test' }, { root, family: 'inspirations', overwrite: true });
+    assert.equal(again.replaced, true);
+    assert.equal(again.file, first.file, 'réécrite à son emplacement, pas déplacée');
+    assert.throws(() => saveDna({ ...dna, id: 'autre' }, { root, family: '../hors' }), /Famille invalide/);
+    assert.throws(() => saveDna({ ...dna, id: 'invalide', tokens: { ...dna.tokens, muted: '#EEEEEE' } }, { root, family: 'x' }), /contraste/);
   } finally {
-    rmSync(dir, { recursive: true, force: true });
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('bibliothèque : sections de famille réservées à ses DNA, dossiers mal nommés signalés', async () => {
+  const { loadPatterns } = await import('../src/patterns/library.js');
+  const lib = loadLibrary();
+  assert.deepEqual(loadPatterns().patterns.get('artefact-alert-rows')?.dna, ['artefact-dark', 'artefact-light']);
+
+  const root = mkdtempSync(path.join(tmpdir(), 'naos-library-'));
+  try {
+    const dna = JSON.parse(readFileSync(lib.locations.get('linen-ledger')!.file, 'utf8'));
+    saveDna(dna, { root, family: 'base' });
+    const wrong = path.join(root, 'base', 'mauvais-nom');
+    mkdirSync(wrong, { recursive: true });
+    writeFileSync(path.join(wrong, 'dna.json'), JSON.stringify(dna));
+    const loaded = loadLibrary([root]);
+    assert.ok(loaded.dnas.has('linen-ledger'));
+    assert.match(loaded.errors.map((e) => e.issues.join()).join(), /ne correspond pas à son emplacement/);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
   }
 });

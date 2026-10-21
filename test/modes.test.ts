@@ -1,3 +1,4 @@
+import './setup.js';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, rmSync, writeFileSync, readFileSync } from 'node:fs';
@@ -44,7 +45,7 @@ test('un nouveau mode s’ajoute par un simple dossier', () => {
 });
 
 test('toutes les DNA sont valides et servent au moins un mode connu', () => {
-  assert.ok(lib.size >= 18);
+  assert.ok(lib.size >= 9);
   for (const dna of lib.values()) assert.deepEqual(checkDnaModes(dna), [], dna.id);
 });
 

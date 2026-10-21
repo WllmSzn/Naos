@@ -1,3 +1,4 @@
+import './setup.js';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -6,20 +7,18 @@ import { loadLibrary, googleFontsUrl } from '../src/dna/library.js';
 import { DnaSchema } from '../src/dna/schema.js';
 import { suggestDna } from '../src/dna/suggest.js';
 import { contrastRatio } from '../src/color.js';
-import { DNA_DIR } from '../src/paths.js';
-
 const lib = loadLibrary();
 const dnas = [...lib.dnas.values()];
+const fileOf = (id: string) => lib.locations.get(id)!.file;
 
-test('toutes les DNA de la bibliothèque sont valides', () => {
+test('toutes les DNA de la bibliothèque de test sont valides et rangées par famille', () => {
   assert.deepEqual(lib.errors, []);
   assert.ok(lib.dnas.size >= 9, `${lib.dnas.size} DNA`);
-});
-
-test('chaque fichier porte le nom de son id', () => {
   for (const dna of dnas) {
-    const raw = JSON.parse(readFileSync(path.join(DNA_DIR, `${dna.id}.json`), 'utf8'));
-    assert.equal(raw.id, dna.id);
+    const loc = lib.locations.get(dna.id)!;
+    assert.ok(loc.family, `${dna.id} sans famille`);
+    assert.equal(path.basename(loc.dir), dna.id, 'le dossier porte l’id');
+    assert.equal(JSON.parse(readFileSync(loc.file, 'utf8')).id, dna.id);
   }
 });
 
@@ -29,7 +28,7 @@ test('contrasteRatio : valeurs de référence WCAG', () => {
 });
 
 test('le schéma rejette un contraste insuffisant', () => {
-  const base = JSON.parse(readFileSync(path.join(DNA_DIR, 'linen-ledger.json'), 'utf8'));
+  const base = JSON.parse(readFileSync(fileOf('linen-ledger'), 'utf8'));
   const bad = { ...base, tokens: { ...base.tokens, muted: '#CFCAC0' } };
   const res = DnaSchema.safeParse(bad);
   assert.equal(res.success, false);
@@ -37,7 +36,7 @@ test('le schéma rejette un contraste insuffisant', () => {
 });
 
 test('le schéma rejette un hex invalide et un id mal formé', () => {
-  const base = JSON.parse(readFileSync(path.join(DNA_DIR, 'linen-ledger.json'), 'utf8'));
+  const base = JSON.parse(readFileSync(fileOf('linen-ledger'), 'utf8'));
   assert.equal(DnaSchema.safeParse({ ...base, id: 'Linen Ledger' }).success, false);
   assert.equal(DnaSchema.safeParse({ ...base, tokens: { ...base.tokens, ink: 'black' } }).success, false);
 });

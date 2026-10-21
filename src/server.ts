@@ -39,8 +39,10 @@ function rulesFor(mode?: Mode): string {
 /** DNA telle que vue dans un mode : identité commune + le seul bloc du mode. */
 function dnaView(dna: Dna, mode?: string) {
   const { modes, ...identity } = dna;
+  const family = getLibrary().locations.get(dna.id)?.family;
   return {
     ...identity,
+    ...(family ? { family } : {}),
     googleFontsUrl: googleFontsUrl(dna),
     modesAvailable: Object.keys(modes),
     ...(mode ? { mode, modeBlock: modes[mode] } : { modes }),
@@ -53,7 +55,7 @@ function catalog(mode?: string) {
   return {
     ...(mode ? { mode } : {}),
     count: list.length,
-    dnas: list.map(dnaSummary),
+    dnas: list.map((d) => ({ ...dnaSummary(d), family: getLibrary().locations.get(d.id)?.family })),
     ...(errors.length ? { invalid: errors } : {}),
   };
 }
@@ -560,18 +562,19 @@ export function createServer(): McpServer {
       title: 'Enregistrer une DNA',
       description:
         'Valide une DNA complète (schéma, contrastes, champs exigés par chacun de ses modes) et l’enregistre dans la bibliothèque. ' +
-        'Refuse d’écraser une DNA existante sans overwrite.',
+        'Une nouvelle DNA se range dans une famille de la bibliothèque (paramètre family) ; une DNA existante est réécrite à son emplacement, avec overwrite.',
       inputSchema: {
         dna: z.record(z.string(), z.unknown()).describe('La DNA complète : identité + modes (format de get_dna sans mode, sans googleFontsUrl ni modesAvailable)'),
-        overwrite: z.boolean().optional().describe('Remplacer une DNA du même id'),
+        overwrite: z.boolean().optional().describe('Remplacer une DNA du même id (réécrite à son emplacement actuel)'),
+        family: z.string().optional().describe('Famille d’une NOUVELLE DNA : « artefact », « inspirations », « clients/acme »… (voir list_dna)'),
       },
       annotations: { destructiveHint: true },
     },
-    guarded(({ dna, overwrite }: { dna: Record<string, unknown>; overwrite?: boolean }) => {
-      const { googleFontsUrl: _g, modesAvailable: _m, mode: _mode, modeBlock: _b, ...rest } = dna;
-      const saved = saveDna(rest, { overwrite });
+    guarded(({ dna, overwrite, family }: { dna: Record<string, unknown>; overwrite?: boolean; family?: string }) => {
+      const { googleFontsUrl: _g, modesAvailable: _m, mode: _mode, modeBlock: _b, family: _f, ...rest } = dna;
+      const saved = saveDna(rest, { overwrite, family });
       reloadLibrary();
-      return json({ saved: saved.file, id: saved.dna.id, modes: Object.keys(saved.dna.modes), replaced: saved.replaced });
+      return json({ saved: saved.file, id: saved.dna.id, family: saved.family, modes: Object.keys(saved.dna.modes), replaced: saved.replaced });
     }),
   );
 

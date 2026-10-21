@@ -10,7 +10,8 @@
     "test": "tsx --test test/*.test.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "demo": "tsx scripts/demo.ts",
-    "audit": "tsx scripts/audit.ts"
+    "audit": "tsx scripts/audit.ts",
+    "catalog": "tsx scripts/catalog.ts"
   },
   "license": "UNLICENSED",
   "type": "module",

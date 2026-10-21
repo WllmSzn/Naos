@@ -104,14 +104,38 @@ Le schéma ([src/dna/schema.ts](src/dna/schema.ts)) vérifie aussi les contraste
 - ≥ 4.5 pour success, warning, danger et l'accent utilisés **en texte**, sur le fond comme sur leur propre teinte ;
 - ≥ 3 pour les couleurs métier (`extraColors`).
 
-Un accent qui fait un bon aplat mais un mauvais texte garde `accent` et ajoute `accentText`. Les champs `extraColors` (couleurs métier comme `sev-critical`), `rootFontSize` et les polices système (`ui-monospace`) servent à coller au design system d'un produit existant. Exemple complet : `artefact-dark.json` et `artefact-light.json`.
+Un accent qui fait un bon aplat mais un mauvais texte garde `accent` et ajoute `accentText`. Les champs `extraColors` (couleurs métier comme `sev-critical`), `rootFontSize` et les polices système (`ui-monospace`) servent à coller au design system d'un produit existant. Exemple complet : `artefact/artefact-dark/dna.json` dans la bibliothèque.
+
+## La bibliothèque de DNA
+
+Les DNA ne vivent pas dans Naos mais dans une **bibliothèque** séparée, avec son propre dépôt git, rangée par famille :
+
+```
+naos-library/
+  index.html                galerie générée (npm run catalog)
+  CATALOG.md
+  artefact/
+    artefact-dark/dna.json  une DNA = un dossier portant son id
+    artefact-dark/previews/ aperçus générés
+    patterns/<mode>/        sections partagées par la famille
+  inspirations/  base/  clients/<client>/
+```
+
+Naos trouve la ou les bibliothèques ainsi, dans l'ordre :
+1. la variable `NAOS_LIBRARY` (plusieurs dossiers séparés par `;`) ;
+2. le fichier local `naos.config.json`, hors git (modèle : `naos.config.example.json`) ;
+3. l'ancien dossier `content/dna`, lu à plat.
+
+Une section propre à une DNA se range dans `<famille>/<id>/patterns/<mode>/`. Une section partagée par une famille va dans `<famille>/patterns/<mode>/`, où elle est réservée aux DNA de la famille, ou à celles listées dans son champ `dna`.
 
 ### Ajouter ou modifier une DNA
 
-1. Créer ou modifier `content/dna/<id>.json`. Le nom du fichier est l'`id`. Partir d'une DNA du même mode.
-2. `npm test` : schéma, contrastes, champs exigés par les modes, sections déclarées.
-3. `npm run demo -- <id>`, ouvrir la page, puis `npm run audit -- <id>`.
+1. **Avec Claude** : `save_dna(dna, family?, overwrite?)`. Une nouvelle DNA exige une famille (`clients/acme`…). Une DNA existante est réécrite à son emplacement.
+2. **À la main** : copier le dossier d'une DNA proche, renommer le dossier et l'`id`, modifier `dna.json`.
+3. Vérifier : `npm run audit -- <id>`, puis `npm run catalog -- --previews` pour mettre la galerie à jour. Une DNA invalide n'est pas chargée et apparaît en tête de la galerie.
 4. Si le serveur tourne déjà : `reload_library`.
+
+Les tests de Naos tournent sur une petite bibliothèque de test (`test/fixtures/library`), jamais sur la bibliothèque réelle.
 
 ## Ajouter un mode
 
@@ -147,17 +171,18 @@ npm test                       # tests unitaires et d'intégration (~15 s)
 npm run audit                  # chaque DNA × chacun de ses modes × toutes ses sections, dans le navigateur
 npm run audit -- artefact-dark # une seule DNA
 npm run demo                   # écrans d'exemple : landing (website), demo et soc (product-desktop)
+npm run catalog -- --previews  # galerie et catalogue de la bibliothèque, avec aperçus
 ```
 
-Les pages vont dans `output/`, ou dans le dossier défini par `NAOS_OUTPUT_DIR`, et les captures dans `output/previews/`. Le serveur n'écrit et ne lit jamais en dehors de ce dossier, ni en dehors de `content/` pour `save_dna`. `NAOS_CONTENT_DIR` permet d'utiliser un autre dossier de contenu, et `NAOS_BROWSER` un autre navigateur (Edge ou Chrome sont détectés automatiquement).
+Les pages vont dans `output/`, ou dans le dossier défini par `NAOS_OUTPUT_DIR`, et les captures dans `output/previews/`. Le serveur n'écrit et ne lit jamais en dehors de ce dossier, ni en dehors de la bibliothèque pour `save_dna`. `NAOS_CONTENT_DIR` permet d'utiliser un autre dossier de contenu (règles, modes), et `NAOS_BROWSER` un autre navigateur (Edge ou Chrome sont détectés automatiquement).
 
 ## Structure
 
 ```
 content/
   rules/core.md         règles communes à tous les modes
-  modes/<mode>/         mode.json, rules.md, patterns/
-  dna/                  une DNA par fichier JSON (identité + modes)
+  modes/<mode>/         mode.json, rules.md, patterns/ (sections génériques)
+naos.config.json        emplacement de la bibliothèque de DNA (local, hors git)
 src/
   index.ts              point d'entrée stdio
   server.ts             outils, resources et prompts MCP
@@ -169,6 +194,6 @@ src/
   patterns/             chargement et sélection des sections
   workflows.ts          workflows guidés
 examples/               corps d'écran de démonstration
-scripts/                demo.ts, audit.ts, migrate-modes.mjs (migration ponctuelle vers les modes)
-test/                   tests node:test (via tsx)
+scripts/                demo.ts, audit.ts, catalog.ts, migrate-modes.mjs (migration ponctuelle vers les modes)
+test/                   tests node:test (via tsx) ; fixtures/library : bibliothèque de test
 ```

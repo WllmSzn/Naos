@@ -1,3 +1,4 @@
+import './setup.js';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { findPatterns, loadPatterns } from '../src/patterns/library.js';
@@ -11,7 +12,7 @@ const modes = getModes().modes;
 
 test('toutes les sections se chargent et appartiennent à un mode', () => {
   assert.deepEqual(errors, []);
-  assert.ok(patterns.size >= 20, `${patterns.size} sections`);
+  assert.ok(patterns.size >= 40, `${patterns.size} sections`);
   for (const p of all) assert.ok(modes.has(p.mode), `${p.id} : mode ${p.mode}`);
 });
 

@@ -3,6 +3,8 @@ import path from 'node:path';
 import { z } from 'zod';
 import { normalize } from '../dna/suggest.js';
 import { getModes, MODES_DIR, type Mode } from '../modes/modes.js';
+import { LIBRARY_DIRS } from '../paths.js';
+import { scanLibraryRoot } from '../dna/library.js';
 
 /**
  * Sections de référence : structure en classes sémantiques, rangées par mode
@@ -33,10 +35,14 @@ export interface PatternLibrary {
   errors: Array<{ file: string; issue: string }>;
 }
 
-function loadModePatterns(mode: Mode, dir: string, out: PatternLibrary) {
+/**
+ * @param defaultDna DNA auxquelles réserver une section qui ne le précise pas
+ *                   (sections rangées avec une DNA ou dans une famille de la bibliothèque).
+ */
+function loadModePatterns(mode: Mode, dir: string, out: PatternLibrary, prefix = mode.id, defaultDna?: string[]) {
   if (!existsSync(dir)) return;
   for (const file of readdirSync(dir).filter((f) => f.endsWith('.html')).sort()) {
-    const label = `${mode.id}/${file}`;
+    const label = `${prefix}/${file}`;
     const source = readFileSync(path.join(dir, file), 'utf8');
     const match = source.match(META_RE);
     if (!match?.[1]) {
@@ -67,13 +73,46 @@ function loadModePatterns(mode: Mode, dir: string, out: PatternLibrary) {
       out.errors.push({ file: label, issue: `id en double : ${meta.id}` });
       continue;
     }
-    out.patterns.set(meta.id, { ...meta, mode: mode.id, html: source.slice(match[0].length).trim() });
+    const dna = meta.dna ?? defaultDna;
+    out.patterns.set(meta.id, { ...meta, ...(dna ? { dna } : {}), mode: mode.id, html: source.slice(match[0].length).trim() });
   }
 }
 
-export function loadPatterns(modesDir: string = MODES_DIR): PatternLibrary {
+/** Sections d'un dossier patterns/<mode>/ de la bibliothèque (DNA ou famille). */
+function loadLibraryPatterns(patternsDir: string, out: PatternLibrary, prefix: string, defaultDna: string[]) {
+  if (!existsSync(patternsDir)) return;
+  const modes = getModes().modes;
+  for (const modeId of readdirSync(patternsDir).sort()) {
+    const mode = modes.get(modeId);
+    if (!mode) {
+      out.errors.push({ file: `${prefix}/patterns/${modeId}`, issue: `mode inconnu (disponibles : ${[...modes.keys()].join(', ')})` });
+      continue;
+    }
+    loadModePatterns(mode, path.join(patternsDir, modeId), out, `${prefix}/patterns/${modeId}`, defaultDna);
+  }
+}
+
+/**
+ * Sections génériques des modes (content/modes/<mode>/patterns/), puis sections de la bibliothèque :
+ *   <famille>/patterns/<mode>/   partagées par les DNA de la famille (ou celles listées dans « dna ») ;
+ *   <famille>/<id>/patterns/<mode>/   propres à une DNA.
+ */
+export function loadPatterns(modesDir: string = MODES_DIR, libraryRoots: string[] = LIBRARY_DIRS): PatternLibrary {
   const out: PatternLibrary = { patterns: new Map(), errors: [] };
   for (const mode of getModes().modes.values()) loadModePatterns(mode, path.join(modesDir, mode.id, 'patterns'), out);
+
+  for (const root of libraryRoots) {
+    const locations = scanLibraryRoot(root).filter((l) => l.family);
+    const families = [...new Set(locations.map((l) => l.family!))];
+    for (const family of families) {
+      const members = locations.filter((l) => l.family === family).map((l) => path.basename(l.dir));
+      loadLibraryPatterns(path.join(root, ...family.split('/'), 'patterns'), out, family, members);
+    }
+    for (const loc of locations) {
+      const id = path.basename(loc.dir);
+      loadLibraryPatterns(path.join(loc.dir, 'patterns'), out, `${loc.family}/${id}`, [id]);
+    }
+  }
   return out;
 }
 

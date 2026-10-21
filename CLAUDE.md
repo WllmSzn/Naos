@@ -26,8 +26,8 @@ Le navigateur headless (scan, aperçu, audit) est l'Edge installé, piloté par 
 ```
 content/                 données éditables, rechargées par l'outil reload_library
   rules/core.md          règles communes à tous les modes
-  modes/<mode>/          un mode de conception : mode.json, rules.md, patterns/<id>.html
-  dna/<id>.json          une Design DNA : identité commune + un bloc par mode servi
+  modes/<mode>/          un mode de conception : mode.json, rules.md, patterns/<id>.html (sections génériques)
+naos.config.json         emplacement de la bibliothèque de DNA (local, hors git)
 src/
   index.ts               point d'entrée stdio (stdout réservé au protocole, logs sur stderr)
   server.ts              outils, resources et prompts MCP ; resolveMode() arbitre DNA + mode
@@ -41,6 +41,13 @@ src/
 examples/                corps d'écran utilisés par npm run demo
 output/                  pages, scans, aperçus générés (ignoré par git)
 ```
+
+## La bibliothèque de DNA (hors de Naos)
+
+Les DNA vivent dans **`C:\Users\Artefact\naos-library`**, un dépôt git séparé, déclaré dans `naos.config.json` (la variable `NAOS_LIBRARY` a priorité, `content/dna` sert de repli historique). Rangement : `<famille>/<id>/dna.json`, avec les familles `artefact`, `inspirations`, `base` et `clients/<client>`. Une section propre à une DNA va dans `<famille>/<id>/patterns/<mode>/`, une section partagée par une famille dans `<famille>/patterns/<mode>/`. `loadLibrary()` renvoie aussi `locations` (famille, dossier, fichier de chaque DNA).
+
+- **Les tests n'utilisent jamais la bibliothèque réelle** : chaque fichier de test importe d'abord `./setup.js`, qui pointe `NAOS_LIBRARY` vers `test/fixtures/library` (11 DNA). Un nouveau test qui a besoin d'une DNA l'y copie.
+- **Après une modification de DNA**, régénérer la galerie : `npm run catalog -- --previews`. La bibliothèque se commite **dans son propre dépôt**, pas dans Naos.
 
 ## Les modes
 
@@ -71,4 +78,5 @@ Pièges connus :
 - Contenu, règles, messages d'erreur et commentaires en **français**. Identifiants et code en anglais.
 - Scripts injectés dans le navigateur (`collect.ts`, `checks.ts`) : écrits en **chaînes JS autonomes**, parce qu'une fonction TS transpilée peut embarquer des helpers absents de la page.
 - Les commentaires expliquent le *pourquoi* (contrainte, piège, décision), pas le *quoi*.
-- Ne jamais écrire en dehors de `content/` (outil `save_dna`) et de `output/` (pages, scans, aperçus). Les noms de fichiers passent par `safeScreenName`.
+- Ne jamais écrire en dehors de la bibliothèque (outil `save_dna`, catalogue) et de `output/` (pages, scans, aperçus). Les noms de fichiers passent par `safeScreenName`, et les familles par la validation de `saveDna`.
+- Avant un commit, **vérifier `git status` juste avant `git add`** : d'autres sessions peuvent travailler en parallèle sur Naos ou la bibliothèque.
