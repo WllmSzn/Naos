@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import { getLibrary } from '../src/dna/library.js';
 import { DnaSchema, type Dna } from '../src/dna/schema.js';
 import { checkRoles, colorAllowance, resolveRoles } from '../src/dna/roles.js';
+import { contrastRatio, mixHex } from '../src/color.js';
 import { tailwindConfig, wrapScreen } from '../src/screen/wrap.js';
 import { lintScreen } from '../src/screen/lint.js';
 import { retheme } from '../src/screen/retheme.js';
@@ -24,7 +25,14 @@ test('rôles : défauts quand la DNA n’en déclare pas', () => {
   assert.equal(r.onAlt, dna.tokens.ink.toUpperCase());
   assert.equal(r.highlight, (dna.tokens.accentText ?? dna.tokens.accent).toUpperCase());
   assert.equal(r.emphasis, dna.tokens.accent.toUpperCase());
-  assert.equal(r.connector, dna.tokens.line.toUpperCase());
+  // Un connecteur par défaut doit se lire : la couleur de ligne seule (1,4:1) disparaît
+  // sur un fond sombre, et un schéma n'aurait plus de traits.
+  assert.equal(r.connector, mixHex(dna.tokens.base, dna.tokens.muted, 0.75).toUpperCase());
+  assert.ok(contrastRatio(r.connector, dna.tokens.base) >= 3, `connecteur lisible (${r.connector})`);
+  assert.ok(
+    contrastRatio(r.connectorMuted, dna.tokens.base) < contrastRatio(r.connector, dna.tokens.base),
+    'le trait « absent » reste plus faible que le trait actif',
+  );
   assert.equal(r.brandFrom, dna.tokens.accent.toUpperCase());
   assert.equal(r.brandTo, dna.tokens.accent2.toUpperCase());
 });

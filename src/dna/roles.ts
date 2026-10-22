@@ -102,6 +102,11 @@ export function resolveRoles(dna: RoleCarrier, mode?: string): ResolvedRoles {
   };
   const base = t.base ?? '#FFFFFF';
   const line = t.line ?? base;
+  // Par défaut, un connecteur de schéma se dessine avec `line`, qui est une couleur de
+  // séparation : à 1 px sur un fond sombre, elle disparaît (contraste ~1,4:1). On part
+  // donc de `muted` ramené vers le fond, pour que le trait se lise sans crier, comme les
+  // valeurs déclarées par les DNA (contraste voisin de 3:1).
+  const connector = pick(block?.connector, mixHex(base, t.muted ?? line, 0.75));
   return {
     alt: pick(block?.alt, base),
     onAlt: pick(block?.onAlt, t.ink),
@@ -110,9 +115,10 @@ export function resolveRoles(dna: RoleCarrier, mode?: string): ResolvedRoles {
     // un accent pensé comme aplat (sombre en thème sombre) serait illisible.
     highlight: pick(block?.highlight, t.accentText ?? t.accent),
     emphasis: pick(block?.emphasis, t.accent),
-    connector: pick(block?.connector, line),
-    // Trait « absent » : la couleur de ligne posée à 60 % sur le fond.
-    connectorMuted: pick(block?.connectorMuted, mixHex(base, line, 0.6)),
+    connector,
+    // Trait « absent » : le connecteur posé à 55 % sur le fond. En dessous, un trait
+    // pointillé de 2 px ne se distingue plus du fond, et la variante ne dit plus rien.
+    connectorMuted: pick(block?.connectorMuted, mixHex(base, connector, 0.55)),
     brandFrom: pick(block?.brand?.from, t.accent),
     ...(block?.brand?.via ? { brandVia: resolveColorRef(block.brand.via, dna) } : {}),
     brandTo: pick(block?.brand?.to, t.accent2),

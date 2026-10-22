@@ -38,6 +38,29 @@ test('chaque bloc porte un type déclaré par son mode', () => {
   for (const b of all) assert.ok(modes.get(b.mode)!.blockKinds.includes(b.kind), `${b.id} : ${b.kind}`);
 });
 
+test('les schémas de présentation sont livrés avec leurs variantes et leurs connecteurs', () => {
+  const diagrams = ['branch', 'merge', 'labeled-flow', 'hub-cycle', 'step-chain'];
+  for (const id of diagrams) {
+    const b = blocks.get(id);
+    assert.ok(b, `${id} manquant`);
+    assert.equal(b.kind, 'diagram', `${id} : type diagram`);
+    assert.ok(b.slots.length >= 2, `${id} : emplacements déclarés`);
+    assert.ok(b.minWidth >= 320 && b.minWidth <= 560, `${id} : largeur minimale`);
+    assert.doesNotMatch(b.html, /absolute/, `${id} : aucun placement en position absolue`);
+  }
+  assert.deepEqual(blocks.get('branch')!.variants.map((v) => v.name), ['merge']);
+  assert.deepEqual(blocks.get('hub-cycle')!.variants.map((v) => v.name), ['absent']);
+  assert.deepEqual(blocks.get('labeled-flow')!.variants.map((v) => v.name), ['dashed']);
+  // Les connecteurs se dessinent dans une colonne ou une rangée : rien ne s'étire avec le texte.
+  for (const id of ['branch', 'merge', 'labeled-flow', 'hub-cycle']) {
+    const html = blocks.get(id)!.html;
+    assert.match(html, /preserveAspectRatio="none"/, `${id} : le connecteur remplit sa cellule`);
+    assert.match(html, /vector-effect="non-scaling-stroke"/, `${id} : le trait garde son épaisseur`);
+    assert.match(html, /stroke="currentColor"[\s\S]*text-connector|text-connector[\s\S]*stroke="currentColor"/, `${id} : le trait suit la DNA`);
+    assert.match(html, /aria-hidden="true"/, `${id} : SVG décoratif masqué aux lecteurs`);
+  }
+});
+
 test('un bloc de la bibliothèque hérite de sa famille, un bloc de mode reste commun', () => {
   const family = blocks.get('fixture-figure');
   assert.ok(family, 'bloc de famille chargé');

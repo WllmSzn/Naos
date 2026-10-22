@@ -44,8 +44,24 @@ Une présentation se projette : l'audience écoute celui qui parle et lit la dia
 - Il hérite du gabarit de la diapo : même padding, mêmes tailles de l'échelle, mêmes rôles de couleur. Ne pas lui donner de fond, de cadre ou d'ombre qui contredirait la diapo.
 - Remplir ses emplacements (le chiffre et son unité, les branches, les étapes) avec le contenu réel ; ses variantes (`data-variant`) sont des états du bloc, pas des diapositives différentes.
 - Un schéma reste lisible à 3 mètres : peu de nœuds (sept au plus), des libellés courts, un seul accent par schéma.
+- Dans un schéma, les libellés de nœuds restent à l'échelle de légende (`text-caption`), et un nœud tient sur une ou deux lignes. Seul l'élément qui porte une phrase — la cible d'une convergence, la légende d'un flux — passe à `text-body`. La hiérarchie d'un schéma se fait par le trait (`border-highlight`, `border-emphasis`) et le fond (`bg-raised`), pas par la taille : un nœud en corps occupe trois lignes dès que le schéma est posé au tiers d'une diapo, et fait déborder la carte.
+- Un schéma doit tenir dans une colonne de 540 px comme en pleine largeur : c'est la largeur d'une carte de comparaison à trois options. À cette largeur, compter une ligne par nœud, et préférer trois satellites à quatre quand le texte s'allonge.
 - Un bloc s'adapte à la largeur de son conteneur : grille ou flex, jamais de position absolue en pixels pour placer du texte. Les connecteurs SVG se dessinent avec `preserveAspectRatio="none"` et `vector-effect="non-scaling-stroke"`, en `stroke="currentColor"` et une classe `text-connector` : le trait suit la DNA et le retheme.
 - Un SVG décoratif porte `aria-hidden="true"` ; un SVG porteur de sens `role="img"` et un `aria-label`. Aucun texte sous `text-caption`.
+
+### Schémas
+
+Cinq schémas couvrent les cas d'une présentation métier. Choisir par ce qu'il faut faire comprendre, pas par la forme qui plaît :
+
+- `branch` — une situation qui se sépare (une alerte traitée par deux analystes, un dossier qui part en deux issues). `data-variant="merge"` retourne le sens quand la source est à droite. Pour une décision qui se joue sur trois options, préférer une grille de comparaison : un embranchement à trois branches se lit mal.
+- `merge` — plusieurs entrées qui aboutissent à la même cible, la phrase de la cible disant ce qu'elles ont en commun. Une seule phrase y tient : si le constat demande deux lignes, ce n'est plus un schéma, c'est une diapo.
+- `labeled-flow` — plusieurs sources qui convergent vers un point unique, chaque lien portant le même libellé (le délai, la dépendance, le ressaisie). À réserver au constat d'un manque : quatre sources, un lien, un point d'arrivée vide.
+- `hub-cycle` — un noyau et ce qui tourne autour. La variante `absent` (pivot en pointillés, traits atténués) montre le même dispositif sans personne au centre : elle sert à opposer deux fonctionnements, jamais à illustrer un vide au hasard.
+- `step-chain` — un processus outillé, en un ou deux groupes, avec la transition libellée entre les deux. Les numéros se suivent d'un groupe à l'autre : c'est le passage d'un outil à l'autre qui se lit, pas deux listes côte à côte.
+
+Sens des traits, dans tous les schémas : **trait plein** = lien actif, le flux passe ; **trait pointillé** = lien faible, délai, dépendance à un humain ou absence. Un schéma dont tous les traits sont pointillés ne montre plus rien : garder au moins un lien plein, sauf quand l'absence est justement le sujet.
+
+Les connecteurs se dessinent dans une colonne ou une rangée de la grille, jamais par-dessus les nœuds. Un nœud n'est jamais placé en position absolue : c'est la grille qui répartit, et le trait s'y adapte.
 
 ## Rôles visuels
 
@@ -54,7 +70,7 @@ Onze classes ont un nom commun dans toutes les DNA du mode, pour que le corps d'
 - `bg-alt` / `text-on-alt` / `text-on-alt-muted` — fond de diapo alterné et ses textes. À utiliser quand la DNA alterne deux fonds dans son deck (diapos de preuve claires, par exemple). Ne jamais poser `text-ink` sur `bg-alt` : le contraste est celui de l'autre fond.
 - `bg-highlight` / `text-highlight` / `border-highlight` — mise en avant qui n'est pas une action : chiffre clé, série principale d'un graphique, option retenue. Une seule par diapo.
 - `border-emphasis` — trait qui désigne l'élément retenu dans une grille ou une comparaison. Il ne remplace pas une couleur d'état.
-- `text-connector` / `text-connector-muted` — liens des schémas (traits SVG en `stroke="currentColor"`). Plein pour un lien actif, `connector-muted` et pointillé pour un lien faible, un délai ou une absence.
+- `text-connector` / `text-connector-muted` — liens des schémas (traits SVG en `stroke="currentColor"`). Plein pour un lien actif, `connector-muted` et pointillé pour un lien faible, un délai ou une absence. Ces deux classes ne servent qu'à un trait : un libellé de nœud reste en `text-muted`, même sur un nœud absent (c'est la bordure pointillée qui dit l'absence).
 - `bg-brand` / `bg-brand-radial` — dégradé de marque (sphère, orbe, moment de marque). Une seule occurrence par deck, à l'ouverture ou à la clôture.
 
 Sur un fond `bg-alt` de luminance opposée à `base` (papier clair sur un thème sombre), la mise en avant passe par `bg-alt` et `border-emphasis`, jamais par `text-highlight` : aucune couleur ne peut être lisible en texte sur un fond très sombre et sur un fond très clair. `preview_screen` mesure le contraste réel et le signalera.

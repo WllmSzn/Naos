@@ -1,0 +1,40 @@
+<!-- {"id":"hub-cycle","name":"Pivot et satellites","kind":"diagram","description":"Un pivot central et trois à quatre satellites reliés en croix : ce qui tourne autour d’un même noyau, et la sortie qui en découle. La variante absent montre le même dispositif sans personne au centre.","tags":["schéma","hub","cycles","satellites","pivot","organisation","rôles","automatisation"],"slots":[{"name":"pivot","description":"Le nom du centre et son sous-nom ; le cadre d’emphase et le fond désignent le pivot, pas sa taille","constraint":"nom 2 mots, sous-nom 2 mots au plus"},{"name":"nœuds","description":"3 ou 4 satellites nommés sur une ligne ; un 5e se pose dans le coin bas-gauche, relié en L","constraint":"nom 2 mots au plus, une ligne à 540 px"},{"name":"sortie","description":"Le résultat du cycle, sous le schéma (facultatif : il coûte une ligne de diapo)","constraint":"1 ligne, 6 mots au plus"}],"variants":[{"name":"absent","attribute":"data-variant=\"absent\""}],"fits":["split","comparison","statement"],"minWidth":380} -->
+<div class="group mx-auto w-full max-w-[680px] text-caption">
+  <div class="grid grid-cols-[minmax(0,1fr)_1rem_minmax(0,1.4fr)_1rem_minmax(0,1fr)] grid-rows-[auto_1rem_auto_1rem_auto] gap-1">
+    <div class="col-start-3 row-start-1 flex items-center justify-center rounded-card border border-line bg-surface px-3 py-1.5 text-center">
+      <p class="text-caption text-ink">Corréler</p>
+    </div>
+    <svg class="col-start-3 row-start-2 h-full w-full text-connector group-data-[variant=absent]:text-connector-muted" viewBox="0 0 10 100" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M5 0 V100" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" class="group-data-[variant=absent]:[stroke-dasharray:7_6]" />
+    </svg>
+
+    <div class="col-start-1 row-start-3 flex items-center justify-center rounded-card border border-line bg-surface px-3 py-1.5 text-center">
+      <p class="text-caption text-ink">Agir</p>
+    </div>
+    <svg class="col-start-2 row-start-3 h-full w-full text-connector group-data-[variant=absent]:text-connector-muted" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 5 H100" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" class="group-data-[variant=absent]:[stroke-dasharray:7_6]" />
+    </svg>
+
+    <div class="col-start-3 row-start-3 flex flex-col justify-center rounded-card border-2 border-emphasis bg-raised px-3 py-2 text-center group-data-[variant=absent]:border-dashed group-data-[variant=absent]:border-line group-data-[variant=absent]:bg-transparent">
+      <p class="text-caption text-ink">Smart Playbook</p>
+      <p class="mt-0.5 font-mono text-caption uppercase tracking-[0.15em] text-muted">ARTEFACT</p>
+    </div>
+
+    <svg class="col-start-4 row-start-3 h-full w-full text-connector group-data-[variant=absent]:text-connector-muted" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 5 H100" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" class="group-data-[variant=absent]:[stroke-dasharray:7_6]" />
+    </svg>
+
+    <div class="col-start-5 row-start-3 flex items-center justify-center rounded-card border border-line bg-surface px-3 py-1.5 text-center">
+      <p class="text-caption text-ink">Investiguer</p>
+    </div>
+
+    <svg class="col-start-3 row-start-4 h-full w-full text-connector group-data-[variant=absent]:text-connector-muted" viewBox="0 0 10 100" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M5 0 V100" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" class="group-data-[variant=absent]:[stroke-dasharray:7_6]" />
+    </svg>
+
+    <div class="col-start-3 row-start-5 flex items-center justify-center rounded-card border border-line bg-surface px-3 py-1.5 text-center">
+      <p class="text-caption text-ink">Plan de réponse</p>
+    </div>
+  </div>
+  <p class="mt-2 text-center text-caption text-muted">Menace neutralisée en 12 minutes</p>
+</div>

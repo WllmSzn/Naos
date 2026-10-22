@@ -1,0 +1,65 @@
+<!-- {"id":"step-chain","name":"Chaîne d’étapes","kind":"diagram","description":"Trois à huit étapes numérotées, réparties en un ou deux groupes, avec la transition libellée qui les sépare : un processus outillé, lu de gauche à droite.","tags":["schéma","étapes","processus","chaîne","workflow","groupes","transition","outillage"],"slots":[{"name":"groupes","description":"Un ou deux groupes : le nom de l’outil ou du moment, et une mention de contexte","constraint":"1 ou 2 groupes, nom 2 mots, mention 4 mots au plus"},{"name":"étapes","description":"3 à 8 étapes au total, numérotées, avec un nom et une description courte","constraint":"nom 2 mots, description 3 mots au plus"},{"name":"transition","description":"Ce qui passe d’un groupe à l’autre","constraint":"2 mots au plus"}],"variants":[],"fits":["split","statement","comparison"],"minWidth":480} -->
+<div class="flex items-stretch gap-3 text-caption">
+  <div class="flex flex-1 flex-col rounded-card border border-line bg-surface px-3 py-3">
+    <p class="text-caption text-ink">SIEM</p>
+    <ol class="mt-3 grid grid-cols-[repeat(auto-fit,minmax(8rem,1fr))] gap-x-3 gap-y-3">
+      <li class="flex gap-2">
+        <span class="font-mono text-caption tabular-nums text-highlight">01</span>
+        <span class="min-w-0">
+          <span class="block break-words text-caption text-ink">Détection</span>
+          <span class="mt-0.5 block break-words text-caption text-muted">Règles et signaux</span>
+        </span>
+      </li>
+      <li class="flex gap-2">
+        <span class="font-mono text-caption tabular-nums text-highlight">02</span>
+        <span class="min-w-0">
+          <span class="block break-words text-caption text-ink">Triage</span>
+          <span class="mt-0.5 block break-words text-caption text-muted">Gravité et portée</span>
+        </span>
+      </li>
+      <li class="flex gap-2">
+        <span class="font-mono text-caption tabular-nums text-highlight">03</span>
+        <span class="min-w-0">
+          <span class="block break-words text-caption text-ink">Qualification</span>
+          <span class="mt-0.5 block break-words text-caption text-muted">Alerte ou bruit</span>
+        </span>
+      </li>
+    </ol>
+    <p class="mt-3 border-t border-line pt-2 text-caption text-muted">14 sources connectées</p>
+  </div>
+
+  <div class="flex w-28 shrink-0 flex-col items-center justify-center gap-1.5">
+    <svg class="h-5 w-9 text-connector" viewBox="0 0 24 12" aria-hidden="true">
+      <path d="M0 6 H21 M15 1 L21 6 L15 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+    <p class="text-center text-caption text-muted">Alertes qualifiées</p>
+  </div>
+
+  <div class="flex flex-1 flex-col rounded-card border border-line bg-surface px-3 py-3">
+    <p class="text-caption text-ink">Smart Playbook</p>
+    <ol class="mt-3 grid grid-cols-[repeat(auto-fit,minmax(8rem,1fr))] gap-x-3 gap-y-3">
+      <li class="flex gap-2">
+        <span class="font-mono text-caption tabular-nums text-highlight">04</span>
+        <span class="min-w-0">
+          <span class="block break-words text-caption text-ink">Investigation</span>
+          <span class="mt-0.5 block break-words text-caption text-muted">Contexte et portée</span>
+        </span>
+      </li>
+      <li class="flex gap-2">
+        <span class="font-mono text-caption tabular-nums text-highlight">05</span>
+        <span class="min-w-0">
+          <span class="block break-words text-caption text-ink">Remédiation</span>
+          <span class="mt-0.5 block break-words text-caption text-muted">Isolement, correctif</span>
+        </span>
+      </li>
+      <li class="flex gap-2">
+        <span class="font-mono text-caption tabular-nums text-highlight">06</span>
+        <span class="min-w-0">
+          <span class="block break-words text-caption text-ink">Clôture</span>
+          <span class="mt-0.5 block break-words text-caption text-muted">Trace et retour</span>
+        </span>
+      </li>
+    </ol>
+    <p class="mt-3 border-t border-line pt-2 text-caption text-muted">Un analyste valide chaque étape</p>
+  </div>
+</div>

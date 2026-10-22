@@ -1,0 +1,29 @@
+<!-- {"id":"labeled-flow","name":"Flux étiqueté","kind":"diagram","description":"Deux à quatre sources qui aboutissent toutes au même point, chaque lien portant le même libellé : le délai, la dépendance ou le vide que le schéma dénonce.","tags":["schéma","flux","sources","lien","délai","dépendance","convergence","outils"],"slots":[{"name":"sources","description":"2 à 4 sources, nommées en un mot ou deux, sur une ligne","constraint":"2 à 4 nœuds, 2 mots au plus"},{"name":"libellé de lien","description":"Ce que porte chaque lien, répété sous chaque source","constraint":"1 à 2 mots"},{"name":"cible","description":"Le symbole de la cible et la légende qui dit ce qui s’y passe ; la légende est le seul texte à l’échelle du corps","constraint":"symbole 1 caractère, légende 8 mots au plus"}],"variants":[{"name":"dashed","attribute":"data-variant=\"dashed\""}],"fits":["split","comparison","statement"],"minWidth":400} -->
+<div class="group grid grid-cols-4 items-end gap-x-2 text-caption" data-variant="dashed">
+  <div class="rounded-card border border-line bg-surface px-3 py-2.5 text-center">
+    <p class="text-caption text-ink">SIEM</p>
+  </div>
+  <div class="rounded-card border border-line bg-surface px-3 py-2.5 text-center">
+    <p class="text-caption text-ink">XDR</p>
+  </div>
+  <div class="rounded-card border border-line bg-surface px-3 py-2.5 text-center">
+    <p class="text-caption text-ink">Threat Intel</p>
+  </div>
+  <div class="rounded-card border border-line bg-surface px-3 py-2.5 text-center">
+    <p class="text-caption text-ink">SOAR</p>
+  </div>
+
+  <p class="pt-2 text-center font-mono text-caption uppercase tracking-[0.1em] text-muted">délai</p>
+  <p class="pt-2 text-center font-mono text-caption uppercase tracking-[0.1em] text-muted">délai</p>
+  <p class="pt-2 text-center font-mono text-caption uppercase tracking-[0.1em] text-muted">délai</p>
+  <p class="pt-2 text-center font-mono text-caption uppercase tracking-[0.1em] text-muted">délai</p>
+
+  <svg class="col-span-4 h-12 w-full text-connector group-data-[variant=dashed]:text-connector-muted" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M12.5 0 L50 100 M37.5 0 L50 100 M62.5 0 L50 100 M87.5 0 L50 100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke" class="group-data-[variant=dashed]:[stroke-dasharray:7_6]" />
+  </svg>
+
+  <div class="col-span-4 flex items-center justify-center gap-3 rounded-card border border-line bg-surface px-4 py-3">
+    <span class="font-display text-subtitle leading-none text-highlight" aria-hidden="true">?</span>
+    <p class="text-body text-ink">L’analyste relie tout à la main</p>
+  </div>
+</div>

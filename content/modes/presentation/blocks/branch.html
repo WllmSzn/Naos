@@ -1,0 +1,28 @@
+<!-- {"id":"branch","name":"Embranchement","kind":"diagram","description":"Une situation qui se sépare en deux à quatre issues : la source à gauche avec son étiquette d’état, une issue par ligne à droite, chacune avec son étiquette et son résultat.","tags":["schéma","branche","arbre","décision","issues","cas","tri"],"slots":[{"name":"source","description":"L’étiquette d’état et le titre de ce dont partent les branches ; le cadre d’emphase désigne la source","constraint":"étiquette 2 mots, titre 6 mots au plus"},{"name":"branches","description":"2 à 4 issues : une étiquette d’état et un résultat par issue","constraint":"2 à 4 cartes, étiquette 2 mots, résultat 6 mots au plus"}],"variants":[{"name":"merge","attribute":"data-variant=\"merge\""}],"fits":["split","comparison","statement"],"minWidth":420} -->
+<div class="flex items-stretch gap-3 text-caption data-[variant=merge]:flex-row-reverse">
+  <div class="flex flex-1 items-center">
+    <div class="w-full rounded-card border border-highlight bg-surface px-4 py-3">
+      <p class="font-mono text-caption uppercase tracking-[0.15em] text-muted">Alerte élevée</p>
+      <p class="mt-1.5 text-caption text-ink">Fichiers renommés en masse</p>
+    </div>
+  </div>
+
+  <svg class="w-10 shrink-0 self-stretch text-connector" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 50 H50 M50 16.7 V83.3 M50 16.7 H100 M50 50 H100 M50 83.3 H100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+  </svg>
+
+  <div class="grid flex-1 auto-rows-fr gap-2">
+    <div class="rounded-card border border-line bg-surface px-4 py-2.5">
+      <p class="font-mono text-caption uppercase tracking-[0.15em] text-muted">Analyste A</p>
+      <p class="mt-1 text-caption text-ink">Poste isolé, incident ouvert</p>
+    </div>
+    <div class="rounded-card border border-line bg-surface px-4 py-2.5">
+      <p class="font-mono text-caption uppercase tracking-[0.15em] text-muted">Analyste B</p>
+      <p class="mt-1 text-caption text-ink">Classée faux positif</p>
+    </div>
+    <div class="rounded-card border border-dashed border-line px-4 py-2.5">
+      <p class="font-mono text-caption uppercase tracking-[0.15em] text-muted">Sans contexte</p>
+      <p class="mt-1 text-caption text-muted">Personne ne tranche</p>
+    </div>
+  </div>
+</div>

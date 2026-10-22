@@ -15,6 +15,7 @@ import { saveScreen } from '../src/screen/output.js';
 import { PROJECT_ROOT } from '../src/paths.js';
 import { loadBlocks } from '../src/blocks/library.js';
 import { hostSection } from '../src/blocks/host.js';
+import { loadPatterns } from '../src/patterns/library.js';
 
 const EXAMPLES: Array<{ prefix: string; file: string; title: string; mode: string; libs: Lib[] }> = [
   { prefix: 'landing', file: 'landing.body.html', title: 'Orée', mode: 'website', libs: [] },
@@ -27,6 +28,34 @@ const { dnas, errors } = loadLibrary();
 for (const e of errors) console.error(`DNA invalide ${e.file} : ${e.issues.join(' ; ')}`);
 const { blocks, errors: blockErrors } = loadBlocks();
 for (const e of blockErrors) console.error(`Bloc invalide ${e.file} : ${e.issue}`);
+const { patterns } = loadPatterns();
+
+/**
+ * Diapo « trois modèles » : une section réelle du mode (comparison-options), remplie par
+ * de vrais blocs. Les blocs isolés disent leur forme ; cette diapo dit s'ils tiennent
+ * côte à côte, à la largeur d'un tiers de diapo.
+ */
+function composedSlide(modeId: string): string {
+  const section = patterns.get('comparison-options');
+  if (!section || section.mode !== modeId) return '';
+  const hub = blocks.get('hub-cycle')?.html ?? '';
+  const fragments = [
+    blocks.get('labeled-flow')?.html ?? '',
+    hub,
+    // Même dispositif, sans personne au centre : c'est la variante qui porte le propos.
+    hub
+      .replace('max-w-[680px]">', 'max-w-[680px]" data-variant="absent">')
+      .replace('ARTEFACT', 'Sans personne')
+      .replace('Smart Playbook', 'Automatisé')
+      .replace('Plan de réponse', 'Plan')
+      .replace('Menace neutralisée en 12 minutes', 'Personne ne relit la réponse'),
+  ];
+  let i = 0;
+  return section.html.replace(
+    /(<div data-slot="diagram"[^>]*>)[\s\S]*?(<\/div>)/g,
+    (_m, open: string, close: string) => `${open}${fragments[i++] ?? ''}${close}`,
+  );
+}
 
 const only = process.argv.slice(2);
 for (const example of EXAMPLES) {
@@ -56,7 +85,7 @@ for (const mode of getModes().modes.values()) {
     const list = [...blocks.values()].filter((b) => b.mode === mode.id && (!b.dna || b.dna.includes(dna.id)));
     if (!list.length) continue;
     const titleClass = dna.modes[mode.id]?.typeScale ? 'text-title' : '';
-    const body = list.map((b) => hostSection(b, mode, titleClass)).join('\n');
+    const body = [composedSlide(mode.id), ...list.map((b) => hostSection(b, mode, titleClass))].filter(Boolean).join('\n');
     const report = lintScreen(body, { theme: dna.theme, profile: mode.lint });
     const file = saveScreen(
       `blocks-${dna.id}`,

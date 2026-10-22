@@ -1,4 +1,4 @@
-<!-- {"id":"comparison-options","name":"Comparaison d’options","kind":"comparison","description":"Trois options côte à côte (nom, sous-titre, capacités, résultat), l’option retenue désignée par un trait d’emphase ; chaque carte garde une zone libre pour un schéma de bloc.","tags":["comparaison","options","choix","décision","scénarios","présentation"]} -->
+<!-- {"id":"comparison-options","name":"Comparaison d’options","kind":"comparison","description":"Trois options côte à côte (nom, schéma, résultat chiffré), l’option retenue désignée par un trait d’emphase ; chaque carte garde une zone libre pour un schéma de bloc, qui porte l’essentiel de la comparaison.","tags":["comparaison","options","choix","décision","scénarios","présentation"]} -->
 <section data-slide class="flex h-[1080px] flex-col justify-between overflow-hidden bg-base px-24 py-20">
   <header class="flex items-baseline justify-between">
     <p class="font-mono text-caption uppercase tracking-[0.2em] text-muted">Les trajectoires possibles</p>
@@ -11,9 +11,7 @@
 
   <div class="grid grid-cols-3 gap-8">
     <article class="flex min-h-[470px] flex-col rounded-card border border-line bg-surface p-8">
-      <p class="font-mono text-caption uppercase tracking-[0.15em] text-muted">Option 1</p>
-      <h3 class="mt-3 text-subtitle text-ink">SOC manuel</h3>
-      <p class="mt-2 text-body text-muted">Statu quo, on recrute.</p>
+      <h3 class="text-subtitle text-ink">SOC manuel</h3>
       <div data-slot="diagram" class="my-6 flex flex-1 flex-col justify-center gap-2 border-y border-line/70 py-5">
         <p class="text-body text-ink">File triée à la main</p>
         <p class="text-body text-muted">Réponse rédigée à la main</p>
@@ -25,12 +23,10 @@
     </article>
 
     <article class="flex min-h-[470px] flex-col rounded-card border-2 border-emphasis bg-raised p-8">
-      <div class="flex items-baseline justify-between">
-        <p class="font-mono text-caption uppercase tracking-[0.15em] text-muted">Option 2</p>
+      <div class="flex items-baseline justify-between gap-4">
+        <h3 class="text-subtitle text-ink">ARTEFACT</h3>
         <span class="font-mono text-caption uppercase tracking-[0.15em] text-ink">Retenue</span>
       </div>
-      <h3 class="mt-3 text-subtitle text-ink">ARTEFACT</h3>
-      <p class="mt-2 text-body text-muted">Le socle automatisé.</p>
       <div data-slot="diagram" class="my-6 flex flex-1 flex-col justify-center gap-2 border-y border-line/70 py-5">
         <p class="text-body text-ink">File triée, réponse prête</p>
         <p class="text-body text-muted">L’analyste valide et envoie</p>
@@ -42,9 +38,7 @@
     </article>
 
     <article class="flex min-h-[470px] flex-col rounded-card border border-line bg-surface p-8">
-      <p class="font-mono text-caption uppercase tracking-[0.15em] text-muted">Option 3</p>
-      <h3 class="mt-3 text-subtitle text-ink">SOC autonome</h3>
-      <p class="mt-2 text-body text-muted">Tout est automatisé.</p>
+      <h3 class="text-subtitle text-ink">SOC autonome</h3>
       <div data-slot="diagram" class="my-6 flex flex-1 flex-col justify-center gap-2 border-y border-line/70 py-5">
         <p class="text-body text-ink">File triée, réponse envoyée</p>
         <p class="text-body text-muted">Personne ne relit</p>
