@@ -1,0 +1,47 @@
+<!-- {"id":"ui-mock-card","name":"Carte d’interface","kind":"media","description":"Une carte d’interface à l’échelle d’une diapo : en-tête et statut, métrique, liste d’items numérotés, deux actions. Elle montre le produit fini sans capture à refaire, et reprend la convention d’état du produit (pastille et mot).","tags":["interface","maquette","produit","carte","états","actions","média"],"slots":[{"name":"en-tête","description":"Le titre de l’objet et sa référence, plus un statut écrit","constraint":"titre 3 mots, référence courte, statut 1 mot"},{"name":"métrique","description":"Le chiffre qui compte dans cette carte, son intitulé et sa période","constraint":"1 chiffre, intitulé 3 mots"},{"name":"items","description":"2 à 4 points de contenu, chacun avec une phrase de détail","constraint":"2 à 4 items, titre 5 mots au plus"},{"name":"actions","description":"Une action principale (aplat d’accent) et une secondaire (contour)","constraint":"1 à 2 mots par action"}],"variants":[],"fits":["split","statement"],"minWidth":520} -->
+<div class="mx-auto w-full max-w-[560px] break-words overflow-hidden rounded-card border border-line bg-surface shadow-card">
+  <div class="flex items-start justify-between gap-4 border-b border-line px-6 py-3.5">
+    <div class="min-w-0">
+      <p class="text-body text-ink">Réclamation facture</p>
+      <p class="mt-1 font-mono text-caption text-muted">Ticket 4821 · ouvert il y a 2 h</p>
+    </div>
+    <span class="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-line px-2.5 py-1 font-mono text-caption text-muted">
+      <span class="h-2 w-2 shrink-0 rounded-full bg-highlight"></span>Qualifié
+    </span>
+  </div>
+
+  <div class="px-6 py-4">
+    <p class="font-mono text-caption uppercase tracking-[0.15em] text-muted">Délai de réponse</p>
+    <p class="mt-1.5 text-title tabular-nums text-ink">4 h 12</p>
+    <p class="mt-1 text-caption text-muted">Médiane des sept derniers jours.</p>
+  </div>
+
+  <ul class="space-y-2.5 border-t border-line px-6 py-3.5">
+    <li class="flex items-start gap-3">
+      <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-line font-mono text-caption text-muted">1</span>
+      <span class="min-w-0">
+        <span class="block text-caption text-ink">Le montant contesté est retrouvé</span>
+        <span class="mt-0.5 block text-caption text-muted">Facture de février, ligne 3.</span>
+      </span>
+    </li>
+    <li class="flex items-start gap-3">
+      <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-line font-mono text-caption text-muted">2</span>
+      <span class="min-w-0">
+        <span class="block text-caption text-ink">La réponse type est proposée</span>
+        <span class="mt-0.5 block text-caption text-muted">Deux phrases, à relire avant l’envoi.</span>
+      </span>
+    </li>
+    <li class="flex items-start gap-3">
+      <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-line font-mono text-caption text-muted">3</span>
+      <span class="min-w-0">
+        <span class="block text-caption text-ink">Le remboursement reste à valider</span>
+        <span class="mt-0.5 block text-caption text-muted">La validation revient au responsable.</span>
+      </span>
+    </li>
+  </ul>
+
+  <div class="flex items-center gap-3 border-t border-line px-6 py-3.5">
+    <span class="inline-flex items-center rounded-ui bg-accent px-4 py-2 text-caption text-accent-ink">Envoyer la réponse</span>
+    <span class="inline-flex items-center rounded-ui border border-line px-4 py-2 text-caption text-ink">Modifier</span>
+  </div>
+</div>

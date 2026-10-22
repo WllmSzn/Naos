@@ -1,0 +1,32 @@
+<!-- {"id":"annotated-shot","name":"Capture annotée","kind":"media","description":"Un emplacement de capture décrit, et des repères numérotés posés dessus en pourcentage, expliqués à côté dans l’ordre : la légende porte le sens, le repère ne fait que désigner.","tags":["capture","écran","annotation","repères","légende","média","produit"],"slots":[{"name":"capture","description":"La description de la capture attendue : écran, zone, données visibles","constraint":"1 phrase précise, jamais une image aléatoire"},{"name":"repères","description":"2 à 5 repères numérotés, chacun avec son nom et une phrase ; leur position est en pourcentage du cadre","constraint":"2 à 5 repères, nom 3 mots, phrase 10 mots au plus"}],"variants":[],"fits":["split","statement","comparison"],"minWidth":540} -->
+<div class="grid grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] items-start gap-8 break-words text-caption">
+  <div data-image="Capture de la file de tickets : trois étiquettes de motif en haut, compteurs à droite, une ligne sélectionnée au centre" role="img" aria-label="Capture de la file de tickets, trois étiquettes de motif et une ligne sélectionnée" class="relative aspect-[16/10] w-full rounded-card">
+    <span aria-hidden="true" class="absolute z-10 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-surface font-mono text-caption text-ink shadow-card" style="left:26%;top:24%">1</span>
+    <span aria-hidden="true" class="absolute z-10 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-surface font-mono text-caption text-ink shadow-card" style="left:66%;top:46%">2</span>
+    <span aria-hidden="true" class="absolute z-10 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-surface font-mono text-caption text-ink shadow-card" style="left:48%;top:78%">3</span>
+  </div>
+
+  <ol class="flex flex-col gap-5">
+    <li class="flex gap-3">
+      <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-line font-mono text-caption text-ink">1</span>
+      <span class="min-w-0">
+        <span class="block text-caption text-ink">Étiquettes de motif</span>
+        <span class="mt-1 block text-caption text-muted">Trois motifs couvrent deux tiers des demandes.</span>
+      </span>
+    </li>
+    <li class="flex gap-3">
+      <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-line font-mono text-caption text-ink">2</span>
+      <span class="min-w-0">
+        <span class="block text-caption text-ink">Ligne sélectionnée</span>
+        <span class="mt-1 block text-caption text-muted">Le contexte s’ouvre sans quitter la file.</span>
+      </span>
+    </li>
+    <li class="flex gap-3">
+      <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-line font-mono text-caption text-ink">3</span>
+      <span class="min-w-0">
+        <span class="block text-caption text-ink">Réponse proposée</span>
+        <span class="mt-1 block text-caption text-muted">Elle reste modifiable avant l’envoi.</span>
+      </span>
+    </li>
+  </ol>
+</div>

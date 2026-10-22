@@ -72,7 +72,7 @@ test('un bloc de la bibliothèque hérite de sa famille, un bloc de mode reste c
 test('le lot données et contenu est livré, rangé par type', () => {
   const expected: Record<string, string[]> = {
     figure: ['bar-series', 'before-after', 'gauge', 'key-figure', 'split-bar'],
-    grid: ['callout', 'logo-row', 'module-grid', 'numbered-points', 'person-card', 'tag-cloud'],
+    grid: ['callout', 'comparison-table', 'logo-row', 'module-grid', 'numbered-points', 'person-card', 'tag-cloud'],
     meta: ['contact', 'slide-footer'],
   };
   for (const [kind, ids] of Object.entries(expected)) {
@@ -86,6 +86,60 @@ test('le lot données et contenu est livré, rangé par type', () => {
     assert.ok(b.minWidth >= 320, `${id} : largeur minimale déclarée`);
     assert.ok(b.fits.length, `${id} : sections hôtes déclarées`);
   }
+});
+
+test('le lot 2 est livré : matrices, arbres, frises et médias', () => {
+  const expected: Record<string, string[]> = {
+    diagram: ['decision-tree', 'matrix-2x2', 'platform-stack', 'timeline'],
+    media: ['annotated-shot', 'ui-mock-card'],
+  };
+  for (const [kind, ids] of Object.entries(expected)) {
+    const got = all.filter((b) => b.mode === 'presentation' && b.kind === kind && !b.dna).map((b) => b.id).sort();
+    for (const id of ids) assert.ok(got.includes(id), `${id} manquant en ${kind}`);
+    for (const id of ids) {
+      const b = blocks.get(id)!;
+      assert.ok(b.slots.length >= 2, `${id} : emplacements déclarés`);
+      assert.ok(b.minWidth >= 320, `${id} : largeur minimale déclarée`);
+      assert.ok(b.fits.length, `${id} : sections hôtes déclarées`);
+    }
+  }
+
+  // La matrice place ses points en pourcentage : leur position est le propos.
+  const matrix = blocks.get('matrix-2x2')!.html;
+  assert.equal((matrix.match(/style="left:\d+%;top:\d+%"/g) ?? []).length, 4);
+  assert.match(matrix, /border-2 border-emphasis/, 'un seul point mis en avant');
+  assert.match(matrix, /Gains rapides[\s\S]*Chantiers de fond[\s\S]*Petits pas[\s\S]*À écarter/, 'quatre quadrants titrés');
+
+  // L'arbre garde le chemin retenu en trait plein, les autres en pointillés.
+  const tree = blocks.get('decision-tree')!.html;
+  assert.match(tree, /stroke-dasharray="6 6"/);
+  assert.equal((tree.match(/stroke-dasharray/g) ?? []).length, 2, 'deux branches écartées');
+  assert.match(tree, /OUI[\s\S]*NON/, 'le sens se lit dans les cartes, pas dans la couleur');
+
+  // La frise dit l'état en toutes lettres, avec ou sans calendrier.
+  const timeline = blocks.get('timeline')!.html;
+  for (const state of ['Fait', 'En cours', 'À venir']) assert.ok(timeline.includes(`>${state}<`), `état ${state}`);
+  assert.doesNotMatch(timeline, /\b(19|20)\d\d\b/, 'aucune date promise');
+
+  // Le tableau porte un mot par cellule : une icône seule ne dirait rien à un lecteur d'écran.
+  const table = blocks.get('comparison-table')!.html;
+  assert.match(table, /<table/);
+  assert.match(table, /<th scope="col"/);
+  assert.match(table, /<th scope="row"/);
+  assert.equal((table.match(/<iconify-icon[^>]*aria-hidden="true"/g) ?? []).length, (table.match(/<iconify-icon/g) ?? []).length);
+  assert.match(table, /Inclus<\/span>|Inclus\n/, 'le mot accompagne la coche');
+
+  // Les repères d'une capture renvoient à une légende, ils ne flottent pas seuls.
+  const shot = blocks.get('annotated-shot')!.html;
+  assert.match(shot, /data-image="Capture/);
+  assert.match(shot, /role="img" aria-label="Capture/);
+  assert.equal((shot.match(/<span aria-hidden="true"[^>]*style="left:/g) ?? []).length, 3);
+
+  // La carte d'interface se tient à l'échelle d'une diapo et garde ses deux actions.
+  const mock = blocks.get('ui-mock-card')!.html;
+  assert.match(mock, /max-w-\[560px\]/);
+  assert.match(mock, /bg-accent[^"]*text-accent-ink/);
+  assert.match(mock, /rounded-ui border border-line/);
 });
 
 test('les blocs de données portent leurs variantes et leurs sources', () => {

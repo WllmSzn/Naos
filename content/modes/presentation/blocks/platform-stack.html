@@ -1,0 +1,42 @@
+<!-- {"id":"platform-stack","name":"Pile de plateforme","kind":"diagram","description":"Un socle commun en bas, des modules posés dessus : chaque module dit son état en toutes lettres, et le socle énumère les capacités qu’il rend possibles une seule fois pour tous.","tags":["architecture","plateforme","socle","modules","capacités","état","actif","à venir","schéma"],"slots":[{"name":"modules","description":"2 à 5 modules posés sur le socle, avec leur nom, une phrase et leur état","constraint":"2 à 5 modules, nom 2 mots, phrase 8 mots au plus"},{"name":"socle","description":"Le nom du socle, une phrase et la liste de ses capacités","constraint":"3 à 6 capacités, 1 à 2 mots chacune"}],"variants":[],"fits":["split","statement","comparison"],"minWidth":560} -->
+<div class="flex flex-col gap-3 break-words text-caption">
+  <div class="grid grid-cols-3 gap-3">
+    <div class="flex min-w-0 flex-col rounded-card border border-line bg-surface p-4">
+      <p class="text-caption text-ink">Qualification</p>
+      <p class="mt-1 text-caption text-muted">Motif, priorité, propriétaire.</p>
+      <p class="mt-3 flex items-center gap-2 font-mono text-caption text-muted">
+        <span class="h-2 w-2 shrink-0 rounded-full bg-highlight"></span>Actif
+      </p>
+    </div>
+
+    <div class="flex min-w-0 flex-col rounded-card border border-line bg-surface p-4">
+      <p class="text-caption text-ink">Réponse guidée</p>
+      <p class="mt-1 text-caption text-muted">Le texte se propose, l’analyste relit.</p>
+      <p class="mt-3 flex items-center gap-2 font-mono text-caption text-muted">
+        <span class="h-2 w-2 shrink-0 rounded-full bg-highlight"></span>Actif
+      </p>
+    </div>
+
+    <div class="flex min-w-0 flex-col rounded-card border border-dashed border-line p-4">
+      <p class="text-caption text-ink">Envoi automatique</p>
+      <p class="mt-1 text-caption text-muted">Sur les motifs sûrs seulement.</p>
+      <p class="mt-3 flex items-center gap-2 font-mono text-caption text-muted">
+        <span class="h-2 w-2 shrink-0 rounded-full border border-line"></span>À venir
+      </p>
+    </div>
+  </div>
+
+  <div class="rounded-card border-2 border-emphasis bg-surface px-5 py-4">
+    <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+      <p class="font-mono text-caption uppercase tracking-[0.15em] text-muted">Socle commun</p>
+      <p class="text-caption text-ink">Une seule identité, un seul journal pour tous les modules.</p>
+    </div>
+    <ul class="mt-3 flex flex-wrap gap-2">
+      <li class="rounded-card border border-line bg-raised px-2.5 py-1 text-caption text-ink">Identité</li>
+      <li class="rounded-card border border-line bg-raised px-2.5 py-1 text-caption text-ink">Permissions</li>
+      <li class="rounded-card border border-line bg-raised px-2.5 py-1 text-caption text-ink">Journal</li>
+      <li class="rounded-card border border-line bg-raised px-2.5 py-1 text-caption text-ink">Connecteurs</li>
+      <li class="rounded-card border border-line bg-raised px-2.5 py-1 text-caption text-ink">Recherche</li>
+    </ul>
+  </div>
+</div>

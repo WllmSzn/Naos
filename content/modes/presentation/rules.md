@@ -65,7 +65,14 @@ Ce que la diapo doit faire comprendre décide du bloc ; la forme suit :
 | qui parle, ou l'équipe | `person-card` | grid |
 | la phrase à retenir | `callout` | grid |
 | des références clientes | `logo-row` | grid |
+| plusieurs options face à des critères, une seule retenue | `comparison-table` | grid |
 | un flux qui se sépare, converge, tourne ou s'enchaîne | `branch`, `merge`, `labeled-flow`, `hub-cycle`, `step-chain` | diagram |
+| des sujets à situer selon deux critères | `matrix-2x2` | diagram |
+| une décision qui se prend par oui/non, en deux temps | `decision-tree` | diagram |
+| une feuille de route en phases, sans date promise | `timeline` | diagram |
+| un socle commun et des modules posés dessus | `platform-stack` | diagram |
+| expliquer une capture d'écran point par point | `annotated-shot` | media |
+| montrer une carte produit finie, à l'échelle d'une diapo | `ui-mock-card` | media |
 | le pied de la diapo | `slide-footer` | meta |
 | la prise de contact | `contact` | meta |
 
@@ -77,7 +84,7 @@ Ce que la diapo doit faire comprendre décide du bloc ; la forme suit :
 - Un schéma reste lisible à 3 mètres : peu de nœuds (sept au plus), des libellés courts, un seul accent par schéma.
 - Dans un schéma, les libellés de nœuds restent à l'échelle de légende (`text-caption`), et un nœud tient sur une ou deux lignes. Seul l'élément qui porte une phrase — la cible d'une convergence, la légende d'un flux — passe à `text-body`. La hiérarchie d'un schéma se fait par le trait (`border-highlight`, `border-emphasis`) et le fond (`bg-raised`), pas par la taille : un nœud en corps occupe trois lignes dès que le schéma est posé au tiers d'une diapo, et fait déborder la carte.
 - Un schéma doit tenir dans une colonne de 540 px comme en pleine largeur : c'est la largeur d'une carte de comparaison à trois options. À cette largeur, compter une ligne par nœud, et préférer trois satellites à quatre quand le texte s'allonge.
-- Un bloc s'adapte à la largeur de son conteneur : grille ou flex, jamais de position absolue en pixels pour placer du texte. Les connecteurs SVG se dessinent avec `preserveAspectRatio="none"` et `vector-effect="non-scaling-stroke"`, en `stroke="currentColor"` et une classe `text-connector` : le trait suit la DNA et le retheme.
+- Un bloc s'adapte à la largeur de son conteneur : grille ou flex, jamais de position absolue en pixels pour placer du texte. Seuls deux blocs placent du contenu en pourcentage, et c'est leur propos : les points de `matrix-2x2` et les repères d'`annotated-shot`. Les connecteurs SVG se dessinent avec `preserveAspectRatio="none"` et `vector-effect="non-scaling-stroke"`, en `stroke="currentColor"` et une classe `text-connector` : le trait suit la DNA et le retheme.
 - Un SVG décoratif porte `aria-hidden="true"` ; un SVG porteur de sens `role="img"` et un `aria-label`. Aucun texte sous `text-caption`.
 
 ### Schémas
@@ -93,6 +100,19 @@ Cinq schémas couvrent les cas d'une présentation métier. Choisir par ce qu'il
 Sens des traits, dans tous les schémas : **trait plein** = lien actif, le flux passe ; **trait pointillé** = lien faible, délai, dépendance à un humain ou absence. Un schéma dont tous les traits sont pointillés ne montre plus rien : garder au moins un lien plein, sauf quand l'absence est justement le sujet.
 
 Les connecteurs se dessinent dans une colonne ou une rangée de la grille, jamais par-dessus les nœuds. Un nœud n'est jamais placé en position absolue : c'est la grille qui répartit, et le trait s'y adapte.
+
+### Comparer et décider
+
+- `comparison-table` — deux à quatre options face à trois à six critères, une seule colonne mise en avant (`bg-highlight/10` et `border-emphasis`). Chaque cellule porte un mot : « Inclus », « Non », « Partiel », « Sur devis ». La coche et la croix ne font que doubler le mot, jamais le remplacer, et le tableau garde un `caption` lu par les lecteurs d'écran. Au-delà de quatre options, la diapo devient un texte illisible : scinder en deux tableaux ou passer à `matrix-2x2`.
+- `matrix-2x2` — deux critères nommés, quatre quadrants titrés, deux à huit points. C'est le seul schéma qui place du contenu en pourcentage : la position *est* le propos, elle ne peut pas être calculée par la grille. Un seul point porte la bordure d'emphase. Les noms de quadrants ne sont pas des jugements vides (« Bon », « Mauvais ») mais des actions (« Gains rapides », « Chantiers de fond »).
+- `decision-tree` — deux questions fermées enchaînées et deux ou trois issues. Chaque carte-issue commence par « OUI » ou « NON » : le mot porte le chemin, le trait plein ne fait que le souligner. Un arbre à trois niveaux sur une diapo se découpe en deux diapos plutôt que de rapetisser.
+- `timeline` — trois à cinq phases dans l'ordre, **sans date obligatoire**. L'état s'écrit (« Fait », « En cours », « À venir ») et la pastille le double : pleine, cerclée, vide. Une roadmap qui promet des dates que personne ne tiendra est un mensonge de mise en page.
+- `platform-stack` — un socle qui énumère les capacités partagées, des modules posés dessus avec leur état actif ou à venir. Le socle reste en bas : c'est lui qui porte la comparaison (« la même identité pour tous les modules »), pas les modules.
+
+### Médias
+
+- `annotated-shot` — un emplacement `data-image` décrit, deux à cinq repères numérotés posés en pourcentage, et la légende à côté dans le même ordre. Le repère ne porte jamais de texte : son numéro renvoie à une ligne qui explique. Sans la légende, la capture n'est qu'une image décorative.
+- `ui-mock-card` — une carte d'interface à l'échelle d'une diapo, pas une capture : en-tête, statut écrit, métrique, items numérotés, une action pleine et une secondaire. Elle sert à montrer un écran qui n'existe pas encore ou qui changerait à chaque capture. Le statut reprend la convention du produit (pastille et mot), et les actions restent des `span` : une diapo n'est pas cliquable.
 
 ### Données et contenu
 

@@ -1,0 +1,38 @@
+<!-- {"id":"matrix-2x2","name":"Matrice 2×2","kind":"diagram","description":"Deux axes nommés en leurs extrémités et quatre quadrants titrés, pour situer des sujets par deux critères. Les points sont placés en pourcentage : leur position est le propos, pas une décoration. Un seul point est mis en avant.","tags":["matrice","2x2","positionnement","priorisation","quadrants","axes","schéma"],"slots":[{"name":"axes","description":"Le nom de chaque axe et le mot de ses deux extrémités (faible / élevé)","constraint":"nom 2 mots, extrémités 1 mot"},{"name":"quadrants","description":"Le titre des quatre quadrants, dans l’ordre haut-gauche, haut-droit, bas-gauche, bas-droit","constraint":"titre 2 à 3 mots"},{"name":"points","description":"2 à 8 points nommés, posés en pourcentage du cadre ; un seul porte la bordure d’emphase","constraint":"2 à 8 points, nom 2 mots au plus"}],"variants":[],"fits":["statement","split","comparison"],"minWidth":560} -->
+<div class="flex flex-col gap-3 break-words text-caption">
+  <div class="flex items-end justify-between gap-4 pl-24">
+    <p class="font-mono text-caption text-muted">Effort faible</p>
+    <p class="font-mono text-caption text-muted">Effort élevé</p>
+  </div>
+
+  <div class="flex items-stretch gap-4">
+    <div class="flex w-20 shrink-0 flex-col justify-between py-1 text-right">
+      <p class="font-mono text-caption text-muted">Impact élevé</p>
+      <p class="font-mono text-caption text-muted">Impact faible</p>
+    </div>
+
+    <div class="relative h-[360px] min-w-0 flex-1 overflow-hidden rounded-card border border-line bg-surface">
+      <div class="grid h-full grid-cols-2 grid-rows-2">
+        <div class="border-b border-r border-line p-4">
+          <p class="text-caption text-muted">Gains rapides</p>
+        </div>
+        <div class="border-b border-line p-4">
+          <p class="text-caption text-muted">Chantiers de fond</p>
+        </div>
+        <div class="border-r border-line p-4">
+          <p class="text-caption text-muted">Petits pas</p>
+        </div>
+        <div class="p-4 text-right">
+          <p class="text-caption text-muted">À écarter</p>
+        </div>
+      </div>
+
+      <span class="absolute -translate-x-1/2 -translate-y-1/2 max-w-[44%] text-center rounded-full border border-line bg-surface px-2.5 py-1 text-caption text-ink" style="left:24%;top:22%">Réponse guidée</span>
+      <span class="absolute -translate-x-1/2 -translate-y-1/2 max-w-[44%] text-center rounded-full border border-line bg-surface px-2.5 py-1 text-caption text-ink" style="left:17%;top:44%">Base de connaissances</span>
+      <span class="absolute -translate-x-1/2 -translate-y-1/2 max-w-[44%] text-center rounded-full border-2 border-emphasis bg-highlight/10 px-2.5 py-1 text-caption text-ink" style="left:72%;top:31%">Qualification automatique</span>
+      <span class="absolute -translate-x-1/2 -translate-y-1/2 max-w-[44%] text-center rounded-full border border-line bg-surface px-2.5 py-1 text-caption text-ink" style="left:78%;top:74%">Refonte du portail</span>
+    </div>
+  </div>
+
+  <p class="font-mono text-caption text-muted">Positionnement qualitatif issu de l’atelier du 14 janvier, sans mesure de coût.</p>
+</div>

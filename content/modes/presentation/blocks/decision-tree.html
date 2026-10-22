@@ -1,0 +1,48 @@
+<!-- {"id":"decision-tree","name":"Arbre de décision","kind":"diagram","description":"Deux questions oui/non enchaînées et trois issues : le chemin retenu se lit en trait plein, les autres restent en pointillés. Chaque carte-issue porte la réponse qui y mène, pour que le sens ne dépende pas de la couleur du trait.","tags":["arbre","décision","oui","non","règles","triage","chemin","schéma"],"slots":[{"name":"questions","description":"1 à 2 questions fermées (réponse oui/non), posées dans l’ordre où on se les pose","constraint":"1 question par carte, 10 mots au plus"},{"name":"issues","description":"2 à 3 décisions finales ; chaque carte commence par « OUI » ou « NON »","constraint":"2 à 3 cartes, décision 8 mots au plus"}],"variants":[],"fits":["statement","split","comparison"],"minWidth":540} -->
+<div class="grid h-[400px] grid-cols-[minmax(0,1fr)_2.5rem_minmax(0,1fr)_2.5rem_minmax(0,1fr)] grid-rows-2 gap-0 break-words text-caption">
+  <div class="col-start-1 row-span-2 row-start-1 flex items-center">
+    <div class="w-full rounded-card border-2 border-emphasis bg-surface px-4 py-3">
+      <p class="font-mono text-caption uppercase tracking-[0.15em] text-muted">Situation</p>
+      <p class="mt-1.5 text-caption text-ink">Le motif est-il écrit dans la base ?</p>
+    </div>
+  </div>
+
+  <div class="col-start-2 row-span-2 row-start-1">
+    <svg class="h-full w-full text-connector" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 50 H50 M50 50 V25 M50 25 H100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+      <path d="M50 50 V75 M50 75 H100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="6 6" vector-effect="non-scaling-stroke" />
+    </svg>
+  </div>
+
+  <div class="col-start-3 row-start-1 flex items-center">
+    <div class="w-full rounded-card border border-line bg-surface px-4 py-3">
+      <p class="font-mono text-caption uppercase tracking-[0.15em] text-muted">OUI</p>
+      <p class="mt-1.5 text-caption text-ink">La réponse a-t-elle moins de trois mois ?</p>
+    </div>
+  </div>
+
+  <div class="col-start-4 row-start-1">
+    <svg class="h-full w-full text-connector" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 50 H40 M40 50 V25 M40 25 H100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+      <path d="M40 50 V75 M40 75 H100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="6 6" vector-effect="non-scaling-stroke" />
+    </svg>
+  </div>
+
+  <div class="col-start-5 row-start-1 flex flex-col justify-around gap-3">
+    <div class="rounded-card border-2 border-emphasis bg-surface px-4 py-2.5">
+      <p class="font-mono text-caption uppercase tracking-[0.15em] text-muted">OUI</p>
+      <p class="mt-1 text-caption text-ink">Réponse envoyée telle quelle</p>
+    </div>
+    <div class="rounded-card border border-dashed border-line px-4 py-2.5">
+      <p class="font-mono text-caption uppercase tracking-[0.15em] text-muted">NON</p>
+      <p class="mt-1 text-caption text-muted">Révision avant envoi</p>
+    </div>
+  </div>
+
+  <div class="col-start-3 row-start-2 flex items-center">
+    <div class="rounded-card w-full border border-dashed border-line px-4 py-2.5">
+      <p class="font-mono text-caption uppercase tracking-[0.15em] text-muted">NON</p>
+      <p class="mt-1 text-caption text-muted">Escalade à un analyste</p>
+    </div>
+  </div>
+</div>

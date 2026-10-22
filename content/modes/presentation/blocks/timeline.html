@@ -1,0 +1,42 @@
+<!-- {"id":"timeline","name":"Frise de phases","kind":"diagram","description":"Trois à cinq phases dans l’ordre, sans calendrier obligatoire : le rail porte l’ordre, la pastille et le mot portent l’état (fait, en cours, à venir). Un jalon se raconte par ce qu’il change, pas par une date promise.","tags":["frise","timeline","roadmap","phases","étapes","jalons","état","avancement"],"slots":[{"name":"phases","description":"3 à 5 phases, dans l’ordre ; chacune avec son nom, une phrase et son état écrit","constraint":"3 à 5 phases, nom 3 mots, phrase 8 mots au plus"},{"name":"état","description":"« Fait » (pastille pleine), « En cours » (pastille cerclée) ou « À venir » (pastille vide) : le mot est obligatoire","constraint":"1 mot parmi les trois"}],"variants":[],"fits":["statement","split","appendix"],"minWidth":540} -->
+<ol class="grid grid-cols-4 gap-x-6 gap-y-0 break-words text-caption">
+  <li class="flex min-w-0 flex-col">
+    <div class="flex items-center gap-0">
+      <span class="h-3 w-3 shrink-0 rounded-full bg-highlight"></span>
+      <span class="h-px flex-1 bg-line"></span>
+    </div>
+    <p class="mt-4 font-mono text-caption text-muted">Fait</p>
+    <p class="mt-1.5 text-caption text-ink">Base de connaissances</p>
+    <p class="mt-1 text-caption text-muted">Les onze motifs, écrits et relus par les analystes.</p>
+  </li>
+
+  <li class="flex min-w-0 flex-col">
+    <div class="flex items-center gap-0">
+      <span class="h-3 w-3 shrink-0 rounded-full border-2 border-highlight"></span>
+      <span class="h-px flex-1 bg-line"></span>
+    </div>
+    <p class="mt-4 font-mono text-caption text-muted">En cours</p>
+    <p class="mt-1.5 text-caption text-ink">Réponse guidée</p>
+    <p class="mt-1 text-caption text-muted">Le texte se propose, l’analyste garde la main.</p>
+  </li>
+
+  <li class="flex min-w-0 flex-col">
+    <div class="flex items-center gap-0">
+      <span class="h-3 w-3 shrink-0 rounded-full border border-line"></span>
+      <span class="h-px flex-1 bg-line"></span>
+    </div>
+    <p class="mt-4 font-mono text-caption text-muted">À venir</p>
+    <p class="mt-1.5 text-caption text-ink">Qualification</p>
+    <p class="mt-1 text-caption text-muted">Le motif est reconnu avant l’ouverture du ticket.</p>
+  </li>
+
+  <li class="flex min-w-0 flex-col">
+    <div class="flex items-center gap-0">
+      <span class="h-3 w-3 shrink-0 rounded-full border border-line"></span>
+      <span class="h-px flex-1 bg-transparent"></span>
+    </div>
+    <p class="mt-4 font-mono text-caption text-muted">À venir</p>
+    <p class="mt-1.5 text-caption text-ink">Envoi automatique</p>
+    <p class="mt-1 text-caption text-muted">Sans validation humaine, sur les motifs sûrs.</p>
+  </li>
+</ol>
