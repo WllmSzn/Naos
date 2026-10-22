@@ -53,6 +53,8 @@ export interface LintProfile {
   bannedWords: boolean;
   genericCta: string[];
   requireH1: boolean;
+  /** Le mode attend des notes orateur sur la plupart des diapos (data-notes). */
+  notes?: boolean;
   /**
    * Fragment (bloc) et non écran : pas de titre principal, pas de cadre de diapo,
    * pas de texte sous l'échelle de légende. Le titre appartient à la section hôte.
@@ -468,6 +470,29 @@ function lintA11y($: cheerio.CheerioAPI, out: Collector, profile: LintProfile) {
   }
 }
 
+/**
+ * Notes orateur : un deck se présente à voix haute. Le corps dit ce qu'on voit,
+ * data-notes dit ce qu'on raconte. Une seule section de référence n'est pas un deck :
+ * le seuil de deux diapos évite de reprocher aux exemples du mode une absence de notes.
+ */
+function lintSpeakerNotes($: cheerio.CheerioAPI, out: Collector, profile: LintProfile) {
+  if (!profile.notes) return;
+  const slides = $('[data-slide]');
+  if (slides.length < 2) return;
+  let noted = 0;
+  slides.each((_, el) => {
+    if (($(el).attr('data-notes') ?? '').trim()) noted++;
+  });
+  if (noted * 2 < slides.length) {
+    out.violation(
+      'notes.missing',
+      'warning',
+      'Moins de la moitié des diapos portent des notes orateur : écrire dans data-notes ce que le présentateur dit, ce qui n’est pas déjà écrit sur la diapo.',
+      `${noted} / ${slides.length} diapos`,
+    );
+  }
+}
+
 // ── Structure et styles en ligne ───────────────────────────────────────────
 
 const STYLE_COLOR_RE = /(?:^|;)\s*(?:color|background(?:-color)?|border(?:-[a-z]+)?-?color|fill|stroke)\s*:|#[0-9a-f]{3,8}\b|rgba?\(|hsla?\(/i;
@@ -524,6 +549,7 @@ export function lintScreen(input: string, options: LintOptions = {}): LintReport
   lintText($, out, opts.autofix, profile);
   lintImages($, out, opts.autofix);
   lintA11y($, out, profile);
+  lintSpeakerNotes($, out, profile);
 
   return out.report(opts.autofix ? $.html().trim() : input);
 }

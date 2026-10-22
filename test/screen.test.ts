@@ -6,7 +6,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { loadLibrary } from '../src/dna/library.js';
 import { applyOverrides } from '../src/dna/overrides.js';
-import { extractBody, readMeta, tailwindConfig, wrapScreen } from '../src/screen/wrap.js';
+import { buildHead, extractBody, readMeta, tailwindConfig, wrapScreen } from '../src/screen/wrap.js';
 import { retheme } from '../src/screen/retheme.js';
 import { safeScreenName, saveScreen } from '../src/screen/output.js';
 import { DnaSchema } from '../src/dna/schema.js';
@@ -70,6 +70,30 @@ test('runtime « slides » : injecté par le mode, conservé au retheme, absent 
   assert.equal(rethemed.match(/naos:slides/g)?.length, 1, 'un seul runtime après retheme');
   assert.match(rethemed, /<meta name="naos-mode" content="presentation">/);
   assert.equal(extractBody(rethemed), extractBody(withRuntime));
+});
+
+test('script d’icônes : chargé seulement si le corps en utilise', () => {
+  const withIcon = wrapScreen('<p class="text-ink"><iconify-icon icon="lucide:check"></iconify-icon> Fait</p>', linen);
+  assert.match(withIcon, /code\.iconify\.design/);
+  const withoutIcon = wrapScreen(BODY, linen);
+  assert.doesNotMatch(withoutIcon, /code\.iconify\.design/, 'aucune requête inutile à un CDN tiers');
+  // L'option explicite force l'inclusion, même sans icône dans le corps.
+  assert.match(wrapScreen(BODY, linen, { iconify: true }), /code\.iconify\.design/);
+  // buildHead, appelé seul, ne connaît pas le corps : il garde le script.
+  assert.match(buildHead(linen), /code\.iconify\.design/);
+});
+
+test('runtime « slides » : réglages du mode (clic, balayage, progression, notes)', () => {
+  const deck = '<section data-slide data-part="Ouverture" class="h-[1080px]"><h1 class="text-title">Une</h1></section>';
+  const html = wrapScreen(deck, linen, { mode: 'presentation' });
+  const runtime = html.match(/\/\* naos:slides \*\/([\s\S]*?)<\/script>/)?.[1] ?? '';
+  assert.match(runtime, /"click":true/);
+  assert.match(runtime, /"swipe":true/);
+  assert.match(runtime, /"progress":"part"/);
+  assert.match(runtime, /"notes":true/);
+  assert.match(runtime, /touchstart/, 'balayage au doigt');
+  assert.match(runtime, /data-notes/, 'notes orateur');
+  assert.match(runtime, /naos-notes/, 'panneau de notes');
 });
 
 test('retheme aller-retour : on retrouve le document d\u2019origine', () => {

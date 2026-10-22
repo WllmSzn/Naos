@@ -55,10 +55,11 @@ On peut aussi le demander en langage courant : *« Avec Naos, en mode produit de
 - `get_rules(mode?)` : règles communes, et règles propres au mode.
 
 **Écrans**
-- `wrap_screen(body, dna_id, mode?, title?, libs?, overrides?, save_as?)` : passe le corps au lint du mode, puis l'assemble en page HTML autonome. La page contient Tailwind configuré sur les tokens **et les dimensions** de la DNA (`h-ctl`, `h-row`, `w-sidebar`…), les polices, les icônes, et sur demande Alpine.js et Chart.js. Le mode est inscrit dans la page.
+- `wrap_screen(body, dna_id, mode?, title?, libs?, overrides?, self_contained?, save_as?)` : passe le corps au lint du mode, puis l'assemble en page HTML autonome. La page contient Tailwind configuré sur les tokens **et les dimensions** de la DNA (`h-ctl`, `h-row`, `w-sidebar`…), les polices, les icônes (seulement si le corps en contient), et sur demande Alpine.js et Chart.js. `self_contained` remplace les `<iconify-icon>` par leur SVG inline : la page ne charge plus de script d'icônes. Le mode est inscrit dans la page, et un mode peut y ajouter son runtime de présentation (navigation, notes orateur).
 - `lint_screen(html, dna_id?, mode?, autofix?)` : contrôle déterministe selon le profil du mode. Il corrige ce qui est sans ambiguïté et signale le reste.
 - `preview_screen(file | html, mode?, viewports?, max_slices?)` : rendu réel aux largeurs du mode. Il renvoie des captures en tranches et des contrôles : débordement, contraste sur le fond effectif, cibles selon les seuils du mode, images cassées, polices, erreurs JavaScript.
 - `retheme(dna_id, html | file, mode?, overrides?, save_as?)` : applique une autre DNA **du même mode** sans régénérer l'écran.
+- `export_pdf(html | file, mode?, notes?, save_as?)` : PDF imprimé par le Chromium installé, une page par cadre du mode (une diapo par page). Avec `notes`, une page de notes orateur suit chaque diapo.
 - `read_screen(file)`.
 
 **Sections**

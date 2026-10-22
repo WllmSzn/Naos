@@ -29,7 +29,7 @@ Les opacités sont permises sur les tokens (`bg-accent/10`, `text-ink/70`, `bord
 
 **Structure attendue** : seul le contenu du `<body>` est écrit. L'enveloppe (`wrap_screen`) fournit Tailwind, les polices, les icônes et, sur demande, Alpine.js et Chart.js. Pas de `<html>`, `<head>`, `<link>` ni `<script src>` dans le corps.
 
-**Icônes** : `<iconify-icon icon="lucide:calendar"></iconify-icon>`. Un seul jeu par écran (lucide par défaut). La taille suit le `font-size` du parent, ou se règle avec `text-lg`, `size-icon`…
+**Icônes** : `<iconify-icon icon="lucide:calendar"></iconify-icon>`. Un seul jeu par écran (lucide par défaut). La taille suit le `font-size` du parent, ou se règle avec `text-lg`, `size-icon`… Le script d'icônes n'est chargé que si le corps en contient ; `wrap_screen` avec `self_contained` les remplace par leur SVG inline quand la page doit vivre sans réseau (intégration chez un client, CSP strict).
 
 **Sections et blocs** : une section (`get_patterns`) est l'unité d'une page ou d'une diapo ; un bloc (`get_blocks`) est un **fragment** inséré DANS une section : chiffre clé, schéma, grille, emplacement média, mention. Un bloc n'a ni titre principal ni cadre de page : il hérite du titre et du gabarit de la section qui l'accueille, et l'on remplit ses emplacements nommés avec le contenu réel. Ses variantes (attribut `data-variant`) sont des états, pas de nouvelles sections.
 

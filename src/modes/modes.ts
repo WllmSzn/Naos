@@ -45,6 +45,10 @@ export const ModeSchema = z.object({
     bannedWords: z.boolean().describe('Signaler les formules marketing creuses'),
     genericCta: z.array(z.string()).describe('Libellés d’action jugés trop vagues dans ce mode'),
     requireH1: z.boolean(),
+    notes: z
+      .boolean()
+      .default(false)
+      .describe('Avertir quand moins de la moitié des diapos portent des notes orateur (data-notes)'),
   }),
   dnaRequires: z.array(z.string()).describe('Champs obligatoires du bloc de mode dans une DNA'),
   dnaRoles: z
@@ -66,6 +70,21 @@ export const ModeSchema = z.object({
         .enum(['none', 'slides'])
         .default('none')
         .describe('Script injecté par l’enveloppe : "slides" = navigation clavier, plein écran, diapo mise à l’échelle en 16:9'),
+      /**
+       * Réglages du runtime « slides ». Ils vivent ici et non dans le code : un mode
+       * montre des diapos sans forcément vouloir la navigation au doigt ni les notes.
+       */
+      nav: z
+        .object({
+          click: z.boolean().default(true).describe('Clic sur la moitié gauche ou droite = diapo précédente ou suivante'),
+          swipe: z.boolean().default(true).describe('Balayage horizontal au doigt (seuil ~40 px)'),
+          progress: z
+            .enum(['none', 'bar', 'part'])
+            .default('none')
+            .describe('Repère de progression : barre fine, ou « partie n / total » lu dans data-part'),
+        })
+        .default({ click: true, swipe: true, progress: 'none' }),
+      notes: z.boolean().default(true).describe('Panneau de notes orateur (data-notes), touche N'),
     })
     .optional(),
   workflow: z.object({

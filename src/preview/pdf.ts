@@ -20,6 +20,11 @@ export interface PdfOptions {
   /** Mode de la page : fournit les cadres, la taille de page et le runtime à neutraliser. */
   mode?: Mode;
   outDir?: string;
+  /**
+   * Imprime une page de notes orateur après chaque diapo, lue dans data-notes.
+   * Sans notes dans la page, l'option ne change rien.
+   */
+  notes?: boolean;
 }
 
 export interface PdfResult {
@@ -29,6 +34,8 @@ export interface PdfResult {
   height: number;
   /** Cadres trouvés dans la page : une page par cadre. */
   frames: number;
+  /** Pages de notes ajoutées après les diapos (export avec notes: true). */
+  notes: number;
   pages: number;
   bytes: number;
 }
@@ -90,6 +97,60 @@ export async function exportPdf(html: string, opts: PdfOptions): Promise<PdfResu
         : '');
     await page.addStyleTag({ content: printCss });
 
+    // Notes orateur : une page après chaque diapo, à la taille de la page. Titrée
+    // « Notes · diapo n / total », elle se glisse dans un PDF remis au présentateur.
+    // Couleurs posées en ligne depuis les tokens : cette page n'est pas du contenu
+    // édité, elle est construite par Naos, et le lint ne la voit jamais.
+    const notesPages =
+      opts.notes && selector
+        ? ((await page.evaluate(`(() => {
+      const H = ${height};
+      const T = (window.NAOS && window.NAOS.tokens) || {};
+      const fonts = (window.NAOS && window.NAOS.fonts) || {};
+      const slides = Array.from(document.querySelectorAll(${JSON.stringify(selector)}));
+      const ink = T.ink || '#111111';
+      const muted = T.muted || '#666666';
+      const base = T.base || '#ffffff';
+      const bodyFont = fonts.body ? '"' + fonts.body + '",sans-serif' : 'sans-serif';
+      const monoFont = fonts.mono ? '"' + fonts.mono + '",monospace' : 'monospace';
+      let added = 0;
+      slides.forEach((slide, i) => {
+        const raw = (slide.getAttribute('data-notes') || '').trim();
+        const page = document.createElement('section');
+        page.setAttribute('data-slide', '');
+        page.setAttribute('data-naos-notes-page', '');
+        page.style.cssText =
+          'box-sizing:border-box;margin:0;padding:96px;display:flex;flex-direction:column;gap:28px;overflow:hidden;' +
+          'width:100%;height:' + H + 'px;background:' + base + ';color:' + ink + ';font-family:' + bodyFont;
+        const head = document.createElement('div');
+        head.style.cssText =
+          'font:500 16px/1.4 ' + monoFont + ';letter-spacing:.08em;text-transform:uppercase;color:' + muted;
+        head.textContent = 'Notes \\u00b7 diapo ' + (i + 1) + ' / ' + slides.length;
+        const rule = document.createElement('div');
+        rule.style.cssText = 'height:1px;background:' + (T.line || muted);
+        const text = document.createElement('p');
+        text.style.cssText = 'margin:0;white-space:pre-line;font-size:28px;line-height:1.5';
+        text.textContent = raw || 'Pas de note pour cette diapo.';
+        if (!raw) text.style.color = muted;
+        page.appendChild(head);
+        page.appendChild(rule);
+        page.appendChild(text);
+        slide.after(page);
+        added++;
+      });
+      // Notes longues : réduire le texte plutôt que le couper.
+      document.querySelectorAll('[data-naos-notes-page]').forEach((p) => {
+        const text = p.lastElementChild;
+        let size = 28;
+        while (text.scrollHeight > H - 320 && size > 14) {
+          size -= 2;
+          text.style.fontSize = size + 'px';
+        }
+      });
+      return added;
+    })()`)) as number)
+        : 0;
+
     const pdf = await page.pdf({
       width: `${width}px`,
       height: `${height}px`,
@@ -106,6 +167,7 @@ export async function exportPdf(html: string, opts: PdfOptions): Promise<PdfResu
       width,
       height,
       frames: measured.frames,
+      notes: notesPages,
       pages: countPdfPages(buffer),
       bytes: buffer.length,
     };

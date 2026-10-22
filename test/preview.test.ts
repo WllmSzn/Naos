@@ -1,9 +1,10 @@
 import './setup.js';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
+import puppeteer from 'puppeteer-core';
 import { loadLibrary } from '../src/dna/library.js';
 import { getMode } from '../src/modes/modes.js';
 import { wrapScreen } from '../src/screen/wrap.js';
@@ -110,6 +111,90 @@ test('export PDF : une page par diapo, à la taille du cadre, fonds imprimés', 
     assert.ok(pdf.length > 10000);
     assert.match(path.basename(r.file), /^deck-test\.pdf$/);
   } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('export PDF : notes orateur imprimées après chaque diapo', { skip: !hasBrowser && 'aucun navigateur' }, async () => {
+  const dir = mkdtempSync(path.join(tmpdir(), 'naos-pdf-'));
+  try {
+    const mode = getMode('presentation')!;
+    const body = `
+      <section data-slide class="h-[1080px] bg-base p-24" data-notes="Ouvrir sur le chiffre, sans le commenter.&#10;Laisser un silence."><h1 class="text-title">Une</h1></section>
+      <section data-slide class="h-[1080px] bg-base p-24"><h1 class="text-title">Deux</h1></section>`;
+    const html = wrapScreen(body, dna, { mode: 'presentation' });
+    const r = await exportPdf(html, { name: 'deck-notes', mode, outDir: dir, notes: true });
+    assert.equal(r.frames, 2);
+    assert.equal(r.notes, 2, 'une page de notes par diapo, même sans note');
+    assert.equal(r.pages, 4);
+    assert.ok(readFileSync(r.file).length > 10000);
+
+    // Sans l'option, le PDF reste un deck de deux pages.
+    const plain = await exportPdf(html, { name: 'deck-sec', mode, outDir: dir });
+    assert.equal(plain.notes, 0);
+    assert.equal(plain.pages, 2);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('runtime « slides » : clic, touches et panneau de notes pilotent la présentation', { skip: !hasBrowser && 'aucun navigateur' }, async () => {
+  const dir = mkdtempSync(path.join(tmpdir(), 'naos-runtime-'));
+  let browser;
+  try {
+    const mode = getMode('presentation')!;
+    const body = `
+      <section data-slide class="h-[1080px] bg-base p-24" data-part="Ouverture" data-notes="Je m'appuie sur le chiffre de gauche."><h1 class="text-title">Une</h1></section>
+      <section data-slide class="h-[1080px] bg-base p-24" data-part="Preuve"><h1 class="text-title">Deux</h1></section>
+      <section data-slide class="h-[1080px] bg-base p-24" data-part="Preuve"><h1 class="text-title">Trois</h1></section>`;
+    const file = path.join(dir, 'deck.html');
+    writeFileSync(file, wrapScreen(body, dna, { mode: 'presentation' }));
+
+    browser = await puppeteer.launch({ executablePath: findBrowser(), headless: true });
+    const page = await browser.newPage();
+    await page.setViewport({ width: 1600, height: 900 });
+    // Le runtime s'efface en mode piloté : on le réveille pour l'éprouver.
+    await page.evaluateOnNewDocument('Object.defineProperty(navigator, "webdriver", { get: () => false });');
+    await page.goto(`file://${file.replace(/\\/g, '/')}`, { waitUntil: 'load' });
+    await page.waitForSelector('#naos-toggle');
+
+    const visible = () =>
+      page.evaluate(`Array.from(document.querySelectorAll('[data-slide]')).map((s) => s.style.display !== 'none')`);
+    const notesOpen = () => page.evaluate(`!document.getElementById('naos-notes').hidden`);
+    const notesText = () => page.evaluate(`document.querySelector('#naos-notes p').textContent`);
+
+    assert.deepEqual(await visible(), [true, false, false]);
+    await page.keyboard.press('ArrowRight');
+    assert.deepEqual(await visible(), [false, true, false]);
+    assert.equal(await page.$eval('#naos-part', (el) => el.textContent), 'Partie 2 / 2 · Preuve');
+
+    // Clic sur la moitié droite puis sur la moitié gauche.
+    await page.mouse.click(1500, 450);
+    assert.deepEqual(await visible(), [false, false, true]);
+    await page.mouse.click(100, 450);
+    assert.deepEqual(await visible(), [false, true, false]);
+
+    // Balayage : la tête n'a pas de doigt, on synthétise les TouchEvent (le runtime
+    // n'écoute que touchstart/touchend sur le document, comme un vrai geste).
+    await page.evaluate(`(() => {
+      const touch = (x) => new Touch({ identifier: 1, target: document.body, clientX: x, clientY: 450 });
+      document.body.dispatchEvent(new TouchEvent('touchstart', { touches: [touch(1200)], changedTouches: [touch(1200)], bubbles: true }));
+      document.body.dispatchEvent(new TouchEvent('touchend', { touches: [], changedTouches: [touch(600)], bubbles: true }));
+    })()`);
+    assert.deepEqual(await visible(), [false, false, true], 'balayage vers la gauche : diapo suivante');
+
+    // Notes : touche N, contenu de la diapo courante, puis fermeture.
+    await page.keyboard.press('Home');
+    await page.keyboard.press('KeyN');
+    assert.equal(await notesOpen(), true);
+    assert.match(String(await notesText()), /chiffre de gauche/);
+    await page.keyboard.press('KeyN');
+    assert.equal(await notesOpen(), false);
+
+    // La barre de progression n'est pas demandée par ce mode : pas de barre.
+    assert.equal(await page.$('#naos-progress'), null);
+  } finally {
+    await browser?.close();
     rmSync(dir, { recursive: true, force: true });
   }
 });

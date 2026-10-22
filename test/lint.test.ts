@@ -125,3 +125,21 @@ test('autofix désactivé : HTML inchangé, problèmes signalés', () => {
   assert.ok(rules(r).includes('tokens.fixable'));
   assert.ok(rules(r).includes('content.emoji'));
 });
+
+test('notes orateur : avertissement quand la moitié des diapos n’en ont pas', () => {
+  const slide = (i: number, notes?: string) =>
+    `<section data-slide class="h-[1080px]"${notes ? ` data-notes="${notes}"` : ''}><h2 class="text-title">Diapo ${i}</h2></section>`;
+  const profile = { bannedWords: true, genericCta: [], requireH1: false, notes: true };
+
+  const pauvre = lintScreen([1, 2, 3, 4].map((i) => slide(i, i === 1 ? 'Ouvrir sur le chiffre.' : undefined)).join(''), { profile });
+  const v = pauvre.violations.find((x) => x.rule === 'notes.missing');
+  assert.equal(v?.severity, 'warning');
+  assert.match(v?.samples[0] ?? '', /^1 \/ 4 diapos/);
+
+  const riche = lintScreen([1, 2, 3, 4].map((i) => slide(i, i <= 2 ? 'Ce que je dis.' : undefined)).join(''), { profile });
+  assert.ok(!rules(riche).includes('notes.missing'), 'la moitié suffit');
+
+  // Un mode sans attente de notes, ou une section de référence seule, ne dit rien.
+  assert.ok(!rules(lintScreen([1, 2, 3].map((i) => slide(i)).join(''), { profile: { ...profile, notes: false } })).includes('notes.missing'));
+  assert.ok(!rules(lintScreen(slide(1), { profile })).includes('notes.missing'));
+});

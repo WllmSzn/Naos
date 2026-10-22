@@ -9,6 +9,14 @@ Une présentation se projette : l'audience écoute celui qui parle et lit la dia
 - Le contenu reste dans une zone utile large : padding généreux (64 à 96px au moins), rien d'important dans les 48px du bord, aucune information vitale en bas de diapo (elle est souvent cachée par la première rangée).
 - Aucune diapo ne défile, aucune diapo n'est plus haute que 1080px.
 
+## Notes orateur et présentation
+
+- `data-notes="…"` sur la `<section data-slide>` porte ce que le présentateur dit : un contexte, une preuve, une transition. C'est ce qui n'est pas déjà écrit sur la diapo (le corps dit ce qu'on voit, la note dit ce qu'on ajoute), deux ou trois phrases au plus. Un retour à la ligne s'écrit `&#10;`.
+- La touche `N` ouvre le panneau de notes, `Échap` le ferme, le bouton « Notes » fait la même chose à la souris. Le panneau suit la diapo courante et ne s'affiche que si le deck a des notes.
+- La page produite se pilote au clavier (flèches, espace, `Home`, `End`, `F` pour le plein écran), au clic (moitié droite = suivante, moitié gauche = précédente) et au doigt (balayage horizontal). Un clic sur un lien ou un contrôle garde son sens.
+- `data-part="…"` sur les diapos donne le repère de progression : le runtime affiche « Partie 2 / 4 · Preuve ». Le nom de la partie est le même que celui du fil narratif.
+- `export_pdf` avec `notes: true` imprime une page de notes après chaque diapo ; le PDF sert alors au présentateur, pas à l'audience.
+
 ## Une idée par diapo
 
 - Un seul titre par diapo, court (huit mots au plus), et il dit quelque chose : « Le support coûte 40 % du budget », pas « Contexte » ni « Chiffres ».
@@ -131,4 +139,5 @@ Les `extraColors` restent réservées au **sens métier** (sévérité, statut, 
 - Rien qui déborde, rien de coupé, rien de superposé, aucune ligne orpheline sous un bloc.
 - Contraste suffisant pour un vidéoprojecteur : les gris clairs et les teintes posées sur une autre teinte ne passent pas.
 - Une seule idée par diapo, un titre par diapo, six lignes de texte au plus.
+- Au moins une diapo sur deux porte une note orateur : sans notes, le deck se lit mais ne se présente pas.
 - Le fil se suit à la lecture des seuls titres, et la clôture ramène au message clé.

@@ -44,6 +44,11 @@ export interface WrapOptions {
   overrides?: DnaOverrides;
   /** Mode de conception (website, product-desktop…) : fournit les dimensions sémantiques. */
   mode?: string;
+  /**
+   * Charger le script d'icônes. wrapScreen le déduit du corps : une page sans
+   * <iconify-icon> n'a rien à demander à un CDN tiers.
+   */
+  iconify?: boolean;
 }
 
 // Valeurs neutres des dimensions sémantiques quand la DNA n'en fournit pas pour le mode.
@@ -151,17 +156,44 @@ function runtimeData(dna: Dna, mode?: string, roles?: ResolvedRoles) {
 }
 
 /**
+ * Réglages du runtime « slides », lus dans le mode (wrap.nav, wrap.notes).
+ * Rien ici ne dépend d'un id de mode : un mode qui n'en déclare pas garde les défauts.
+ */
+export interface SlidesSettings {
+  click: boolean;
+  swipe: boolean;
+  progress: 'none' | 'bar' | 'part';
+  notes: boolean;
+}
+
+function slidesSettings(mode?: string): SlidesSettings {
+  const wrap = mode ? getMode(mode)?.wrap : undefined;
+  return {
+    click: wrap?.nav?.click ?? true,
+    swipe: wrap?.nav?.swipe ?? true,
+    progress: wrap?.nav?.progress ?? 'none',
+    notes: wrap?.notes ?? true,
+  };
+}
+
+/**
  * Runtime « slides » : chaîne JS autonome, sans dépendance ni appel réseau.
  * Chaque [data-slide] est affichée seule, mise à l'échelle de la fenêtre en gardant
- * le 16:9 défini par sa hauteur, avec flèches et espace pour naviguer, F pour le plein
- * écran, et un compteur discret.
+ * le 16:9 défini par sa hauteur, avec flèches, espace, clic sur une moitié d'écran,
+ * balayage au doigt pour naviguer, F pour le plein écran, N pour les notes orateur,
+ * un compteur discret et, si le mode le demande, un repère de progression.
+ *
+ * Les notes vivent dans l'attribut data-notes de la diapo (&#10; pour un retour à la
+ * ligne) : rien à charger, rien à modéliser, et le PDF peut les imprimer.
  *
  * Deux garde-fous : le drapeau __NAOS_NO_RUNTIME__ posé par preview_screen, et
  * navigator.webdriver, pour qu'un rendu headless conservé dans un fichier (ou rejoué
  * sans le drapeau) empile toujours les diapos et reste mesurable.
  */
-export const SLIDES_RUNTIME = `/* naos:slides */
+export function slidesRuntime(cfg: SlidesSettings): string {
+  return `/* naos:slides */
 (() => {
+  const CFG = ${JSON.stringify(cfg)};
   if (window.__NAOS_NO_RUNTIME__ || navigator.webdriver) return;
 
   // Le script vit dans le <head> : au moment où il s'exécute, les diapos du <body>
@@ -191,13 +223,95 @@ export const SLIDES_RUNTIME = `/* naos:slides */
       s.style.transformOrigin = '0 0';
     }
 
+    // Chrome de présentation : couleurs uniquement par variables, donc il suit la DNA.
+    const style = document.createElement('style');
+    style.textContent =
+      '#naos-counter,#naos-part,#naos-toggle{position:fixed;z-index:60;display:inline-flex;align-items:center;gap:.35em;' +
+      'padding:5px 12px;border-radius:9999px;border:1px solid var(--naos-line);background:var(--naos-surface);' +
+      'color:var(--naos-muted);font:500 13px/1.4 ui-monospace,SFMono-Regular,monospace;letter-spacing:.04em;' +
+      'font-variant-numeric:tabular-nums}' +
+      '#naos-counter{right:20px;bottom:16px;pointer-events:none}' +
+      '#naos-part{right:20px;bottom:52px;pointer-events:none;max-width:min(440px,calc(100vw - 40px));' +
+      'white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
+      '#naos-toggle{left:20px;bottom:16px;cursor:pointer;font-family:inherit}' +
+      '#naos-toggle:focus-visible{outline:2px solid var(--naos-accent);outline-offset:2px}' +
+      '#naos-progress{position:fixed;left:0;top:0;right:0;height:3px;z-index:60;background:var(--naos-line)}' +
+      '#naos-progress>span{display:block;height:100%;width:0;background:var(--naos-accent);transition:width .18s ease}' +
+      '#naos-notes{position:fixed;z-index:70;right:20px;bottom:60px;width:min(420px,calc(100vw - 40px));max-height:50vh;' +
+      'overflow:auto;padding:16px 18px;border-radius:12px;border:1px solid var(--naos-line);background:var(--naos-surface);' +
+      'color:var(--naos-muted);font-family:inherit;font-size:15px;line-height:1.55;' +
+      'box-shadow:0 18px 40px rgba(0,0,0,.22)}' +
+      '#naos-notes>p{margin:0;white-space:pre-line}' +
+      '#naos-notes[hidden]{display:none}' +
+      '@media (prefers-reduced-motion: reduce){#naos-progress>span{transition:none}}';
+    document.head.appendChild(style);
+
     const counter = document.createElement('div');
+    counter.id = 'naos-counter';
     counter.setAttribute('aria-live', 'polite');
-    counter.style.cssText =
-      'position:fixed;right:20px;bottom:16px;z-index:50;pointer-events:none;' +
-      'padding:4px 10px;border-radius:9999px;background:var(--naos-surface);color:var(--naos-muted);' +
-      'font:500 13px/1.4 ui-monospace,monospace;letter-spacing:.04em;font-variant-numeric:tabular-nums';
     document.body.appendChild(counter);
+
+    // Repère de progression : barre fine, ou « partie n / total » lu dans data-part.
+    const bar = document.createElement('div');
+    let barFill = null;
+    if (CFG.progress === 'bar') {
+      bar.id = 'naos-progress';
+      bar.setAttribute('role', 'presentation');
+      barFill = document.createElement('span');
+      bar.appendChild(barFill);
+      document.body.appendChild(bar);
+    }
+    const part = document.createElement('div');
+    const parts = [];
+    for (const s of slides) {
+      const name = (s.getAttribute('data-part') || '').trim();
+      if (name && parts[parts.length - 1] !== name) parts.push(name);
+    }
+    if (CFG.progress === 'part' && parts.length) {
+      part.id = 'naos-part';
+      document.body.appendChild(part);
+    }
+
+    // Notes orateur : panneau à droite, ouvert par la touche N ou le bouton.
+    const notes = slides.map((s) => (s.getAttribute('data-notes') || '').trim());
+    const hasNotes = CFG.notes && notes.some(Boolean);
+    let panel = null;
+    let toggle = null;
+    const setNotesOpen = (open) => {
+      if (!panel || !toggle) return;
+      panel.hidden = !open;
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open) renderNotes();
+    };
+    const renderNotes = () => {
+      if (!panel || panel.hidden) return;
+      const text = notes[index];
+      panel.firstChild.textContent = text || 'Pas de note pour cette diapo.';
+    };
+    if (hasNotes) {
+      panel = document.createElement('div');
+      panel.id = 'naos-notes';
+      panel.setAttribute('role', 'region');
+      panel.setAttribute('aria-label', 'Notes de l\\u2019orateur');
+      panel.setAttribute('aria-live', 'polite');
+      panel.hidden = true;
+      const text = document.createElement('p');
+      panel.appendChild(text);
+      document.body.appendChild(panel);
+
+      toggle = document.createElement('button');
+      toggle.type = 'button';
+      toggle.id = 'naos-toggle';
+      toggle.setAttribute('aria-controls', 'naos-notes');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-keyshortcuts', 'N');
+      toggle.textContent = 'Notes (N)';
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setNotesOpen(panel.hidden);
+      });
+      document.body.appendChild(toggle);
+    }
 
     const show = (next) => {
       index = Math.max(0, Math.min(slides.length - 1, next));
@@ -209,6 +323,16 @@ export const SLIDES_RUNTIME = `/* naos:slides */
         s.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + k + ')';
       });
       counter.textContent = index + 1 + ' / ' + slides.length;
+      if (barFill) barFill.style.width = ((index + 1) / slides.length) * 100 + '%';
+      if (part.id) {
+        const current = (slides[index].getAttribute('data-part') || '').trim();
+        if (!current) part.style.display = 'none';
+        else {
+          part.style.display = '';
+          part.textContent = 'Partie ' + (parts.indexOf(current) + 1) + ' / ' + parts.length + ' · ' + current;
+        }
+      }
+      renderNotes();
     };
 
     const toggleFullscreen = () => {
@@ -219,13 +343,47 @@ export const SLIDES_RUNTIME = `/* naos:slides */
     document.addEventListener('keydown', (e) => {
       if (e.ctrlKey || e.metaKey || e.altKey) return;
       const target = e.target;
-      if (target && /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName)) return;
+      if (target && (/^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName) || target.isContentEditable)) return;
+      if (e.key === 'n' || e.key === 'N') { e.preventDefault(); setNotesOpen(panel ? panel.hidden : false); return; }
+      if (e.key === 'Escape' && panel && !panel.hidden) { e.preventDefault(); setNotesOpen(false); return; }
+      if (target && target.tagName === 'BUTTON') return;
       if (['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Spacebar'].includes(e.key)) { e.preventDefault(); show(index + 1); }
       else if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); show(index - 1); }
       else if (e.key === 'Home') { e.preventDefault(); show(0); }
       else if (e.key === 'End') { e.preventDefault(); show(slides.length - 1); }
       else if (e.key === 'f' || e.key === 'F') { e.preventDefault(); toggleFullscreen(); }
     });
+
+    // Souris : la moitié droite avance, la moitié gauche recule. Un clic sur un lien,
+    // un contrôle ou le panneau de notes garde son sens habituel.
+    if (CFG.click) {
+      document.addEventListener('click', (e) => {
+        if (e.button !== 0 || e.defaultPrevented) return;
+        if (e.target.closest('a,button,input,textarea,select,label,summary,[role="button"],[contenteditable="true"]')) return;
+        const selection = window.getSelection();
+        if (selection && String(selection).length) return;
+        show(e.clientX > window.innerWidth / 2 ? index + 1 : index - 1);
+      });
+    }
+
+    // Tactile : balayage horizontal, à condition qu'il soit franc (40 px) et plus
+    // horizontal que vertical, pour ne pas gêner un défilement ou une sélection.
+    if (CFG.swipe) {
+      let sx = 0, sy = 0, tracking = false;
+      document.addEventListener('touchstart', (e) => {
+        if (e.touches.length !== 1) { tracking = false; return; }
+        tracking = true; sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+      }, { passive: true });
+      document.addEventListener('touchend', (e) => {
+        if (!tracking) return;
+        tracking = false;
+        const t = e.changedTouches[0];
+        if (!t) return;
+        const dx = t.clientX - sx, dy = t.clientY - sy;
+        if (Math.abs(dx) < 40 || Math.abs(dx) <= Math.abs(dy)) return;
+        show(dx < 0 ? index + 1 : index - 1);
+      }, { passive: true });
+    }
 
     window.addEventListener('resize', () => show(index));
     show(0);
@@ -234,6 +392,7 @@ export const SLIDES_RUNTIME = `/* naos:slides */
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
 })();`;
+}
 
 /** Runtime demandé par le mode (wrap.runtime), sinon aucun. */
 function modeRuntime(mode?: string): 'none' | 'slides' {
@@ -262,7 +421,9 @@ export function buildHead(dna: Dna, opts: WrapOptions = {}): string {
     `<script>tailwind.config = ${JSON.stringify(tailwindConfig(dna, opts.mode))};</script>`,
     // window.HECATE : alias pour les graphiques des pages produites avant le renommage.
     `<script>window.NAOS = ${JSON.stringify(runtimeData(dna, opts.mode, resolveRoles(dna, opts.mode)))}; window.HECATE = window.NAOS;</script>`,
-    `<script src="${CDN.iconify}"></script>`,
+    // Icônes : uniquement si le corps en contient. Un document imprimé ou recopié
+    // sans <iconify-icon> ne contacte alors aucun CDN tiers, et passe un CSP strict.
+    ...(opts.iconify === false ? [] : [`<script src="${CDN.iconify}"></script>`]),
   ];
   if (libs.includes('chartjs')) {
     lines.push(`<script src="${CDN.chartjs}"></script>`);
@@ -273,10 +434,11 @@ export function buildHead(dna: Dna, opts: WrapOptions = {}): string {
     );
   }
   if (libs.includes('alpine')) lines.push(`<script defer src="${CDN.alpine}"></script>`);
-  if (modeRuntime(opts.mode) === 'slides') lines.push(`<script>${SLIDES_RUNTIME}</script>`);
+  if (modeRuntime(opts.mode) === 'slides') lines.push(`<script>${slidesRuntime(slidesSettings(opts.mode))}</script>`);
   const t = dna.tokens;
   lines.push(
-    `<style>:root{color-scheme:${dna.theme};--naos-raised:${t.raised};--naos-line:${t.line};--naos-muted:${t.muted};--naos-surface:${t.surface}}[x-cloak]{display:none!important}` +
+    `<style>:root{color-scheme:${dna.theme};--naos-raised:${t.raised};--naos-line:${t.line};--naos-muted:${t.muted};` +
+      `--naos-surface:${t.surface};--naos-ink:${t.ink};--naos-accent:${t.accent}}[x-cloak]{display:none!important}` +
       (dna.rootFontSize ? `html{font-size:${dna.rootFontSize}}` : '') +
       // Emplacement d'image décrit : hachures aux couleurs de la DNA, description en légende.
       '[data-image]{position:relative;overflow:hidden;background-color:var(--naos-raised);' +
@@ -341,16 +503,22 @@ export function readMeta(html: string): ScreenMeta {
   return { dnaId: meta('naos-dna'), mode: meta('naos-mode'), libs, title: title ? unescapeHtml(title) : undefined, lang, overrides };
 }
 
+/** Une page a besoin du CDN d'icônes seulement si son corps en utilise. */
+export function usesIcons(html: string): boolean {
+  return /<iconify-icon[\s>]/i.test(html);
+}
+
 export function wrapScreen(body: string, dna: Dna, opts: WrapOptions = {}): string {
+  const content = extractBody(body);
   return [
     '<!DOCTYPE html>',
     `<html lang="${escapeHtml(opts.lang ?? 'fr')}">`,
     '<head>',
-    buildHead(dna, opts),
+    buildHead(dna, { ...opts, iconify: opts.iconify ?? usesIcons(content) }),
     '</head>',
     '<body class="min-h-screen bg-base text-ink font-body antialiased">',
     BODY_START,
-    extractBody(body),
+    content,
     BODY_END,
     '</body>',
     '</html>',

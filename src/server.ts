@@ -17,6 +17,7 @@ import type { Dna } from './dna/schema.js';
 import { colorAllowance, resolveRoles } from './dna/roles.js';
 import { applyOverrides, DnaOverridesSchema } from './dna/overrides.js';
 import { LIBS, readMeta, wrapScreen } from './screen/wrap.js';
+import { inlineIcons } from './screen/icons.js';
 import { lintScreen, type LintReport } from './screen/lint.js';
 import { retheme } from './screen/retheme.js';
 import { loadScreen, saveScreen } from './screen/output.js';
@@ -315,8 +316,9 @@ export function createServer(): McpServer {
       title: 'Assembler un écran',
       description:
         'Transforme le corps d’un écran en page HTML autonome pour une DNA et un mode : Tailwind configuré sur ses tokens et ses dimensions ' +
-        '(h-ctl, h-row, w-sidebar…), polices, icônes, et sur demande Alpine.js et Chart.js. Le corps passe d’abord au lint du mode. ' +
-        'Renvoie le rapport puis la page.',
+        '(h-ctl, h-row, w-sidebar…), polices, icônes (seulement si le corps en contient), et sur demande Alpine.js et Chart.js. ' +
+        'Avec self_contained, les <iconify-icon> sont remplacées par leur SVG inline : la page ne charge plus de script d’icônes, ' +
+        'mais reste dépendante du CDN Tailwind. Le corps passe d’abord au lint du mode. Renvoie le rapport puis la page.',
       inputSchema: {
         body: z.string().min(1).describe('Contenu du <body>, en classes sémantiques uniquement'),
         dna_id: z.string().describe('DNA à appliquer'),
@@ -326,18 +328,54 @@ export function createServer(): McpServer {
         libs: z.array(z.enum(LIBS)).optional().describe('Bibliothèques : "alpine" (interactions), "chartjs" (graphiques)'),
         overrides: overridesInput,
         lint: z.boolean().optional().describe('Passer le lint avant assemblage (true par défaut)'),
+        self_contained: z
+          .boolean()
+          .optional()
+          .describe('Remplacer les <iconify-icon> par leur SVG inline (aucun script d’icônes dans la page)'),
         save_as: saveAsInput,
       },
     },
-    guarded((a: { body: string; dna_id: string; mode?: string; title?: string; lang?: string; libs?: (typeof LIBS)[number][]; overrides?: z.infer<typeof DnaOverridesSchema>; lint?: boolean; save_as?: string }) => {
-      const base = requireDna(a.dna_id);
-      const mode = resolveMode(base, a.mode);
-      const dna = applyOverrides(base, a.overrides);
-      const report = a.lint === false ? undefined : lintScreen(a.body, { theme: dna.theme, profile: mode.lint });
-      const html = wrapScreen(report?.html ?? a.body, dna, { title: a.title, lang: a.lang, libs: a.libs, overrides: a.overrides, mode: mode.id });
-      const saved = a.save_as ? saveScreen(a.save_as, html) : undefined;
-      return withHtml({ dna: dna.id, mode: mode.id, ...(saved ? { saved } : {}), ...(report ? { lint: lintSummary(report) } : {}) }, html);
-    }),
+    guarded(
+      async (a: {
+        body: string;
+        dna_id: string;
+        mode?: string;
+        title?: string;
+        lang?: string;
+        libs?: (typeof LIBS)[number][];
+        overrides?: z.infer<typeof DnaOverridesSchema>;
+        lint?: boolean;
+        self_contained?: boolean;
+        save_as?: string;
+      }) => {
+        const base = requireDna(a.dna_id);
+        const mode = resolveMode(base, a.mode);
+        const dna = applyOverrides(base, a.overrides);
+        const report = a.lint === false ? undefined : lintScreen(a.body, { theme: dna.theme, profile: mode.lint });
+        let body = report?.html ?? a.body;
+        let icons: { inlined: string[]; missing: string[] } | undefined;
+        if (a.self_contained) {
+          const r = await inlineIcons(body);
+          body = r.html;
+          icons = { inlined: r.inlined, missing: r.missing };
+        }
+        const html = wrapScreen(body, dna, { title: a.title, lang: a.lang, libs: a.libs, overrides: a.overrides, mode: mode.id });
+        const saved = a.save_as ? saveScreen(a.save_as, html) : undefined;
+        return withHtml(
+          {
+            dna: dna.id,
+            mode: mode.id,
+            ...(icons ? { icons } : {}),
+            ...(saved ? { saved } : {}),
+            ...(report ? { lint: lintSummary(report) } : {}),
+            ...(icons?.missing.length
+              ? { warnings: [`Icônes laissées en <iconify-icon> (introuvables) : ${icons.missing.join(', ')}.`] }
+              : {}),
+          },
+          html,
+        );
+      },
+    ),
   );
 
   server.registerTool(
@@ -452,23 +490,25 @@ export function createServer(): McpServer {
       description:
         'Imprime une page en PDF avec le Chromium installé (Edge) : une page par cadre du mode (une diapo par page quand le mode ' +
         'déclare preview.frameSelector), à la taille réelle du cadre, fonds et emplacements d’image compris. ' +
+        'Avec notes, une page de notes orateur (data-notes) suit chaque diapo : le PDF sert alors au présentateur. ' +
         'Le fichier est écrit dans le dossier de sortie. Fournir file (page du dossier de sortie) ou html, et le mode de la page.',
       inputSchema: {
         file: z.string().optional().describe('Nom d’une page enregistrée, ex. "deck-daylight-product"'),
         html: z.string().optional().describe('Document complet produit par wrap_screen'),
         mode: modeInput,
+        notes: z.boolean().optional().describe('Ajouter une page de notes orateur après chaque diapo'),
         save_as: z.string().optional().describe('Nom du fichier PDF, sans extension'),
       },
       annotations: { readOnlyHint: false },
     },
-    guarded(async ({ file, html, mode, save_as }: { file?: string; html?: string; mode?: string; save_as?: string }) => {
+    guarded(async ({ file, html, mode, notes, save_as }: { file?: string; html?: string; mode?: string; notes?: boolean; save_as?: string }) => {
       const source = readSource(html, file);
       if (!/<html[\s>]/i.test(source)) throw new ToolError('export_pdf attend un document complet : passer d’abord le corps dans wrap_screen.');
       const modeId = mode ?? readMeta(source).mode;
       if (!modeId) throw new ToolError('Mode inconnu : préciser mode (voir list_modes).');
       const m = requireMode(modeId);
-      const r = await exportPdf(source, { name: save_as ?? file ?? `export-${Date.now()}`, mode: m });
-      return json({ ...r, mode: m.id, frames: r.frames, pagesExpected: r.frames || 1 });
+      const r = await exportPdf(source, { name: save_as ?? file ?? `export-${Date.now()}`, mode: m, notes });
+      return json({ ...r, mode: m.id, frames: r.frames, pagesExpected: r.frames + r.notes || 1 });
     }),
   );
 

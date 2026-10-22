@@ -33,7 +33,7 @@ src/
   server.ts              outils, resources et prompts MCP ; resolveMode() arbitre DNA + mode
   modes/                 schéma et chargement des modes
   dna/                   schéma zod (contrastes, blocs de mode), chargement, suggestion, surcharges
-  screen/                wrap (enveloppe : <head> généré depuis la DNA et le mode), lint, retheme, sortie
+  screen/                wrap (enveloppe : <head> généré depuis la DNA et le mode), lint, icons (SVG inline), retheme, sortie
   scan/                  scan d'un site : collecte dans la page, analyse, brouillon de DNA
   preview/               rendu réel aux viewports du mode : captures en tranches et contrôles
   patterns/              chargement et sélection des sections, par mode
@@ -55,6 +55,12 @@ Les DNA vivent dans **`C:\Users\Artefact\naos-library`**, un dépôt git sépar�
 Naos distingue des **métiers de conception** : `website` (sites, landings) et `product-desktop` (écrans d'application). Un mode est **entièrement décrit par son dossier**. Le code ne doit jamais tester un id de mode en dur : il lit `mode.json` (viewports, seuils de cibles, profil de lint, `dnaRequires`, `patternKinds`, `blockKinds`, textes du workflow). Ajouter un mode (`product-mobile`…) = un dossier + des blocs dans les DNA concernées. Si un besoin semble exiger du code propre à un mode, c'est un réglage manquant dans `ModeSchema`.
 
 Une DNA sert un mode seulement si elle a le bloc `modes.<mode>`, avec les champs exigés par ce mode. Les sections portant `"dna": [...]` sont réservées à ces DNA. Le mode est inscrit dans la page (`<meta name="naos-mode">`) : le lint, le rendu et le retheme le relisent.
+
+### Le runtime d'une page
+
+Un mode peut demander un runtime (`wrap.runtime`) : `slides` affiche une diapo à la fois, à l'échelle de la fenêtre en 16:9, et fournit clavier (flèches, espace, `Home`/`End`, `F`), clic sur une moitié d'écran, balayage au doigt, compteur, panneau de notes orateur (`data-notes`, touche `N`) et, si le mode le demande, une barre ou un repère « partie n / total » (`data-part`). Ces réglages vivent dans `mode.json` (`wrap.nav`, `wrap.notes`) : le code ne teste jamais un id de mode.
+
+Le runtime est une chaîne JS autonome (`slidesRuntime` dans `src/screen/wrap.ts`), sans dépendance ni appel réseau, neutralisée par `preview_screen` (`__NAOS_NO_RUNTIME__`) et par `navigator.webdriver` : une page conservée dans un fichier reste empilée et mesurable. Le script d'icônes (`code.iconify.design`) n'est chargé que si le corps contient un `<iconify-icon>` ; `wrap_screen` avec `self_contained` remplace ces balises par leur SVG (`src/screen/icons.ts`), la page ne dépend alors plus que du CDN Tailwind.
 
 ## Le principe qui tient tout
 
