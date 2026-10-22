@@ -32,6 +32,20 @@ Une présentation se projette : l'audience écoute celui qui parle et lit la dia
 - Le vide fait partie de la composition : mieux vaut une diapo à moitié pleine qu'une diapo remplie jusqu'aux bords.
 - Les visuels passent par un emplacement `data-image` décrit (sujet, cadrage, lumière), jamais par une photo aléatoire ni un faux logo.
 
+## Rôles visuels
+
+Sept rôles ont un nom commun dans toutes les DNA du mode, pour que le corps d'une diapo survive à un changement de DNA. Ils se remplissent dans le bloc `presentation.roles` de chaque DNA ; sans déclaration, ils retombent sur l'accent de la DNA.
+
+- `bg-alt` / `text-on-alt` / `text-on-alt-muted` — fond de diapo alterné et ses textes. À utiliser quand la DNA alterne deux fonds dans son deck (diapos de preuve claires, par exemple). Ne jamais poser `text-ink` sur `bg-alt` : le contraste est celui de l'autre fond.
+- `bg-highlight` / `text-highlight` / `border-highlight` — mise en avant qui n'est pas une action : chiffre clé, série principale d'un graphique, option retenue. Une seule par diapo.
+- `border-emphasis` — trait qui désigne l'élément retenu dans une grille ou une comparaison. Il ne remplace pas une couleur d'état.
+- `text-connector` / `text-connector-muted` — liens des schémas (traits SVG en `stroke="currentColor"`). Plein pour un lien actif, `connector-muted` et pointillé pour un lien faible, un délai ou une absence.
+- `bg-brand` / `bg-brand-radial` — dégradé de marque (sphère, orbe, moment de marque). Une seule occurrence par deck, à l'ouverture ou à la clôture.
+
+Sur un fond `bg-alt` de luminance opposée à `base` (papier clair sur un thème sombre), la mise en avant passe par `bg-alt` et `border-emphasis`, jamais par `text-highlight` : aucune couleur ne peut être lisible en texte sur un fond très sombre et sur un fond très clair. `preview_screen` mesure le contraste réel et le signalera.
+
+Les `extraColors` restent réservées au **sens métier** (sévérité, statut, workflow, identité de marque). Une alternance, une mise en avant ou un dégradé décoratif se dit en rôle, pas en couleur métier : c'est ce qui permet de changer de DNA sans table de correspondance.
+
 ## Fil narratif
 
 - Le message clé s'entend à l'ouverture et se retrouve à la clôture, dans les mêmes mots.

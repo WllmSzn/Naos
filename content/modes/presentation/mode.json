@@ -13,6 +13,7 @@
     "requireH1": false
   },
   "dnaRequires": ["signature", "typeScale"],
+  "dnaRoles": ["alt", "highlight", "emphasis", "connector", "brand"],
   "patternKinds": ["title", "agenda", "statement", "split", "chart", "quote", "comparison", "closing"],
   "workflow": {
     "unit": "une présentation",

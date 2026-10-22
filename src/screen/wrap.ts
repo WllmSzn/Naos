@@ -2,6 +2,14 @@ import type { Dna } from '../dna/schema.js';
 import { googleFontsUrl } from '../dna/library.js';
 import { DnaOverridesSchema, hasOverrides, type DnaOverrides } from '../dna/overrides.js';
 import { getMode } from '../modes/modes.js';
+import {
+  resolveRoles,
+  roleRuntimeData,
+  roleThemeConfig,
+  type ResolvedRoles,
+  type RoleGroup,
+  type RoleThemeFragments,
+} from '../dna/roles.js';
 
 /**
  * Enveloppe déterministe d'un écran.
@@ -72,6 +80,14 @@ function unescapeHtml(s: string): string {
 }
 
 /**
+ * Rôles visuels exposés par le mode (mode.json → dnaRoles). Aucun id de mode en dur :
+ * un mode qui ne déclare rien n'expose aucun rôle.
+ */
+export function modeRoleGroups(mode?: string): RoleGroup[] {
+  return mode ? (getMode(mode)?.dnaRoles ?? []) : [];
+}
+
+/**
  * Configuration Tailwind générée depuis la DNA.
  * « base » n'est pas une couleur globale : text-base est déjà la taille de police
  * par défaut de Tailwind. Le texte posé sur bg-ink utilise donc text-inverse.
@@ -79,6 +95,7 @@ function unescapeHtml(s: string): string {
 export function tailwindConfig(dna: Dna, mode?: string) {
   const t = dna.tokens;
   const scale = typeScale(dna, mode);
+  const roles: RoleThemeFragments = roleThemeConfig(resolveRoles(dna, mode), modeRoleGroups(mode));
   return {
     theme: {
       extend: {
@@ -96,11 +113,14 @@ export function tailwindConfig(dna: Dna, mode?: string) {
           danger: t.danger,
           inverse: t.base,
           ...dna.extraColors,
+          ...roles.colors,
         },
-        backgroundColor: { base: t.base },
+        backgroundColor: { base: t.base, ...roles.backgroundColor },
         // text-accent peut différer de l'aplat bg-accent (accent sombre illisible en texte sur fond sombre).
-        textColor: { accent: t.accentText ?? t.accent },
+        textColor: { accent: t.accentText ?? t.accent, ...roles.textColor },
+        borderColor: roles.borderColor,
         gradientColorStops: { base: t.base },
+        backgroundImage: roles.backgroundImage,
         fontFamily: {
           display: [dna.fonts.display, 'ui-sans-serif', 'system-ui', 'sans-serif'],
           body: [dna.fonts.body, 'ui-sans-serif', 'system-ui', 'sans-serif'],
@@ -119,13 +139,14 @@ export function tailwindConfig(dna: Dna, mode?: string) {
 }
 
 /** Données exposées à la page (graphiques, scripts) sous window.NAOS. */
-function runtimeData(dna: Dna) {
+function runtimeData(dna: Dna, mode?: string, roles?: ResolvedRoles) {
   return {
     dna: dna.id,
     tokens: dna.tokens,
     dataPalette: dna.dataPalette,
     extraColors: dna.extraColors ?? {},
     fonts: { display: dna.fonts.display, body: dna.fonts.body, mono: dna.fonts.mono, accent: dna.fonts.accent ?? dna.fonts.display },
+    ...(roles ? { roles: roleRuntimeData(roles, modeRoleGroups(mode)) } : {}),
   };
 }
 
@@ -240,7 +261,7 @@ export function buildHead(dna: Dna, opts: WrapOptions = {}): string {
     `<script src="${CDN.tailwind}"></script>`,
     `<script>tailwind.config = ${JSON.stringify(tailwindConfig(dna, opts.mode))};</script>`,
     // window.HECATE : alias pour les graphiques des pages produites avant le renommage.
-    `<script>window.NAOS = ${JSON.stringify(runtimeData(dna))}; window.HECATE = window.NAOS;</script>`,
+    `<script>window.NAOS = ${JSON.stringify(runtimeData(dna, opts.mode, resolveRoles(dna, opts.mode)))}; window.HECATE = window.NAOS;</script>`,
     `<script src="${CDN.iconify}"></script>`,
   ];
   if (libs.includes('chartjs')) {

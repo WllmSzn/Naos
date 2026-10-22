@@ -1,5 +1,6 @@
 import type { Dna } from '../dna/schema.js';
 import { applyOverrides, type DnaOverrides } from '../dna/overrides.js';
+import { ROLE_GROUPS, roleClassNames } from '../dna/roles.js';
 import { extractBody, readMeta, wrapScreen, type Lib } from './wrap.js';
 
 /**
@@ -24,6 +25,48 @@ export interface RethemeResult {
   to: string;
   mode?: string;
   hexReplaced: number;
+  /** Classes de couleur du corps qui n'existent pas dans la DNA cible. */
+  missingClasses: Array<{ class: string; count: number; sample: string }>;
+}
+
+/** Canaux porteurs d'un nom de couleur (même forme que le lint, sans cheerio). */
+const COLOR_TOKEN_RE = /^(?:[a-z0-9-]+:)*!?(?:bg|text|border(?:-[xytrblse])?|from|via|to|fill|stroke|ring|outline|divide|placeholder|caret|accent|decoration)-([a-z][a-z0-9-]*)(?:\/\S+)?$/;
+
+/**
+ * Repère les classes qui portaient une extraColor de la DNA source absente de la
+ * cible. Avant les rôles, c'était le trou du retheme : bg-paper restait sans couleur,
+ * sans que rien ne le signale.
+ */
+function missingColorClasses(
+  body: string,
+  source: Dna | undefined,
+  target: Dna,
+): Array<{ class: string; count: number; sample: string }> {
+  if (!source) return [];
+  const sourceExtras = new Set(Object.keys(source.extraColors ?? {}));
+  if (!sourceExtras.size) return [];
+  const targetNames = new Set([
+    ...Object.keys(target.extraColors ?? {}),
+    ...Object.keys(target.tokens),
+    ...roleClassNames(ROLE_GROUPS),
+  ]);
+  const suspects = [...sourceExtras].filter((n) => !targetNames.has(n));
+  if (!suspects.length) return [];
+
+  const found = new Map<string, { count: number; sample: string }>();
+  for (const line of body.split('\n')) {
+    for (const attr of line.matchAll(/class="([^"]*)"/g)) {
+      for (const token of (attr[1] ?? '').split(/\s+/).filter(Boolean)) {
+        const name = token.match(COLOR_TOKEN_RE)?.[1];
+        if (!name || !suspects.includes(name)) continue;
+        const plain = token.replace(/^(?:[a-z0-9-]+:)*!?/, '');
+        const entry = found.get(plain) ?? { count: 0, sample: line.trim().slice(0, 140) };
+        entry.count++;
+        found.set(plain, entry);
+      }
+    }
+  }
+  return [...found].map(([cls, v]) => ({ class: cls, count: v.count, sample: v.sample }));
 }
 
 function hexMap(from: Dna, to: Dna): Map<string, string> {
@@ -86,5 +129,6 @@ export function retheme(
     to: target.id,
     mode,
     hexReplaced,
+    missingClasses: missingColorClasses(body, source, effective),
   };
 }

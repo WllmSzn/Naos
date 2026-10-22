@@ -2,6 +2,7 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { z } from 'zod';
 import { CONTENT_DIR } from '../paths.js';
+import { ROLE_GROUPS } from '../dna/roles.js';
 
 /**
  * Un mode = un métier de conception (site web, produit desktop, produit mobile…).
@@ -46,6 +47,10 @@ export const ModeSchema = z.object({
     requireH1: z.boolean(),
   }),
   dnaRequires: z.array(z.string()).describe('Champs obligatoires du bloc de mode dans une DNA'),
+  dnaRoles: z
+    .array(z.enum(ROLE_GROUPS))
+    .default([])
+    .describe('Rôles visuels exposés par ce mode (bg-alt, bg-highlight, border-emphasis, text-connector, bg-brand)'),
   patternKinds: z.array(kebab).min(1).describe('Types de sections propres au mode, dans l’ordre de lecture'),
   /**
    * Comportement de la page produite. Générique : n'importe quel mode peut demander

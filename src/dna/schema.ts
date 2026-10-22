@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { HEX_RE, contrastRatio, mixHex } from '../color.js';
+import { RolesSchema, ROLE_GROUPS, checkRoles, roleClassNames } from './roles.js';
 
 const hex = z.string().regex(HEX_RE, 'couleur hex attendue (#RGB ou #RRGGBB)');
 
@@ -45,6 +46,9 @@ const RESERVED_COLOR_NAMES = new Set([
   'base', 'surface', 'raised', 'line', 'ink', 'muted', 'accent', 'accent-ink', 'accent2', 'success', 'warning', 'danger', 'inverse',
   // Rôles de l'échelle typographique : text-<rôle> ne doit pas désigner une couleur.
   'display', 'title', 'subtitle', 'body', 'caption',
+  // Rôles visuels génériques : leurs classes sont générées par wrap, une extraColor du
+  // même nom écraserait le rôle (bg-brand d'une DNA contre le dégradé de marque).
+  'alt', 'on-alt', 'on-alt-muted', 'highlight', 'emphasis', 'connector', 'connector-muted', 'brand', 'brand-radial',
   'white', 'black', 'transparent', 'current', 'inherit',
   'slate', 'gray', 'zinc', 'neutral', 'stone', 'red', 'orange', 'amber', 'yellow', 'lime', 'green', 'emerald', 'teal', 'cyan',
   'sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose',
@@ -100,6 +104,7 @@ export const ModeBlockSchema = z.object({
   states: z.record(z.string(), z.string()).optional().describe('Classes des états récurrents (selected, hover…)'),
   rules: RulesSchema.optional(),
   patterns: z.array(z.string()).optional().describe('Sections propres à cette DNA, à privilégier dans ce mode'),
+  roles: RolesSchema.optional().describe('Rôles visuels du mode (fond alterné, mise en avant, dégradé) que la DNA remplit'),
 });
 
 export type ModeBlock = z.infer<typeof ModeBlockSchema>;
@@ -155,6 +160,14 @@ export const DnaSchema = z
       .describe('Un bloc par mode servi par la DNA (website, product-desktop…)'),
   })
   .superRefine((dna, ctx) => {
+    // Rôles déclarés : contrastes vérifiés, et références « ref:… » résolues.
+    // Les rôles non déclarés retombent sur des défauts qui ne cassent aucune DNA.
+    for (const [modeId, block] of Object.entries(dna.modes)) {
+      for (const message of checkRoles(block.roles, dna, modeId)) {
+        ctx.addIssue({ code: 'custom', path: ['modes', modeId, 'roles'], message });
+      }
+    }
+
     // Garde-fous d'accessibilité vérifiés à chaque chargement.
     const checks: Array<[keyof typeof dna.tokens, keyof typeof dna.tokens, number]> = [
       ['ink', 'base', 7],

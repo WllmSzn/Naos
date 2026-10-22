@@ -13,6 +13,7 @@ import { findPatterns, getPatterns, patternMeta, reloadPatterns } from './patter
 import { getWorkflow, WORKFLOWS } from './workflows.js';
 import { suggestDna } from './dna/suggest.js';
 import type { Dna } from './dna/schema.js';
+import { colorAllowance, resolveRoles } from './dna/roles.js';
 import { applyOverrides, DnaOverridesSchema } from './dna/overrides.js';
 import { LIBS, readMeta, wrapScreen } from './screen/wrap.js';
 import { lintScreen, type LintReport } from './screen/lint.js';
@@ -45,7 +46,9 @@ function dnaView(dna: Dna, mode?: string) {
     ...(family ? { family } : {}),
     googleFontsUrl: googleFontsUrl(dna),
     modesAvailable: Object.keys(modes),
-    ...(mode ? { mode, modeBlock: modes[mode] } : { modes }),
+    // Valeurs effectives des rôles (références résolues, défauts compris) : sans cela,
+    // le modèle ne saurait pas à quoi bg-alt ou text-highlight correspondent.
+    ...(mode ? { mode, modeBlock: modes[mode], roles: resolveRoles(dna, mode) } : { modes }),
   };
 }
 
@@ -296,7 +299,11 @@ export function createServer(): McpServer {
       const id = dna_id ?? meta.dnaId;
       const dna = id ? (dna_id ? requireDna(dna_id) : getLibrary().dnas.get(id)) : undefined;
       const m = dna ? resolveMode(dna, mode, meta.mode) : mode ? requireMode(mode) : meta.mode ? getMode(meta.mode) : undefined;
-      const report = lintScreen(html, { theme: dna?.theme, autofix: autofix ?? true, profile: m?.lint });
+      // Avec la DNA, une couleur absente de son vocabulaire devient une erreur visible.
+      const colors = dna
+        ? colorAllowance(dna, m?.dnaRoles ?? [], Object.keys(dna.modes[m?.id ?? '']?.typeScale ?? {}))
+        : undefined;
+      const report = lintScreen(html, { theme: dna?.theme, autofix: autofix ?? true, profile: m?.lint, colors });
       return withHtml({ ...(m ? { mode: m.id } : {}), ...lintSummary(report) }, report.html);
     }),
   );
@@ -358,7 +365,25 @@ export function createServer(): McpServer {
       const mode = resolveMode(target, a.mode ?? pageMode);
       const result = retheme(source, target, (id) => lib.get(id), { source: a.from_dna ? lib.get(a.from_dna) : undefined, overrides: a.overrides, mode: mode.id });
       const saved = a.save_as ? saveScreen(a.save_as, result.html) : undefined;
-      return withHtml({ from: result.from, to: result.to, mode: result.mode, hexReplaced: result.hexReplaced, ...(saved ? { saved } : {}) }, result.html);
+      const warnings = result.missingClasses.length
+        ? [
+            `Couleurs absentes de « ${target.id} », restées sans effet : ${result.missingClasses
+              .map((c) => `${c.class} (${c.count})`)
+              .join(', ')}. Les remplacer par un rôle de présentation (bg-alt, bg-highlight…) ou une couleur de la DNA cible.`,
+          ]
+        : [];
+      return withHtml(
+        {
+          from: result.from,
+          to: result.to,
+          mode: result.mode,
+          hexReplaced: result.hexReplaced,
+          missingClasses: result.missingClasses,
+          ...(warnings.length ? { warnings } : {}),
+          ...(saved ? { saved } : {}),
+        },
+        result.html,
+      );
     }),
   );
 

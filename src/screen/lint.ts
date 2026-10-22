@@ -1,6 +1,7 @@
 import * as cheerio from 'cheerio';
 import type { Element } from 'domhandler';
 import { extractBody } from './wrap.js';
+import type { ColorAllowance } from '../dna/roles.js';
 
 /**
  * Lint déterministe d'un écran : zéro appel LLM.
@@ -40,6 +41,12 @@ export interface LintOptions {
   autofix?: boolean;
   /** Profil du mode : ce qui relève d'un site (formules marketing) n'est pas exigé d'un écran produit. */
   profile?: LintProfile;
+  /**
+   * Noms de couleur de la DNA visée. Fourni avec dna_id : une classe de couleur qui
+   * n'existe ni comme token, ni comme extraColor, ni comme rôle est une erreur au lieu
+   * de rester silencieusement sans effet (le défaut du retheme avant les rôles).
+   */
+  colors?: ColorAllowance;
 }
 
 export interface LintProfile {
@@ -108,6 +115,37 @@ const ARBITRARY_COLOR_RE = new RegExp(`^(${COLOR_UTIL})-\\[(?:#|rgb|hsl|oklch|ok
 const RADIUS_RE = /^rounded(-(?:[trblse]|tl|tr|bl|br|ss|se|es|ee))?(?:-(sm|md|lg|xl|2xl|3xl))?$/;
 const SHADOW_RE = /^shadow(?:-(sm|md|lg|xl|2xl))?$/;
 const NEUTRAL_SET = new Set(NEUTRALS.split('|'));
+
+// Canaux porteurs d'un nom de couleur (token, extraColor ou rôle).
+const COLOR_NAME_RE = /^(bg|text|border(?:-[xytrblse])?|from|via|to|fill|stroke|ring|outline|divide|placeholder|caret|accent|decoration)-([a-z][a-z0-9-]*)$/;
+
+/**
+ * Mots d'une classe qui ressemblent à un nom de couleur mais sont des utilitaires.
+ * Sans cette liste, le contrôle color.unknown signalerait bg-cover ou text-center.
+ */
+const NON_COLOR_NAMES = new Set([
+  'none', 'auto', 'full', 'current', 'transparent', 'inherit', 'inset', 'offset', 'shadow',
+  'cover', 'contain', 'center', 'top', 'bottom', 'left', 'right', 'start', 'end', 'x', 'y', 's', 'e', 't', 'r', 'b', 'l',
+  'fixed', 'local', 'scroll', 'repeat', 'no-repeat', 'repeat-x', 'repeat-y', 'repeat-round', 'repeat-space',
+  'solid', 'dashed', 'dotted', 'double', 'hidden', 'collapse', 'separate',
+  'clip', 'ellipsis', 'wrap', 'nowrap', 'balance', 'pretty', 'justify',
+  'xs', 'sm', 'base', 'lg', 'xl',
+]);
+const NON_COLOR_PREFIXES = ['gradient', 'blend', 'clip-', 'origin-'];
+
+function unknownColorName(core: string, colors: ColorAllowance): string | null {
+  const bare = core.split('/')[0]!;
+  const m = bare.match(COLOR_NAME_RE);
+  if (!m) return null;
+  const [, util, name] = m as unknown as [string, string, string];
+  if (colors.names.has(name)) return null;
+  if (util === 'text' && colors.textSizes.has(name)) return null;
+  if (NON_COLOR_NAMES.has(name)) return null;
+  if (NON_COLOR_PREFIXES.some((p) => name.startsWith(p))) return null;
+  // Positions et échelles : ring-offset-2, from-50, border-2 (déjà exclu).
+  if (/\d$/.test(name)) return null;
+  return name;
+}
 
 /** Sépare « md:hover:!bg-gray-100 » en préfixe de variantes, « ! » et cœur. */
 function splitClass(token: string): { prefix: string; bang: string; core: string } {
@@ -221,6 +259,17 @@ function lintClasses($: cheerio.CheerioAPI, out: Collector, opts: Required<Pick<
         out.violation('tokens.font-family', 'warning', 'Police nommée : utiliser font-display, font-body ou font-mono.', token);
       } else if (/^shadow-\[/.test(core)) {
         out.violation('tokens.shadow', 'warning', 'Ombre arbitraire : utiliser shadow-card ou shadow-overlay.', token);
+      } else if (opts.colors) {
+        const unknown = unknownColorName(core, opts.colors);
+        if (unknown) {
+          out.violation(
+            'color.unknown',
+            'error',
+            `Couleur absente de la DNA : « ${unknown} » n’est ni un token, ni un rôle, ni une couleur métier de cette DNA. ` +
+              'Utiliser un token sémantique ou un rôle (bg-alt, bg-highlight, border-emphasis, text-connector, bg-brand).',
+            token,
+          );
+        }
       }
 
       if (replacement && opts.autofix) {
