@@ -1,0 +1,37 @@
+<!-- {"id":"bar-series","name":"Série de barres","kind":"figure","description":"Barres verticales en HTML, une seule mise en avant, valeur au-dessus et étiquette en dessous : une série courte qui montre une tendance, avec une mention d’illustration facultative.","tags":["série","barres","graphique","tendance","trimestres","évolution","présentation"],"slots":[{"name":"titre","description":"Ce que la série mesure, unité comprise","constraint":"1 ligne courte"},{"name":"valeurs","description":"3 à 6 barres, valeur au-dessus et étiquette en dessous ; la hauteur est en % de la plus grande","constraint":"valeur 3 caractères au plus"},{"name":"mention","description":"Source ou réserve sur les chiffres (facultatif)","constraint":"1 ligne"}],"fits":["chart","statement","split"],"minWidth":520} -->
+<div class="flex flex-col gap-6">
+  <p class="font-mono text-caption uppercase tracking-[0.18em] text-muted">Tickets reçus, en milliers</p>
+
+  <div class="flex h-[280px] gap-6">
+    <div class="flex min-w-0 flex-1 flex-col">
+      <p class="text-body tabular-nums text-ink">96</p>
+      <div class="mt-3 flex flex-1 items-end"><div class="h-full w-full bg-ink/25"></div></div>
+    </div>
+    <div class="flex min-w-0 flex-1 flex-col">
+      <p class="text-body tabular-nums text-ink">88</p>
+      <div class="mt-3 flex flex-1 items-end"><div class="h-[92%] w-full bg-ink/25"></div></div>
+    </div>
+    <div class="flex min-w-0 flex-1 flex-col">
+      <p class="text-body tabular-nums text-ink">74</p>
+      <div class="mt-3 flex flex-1 items-end"><div class="h-[77%] w-full bg-ink/25"></div></div>
+    </div>
+    <div class="flex min-w-0 flex-1 flex-col">
+      <p class="text-body tabular-nums text-ink">68</p>
+      <div class="mt-3 flex flex-1 items-end"><div class="h-[71%] w-full bg-ink/25"></div></div>
+    </div>
+    <div class="flex min-w-0 flex-1 flex-col">
+      <p class="text-body tabular-nums text-highlight">61</p>
+      <div class="mt-3 flex flex-1 items-end"><div class="h-[64%] w-full bg-highlight"></div></div>
+    </div>
+  </div>
+
+  <div class="flex gap-6 border-t border-line pt-4">
+    <p class="min-w-0 flex-1 font-mono text-caption text-muted">T1 2026</p>
+    <p class="min-w-0 flex-1 font-mono text-caption text-muted">T2 2026</p>
+    <p class="min-w-0 flex-1 font-mono text-caption text-muted">T3 2026</p>
+    <p class="min-w-0 flex-1 font-mono text-caption text-muted">T4 2026</p>
+    <p class="min-w-0 flex-1 font-mono text-caption text-muted">T1 2027</p>
+  </div>
+
+  <p class="font-mono text-caption text-muted">Valeurs illustratives, projection au rythme des deux premiers chantiers.</p>
+</div>

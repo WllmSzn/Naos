@@ -1,10 +1,19 @@
 <!-- {"id":"split","name":"Diapo texte et visuel","kind":"split","description":"Diapo en deux colonnes : le titre et trois lignes de texte à gauche, un emplacement d’image décrit à droite, sans marge ni dégradé entre les deux.","tags":["deux colonnes","texte","image","visuel","présentation"]} -->
 <section data-slide class="grid h-[1080px] grid-cols-2 overflow-hidden bg-base">
-  <div class="flex flex-col justify-center px-20 py-20">
-    <p class="font-mono text-caption uppercase tracking-[0.2em] text-muted">Le diagnostic</p>
-    <h2 class="mt-8 max-w-[760px] font-display text-title">Trois motifs, deux tiers des tickets</h2>
-    <p class="mt-10 max-w-[640px] text-body text-ink">Mot de passe oublié, facture contestée, accès perdu.</p>
-    <p class="mt-4 max-w-[640px] text-body text-muted">Chacun a une réponse écrite et vérifiable.</p>
+  <div class="flex flex-col px-20 py-20">
+    <div class="flex flex-1 flex-col justify-center">
+      <p class="font-mono text-caption uppercase tracking-[0.2em] text-muted">Le diagnostic</p>
+      <h2 class="mt-8 max-w-[760px] font-display text-title">Trois motifs, deux tiers des tickets</h2>
+      <p class="mt-10 max-w-[640px] text-body text-ink">Mot de passe oublié, facture contestée, accès perdu.</p>
+      <p class="mt-4 max-w-[640px] text-body text-muted">Chacun a une réponse écrite et vérifiable.</p>
+    </div>
+
+    <footer data-slide-footer class="flex flex-wrap items-baseline gap-x-4 gap-y-2 border-t border-line pt-6 text-body text-muted data-[variant=inverse]:!border-inverse/20 data-[variant=inverse]:!text-inverse/70 data-[variant=alt]:!border-on-alt/20 data-[variant=alt]:!text-on-alt-muted">
+    <p class="min-w-0">Revue du support · 2026</p>
+    <span aria-hidden="true">·</span>
+    <p class="min-w-0">Le diagnostic</p>
+    <p class="ml-auto shrink-0 font-mono text-caption tabular-nums">04 / 13</p>
+  </footer>
   </div>
 
   <div data-image="Capture de la file de tickets : trois étiquettes de motif regroupant les demandes, compteurs visibles à droite" role="img" aria-label="Capture de la file de tickets regroupée par motif" class="h-full w-full border-l border-line"></div>

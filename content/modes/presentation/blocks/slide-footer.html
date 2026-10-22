@@ -1,0 +1,7 @@
+<!-- {"id":"slide-footer","name":"Pied de diapo","kind":"meta","description":"Le pied commun à toutes les diapos : mention du deck à gauche, partie en cours ensuite, numéro « n / total » à droite, séparés du contenu par un trait. Variantes inverse et alt pour les fonds inversé et alterné.","tags":["pied","footer","numéro","confidentialité","partie","repère","présentation"],"slots":[{"name":"mention","description":"La mention du deck : confidentialité, diffusion, commanditaire","constraint":"1 ligne courte"},{"name":"partie","description":"La partie en cours ou la source de la diapo","constraint":"1 ligne courte"},{"name":"numéro","description":"« n / total », à réviser à la main quand le deck change","constraint":"ex. « 07 / 13 »"}],"variants":[{"name":"inverse","attribute":"data-variant=\"inverse\""},{"name":"alt","attribute":"data-variant=\"alt\""}],"fits":["title","agenda","divider","statement","transition","split","chart","quote","comparison","appendix","closing"],"minWidth":480} -->
+<footer data-slide-footer class="flex flex-wrap items-baseline gap-x-4 gap-y-2 border-t border-line pt-6 text-body text-muted data-[variant=inverse]:!border-inverse/20 data-[variant=inverse]:!text-inverse/70 data-[variant=alt]:!border-on-alt/20 data-[variant=alt]:!text-on-alt-muted">
+  <p class="min-w-0">Confidentiel · Diffusion restreinte</p>
+  <span aria-hidden="true">·</span>
+  <p class="min-w-0">Partie 02 · Ce que l’automatisation sait faire</p>
+  <p class="ml-auto shrink-0 font-mono text-caption tabular-nums">07 / 13</p>
+</footer>

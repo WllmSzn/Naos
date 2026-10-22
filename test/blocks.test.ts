@@ -69,6 +69,54 @@ test('un bloc de la bibliothèque hérite de sa famille, un bloc de mode reste c
   assert.equal(blocks.get('key-figure')?.dna, undefined);
 });
 
+test('le lot données et contenu est livré, rangé par type', () => {
+  const expected: Record<string, string[]> = {
+    figure: ['bar-series', 'before-after', 'gauge', 'key-figure', 'split-bar'],
+    grid: ['callout', 'logo-row', 'module-grid', 'numbered-points', 'person-card', 'tag-cloud'],
+    meta: ['contact', 'slide-footer'],
+  };
+  for (const [kind, ids] of Object.entries(expected)) {
+    const got = all.filter((b) => b.mode === 'presentation' && b.kind === kind && !b.dna).map((b) => b.id).sort();
+    for (const id of ids) assert.ok(got.includes(id), `${id} manquant en ${kind}`);
+    assert.deepEqual(got, ids, `${kind} : liste inattendue`);
+  }
+  for (const id of Object.values(expected).flat()) {
+    const b = blocks.get(id)!;
+    assert.ok(b.description.length >= 40, `${id} : description pour le modèle`);
+    assert.ok(b.minWidth >= 320, `${id} : largeur minimale déclarée`);
+    assert.ok(b.fits.length, `${id} : sections hôtes déclarées`);
+  }
+});
+
+test('les blocs de données portent leurs variantes et leurs sources', () => {
+  assert.deepEqual(blocks.get('key-figure')!.variants.map((v) => v.name), ['tendance', 'inversé']);
+  assert.deepEqual(blocks.get('before-after')!.variants.map((v) => v.name), ['large']);
+  assert.deepEqual(blocks.get('numbered-points')!.variants.map((v) => v.name), ['pair']);
+  assert.deepEqual(blocks.get('module-grid')!.variants.map((v) => v.name), ['duo']);
+  assert.deepEqual(blocks.get('slide-footer')!.variants.map((v) => v.name), ['inverse', 'alt']);
+  // La valeur de repli existe vraiment : la variante change la taille, pas seulement l'étiquette.
+  assert.match(blocks.get('before-after')!.html, /group-data-\[variant=large\]:!text-title/);
+  assert.match(blocks.get('key-figure')!.html, /group-data-\[variant=trend\]:flex/);
+  // Un chiffre clé sans source n'est pas une preuve.
+  assert.match(blocks.get('key-figure')!.html, /text-caption text-muted/);
+});
+
+test('aucun faux logo, aucun visage aléatoire dans les blocs de contenu', () => {
+  const logos = blocks.get('logo-row')!.html;
+  assert.doesNotMatch(logos, /<img/, 'un logo passe par un emplacement décrit');
+  assert.match(logos, /data-image="Logo /);
+  assert.match(blocks.get('person-card')!.html, /rounded-full/, 'les initiales remplacent le visage');
+  assert.doesNotMatch(blocks.get('person-card')!.html, /<img/);
+});
+
+test('le pied de diapo est un bloc meta, identifié pour le lint et l’audit', () => {
+  const footer = blocks.get('slide-footer')!;
+  assert.equal(footer.kind, 'meta');
+  assert.match(footer.html, /^<footer data-slide-footer class="/);
+  assert.match(footer.html, /text-caption tabular-nums">\d{2} \/ \d{2}</, 'le numéro est écrit n / total');
+  assert.ok(footer.fits.includes('title') && footer.fits.includes('closing'), 'les sections hôtes sont déclarées');
+});
+
 for (const theme of ['light', 'dark'] as const) {
   test(`chaque bloc passe le lint de son mode sans erreur ni correction (thème ${theme})`, () => {
     for (const b of all) {

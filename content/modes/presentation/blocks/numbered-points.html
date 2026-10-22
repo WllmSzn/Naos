@@ -1,0 +1,20 @@
+<!-- {"id":"numbered-points","name":"Points numérotés","kind":"grid","description":"Deux à quatre colonnes numérotées, un titre court et trois phrases au plus ; le point retenu porte le trait d’emphase. Variante pair pour une grille 2×2.","tags":["points","arguments","objections","compétences","roi","grille","présentation"],"slots":[{"name":"points","description":"Numéro, titre court et description de trois phrases au plus","constraint":"titre 4 mots, description 3 phrases"},{"name":"point mis en avant","description":"Un seul point porte border-emphasis et son numéro en text-highlight : c’est celui qui est retenu","constraint":"au plus 1 sur 4"}],"variants":[{"name":"pair","attribute":"data-variant=\"pair\""}],"fits":["statement","split","comparison","chart"],"minWidth":540} -->
+<div class="grid grid-cols-3 gap-x-10 gap-y-8 data-[variant=pair]:grid-cols-2">
+  <div class="min-w-0 border-t-2 border-line pt-5">
+    <p class="font-mono text-body tabular-nums text-muted">01</p>
+    <h3 class="mt-3 text-subtitle text-ink">Écrire la règle</h3>
+    <p class="mt-2 text-body text-muted">Une réponse vérifiable, relue par le métier.</p>
+  </div>
+
+  <div class="min-w-0 border-t-2 border-emphasis pt-5">
+    <p class="font-mono text-body tabular-nums text-highlight">02</p>
+    <h3 class="mt-3 text-subtitle text-ink">La brancher au ticket</h3>
+    <p class="mt-2 text-body text-muted">Le support valide la réponse, puis l’envoie.</p>
+  </div>
+
+  <div class="min-w-0 border-t-2 border-line pt-5">
+    <p class="font-mono text-body tabular-nums text-muted">03</p>
+    <h3 class="mt-3 text-subtitle text-ink">Mesurer et reprendre</h3>
+    <p class="mt-2 text-body text-muted">Taux de réouverture, délai, motifs nouveaux.</p>
+  </div>
+</div>

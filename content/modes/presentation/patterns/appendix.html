@@ -2,7 +2,6 @@
 <section data-slide class="flex h-[1080px] flex-col justify-between overflow-hidden bg-base px-24 py-20">
   <header class="flex items-baseline justify-between">
     <p class="font-mono text-caption uppercase tracking-[0.2em] text-muted">Annexe</p>
-    <p class="font-mono text-caption tabular-nums text-muted">12 / 13</p>
   </header>
 
   <div class="grid grid-cols-2 gap-24">
@@ -36,7 +35,10 @@
     </div>
   </div>
 
-  <footer class="text-body text-muted">
-    Les chiffres marqués d’un astérisque restent à consolider avec l’assureur et la direction financière.
+  <footer data-slide-footer class="flex flex-wrap items-baseline gap-x-4 gap-y-2 border-t border-line pt-6 text-body text-muted data-[variant=inverse]:!border-inverse/20 data-[variant=inverse]:!text-inverse/70 data-[variant=alt]:!border-on-alt/20 data-[variant=alt]:!text-on-alt-muted">
+    <p class="min-w-0">Les chiffres marqués d’un astérisque restent à consolider</p>
+    <span aria-hidden="true">·</span>
+    <p class="min-w-0">Annexe</p>
+    <p class="ml-auto shrink-0 font-mono text-caption tabular-nums">12 / 13</p>
   </footer>
 </section>

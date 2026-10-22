@@ -76,6 +76,28 @@ test('findPatterns : les types de présentation sont couverts, y compris les nou
   assert.deepEqual(comparisons.sort(), ['comparison-before-after', 'comparison-options']);
 });
 
+test('chaque diapo porte le même pied, seul le texte et le variant changent', () => {
+  const slides = all.filter((p) => p.mode === 'presentation');
+  const shapes = new Set<string>();
+  for (const p of slides) {
+    const footers = p.html.match(/<footer data-slide-footer[\s\S]*?<\/footer>/g) ?? [];
+    assert.equal(footers.length, 1, `${p.id} : exactement un pied de diapo`);
+    // Forme du pied : même balise, mêmes classes, mêmes enfants — la variante exceptée.
+    const shape = footers[0]!
+      .replace(/\s*data-variant="[^"]*"/, '')
+      .replace(/>[^<]+</g, '><');
+    shapes.add(shape);
+    assert.match(footers[0]!, /text-caption tabular-nums">\d{2} \/ \d{2}</, `${p.id} : numéro « n / total »`);
+  }
+  assert.equal(shapes.size, 1, `le pied doit être identique partout :\n${[...shapes].join('\n---\n')}`);
+});
+
+test('les pieds sur fond inversé ou alterné passent par la variante du bloc', () => {
+  const byId = new Map(all.filter((p) => p.mode === 'presentation').map((p) => [p.id, p.html]));
+  assert.match(byId.get('closing')!, /<section[^>]*bg-ink[\s\S]*data-variant="inverse"/, 'clôture : pied inversé');
+  assert.match(byId.get('divider')!, /<section[^>]*bg-alt[\s\S]*data-variant="alt"/, 'intercalaire : pied alterné');
+});
+
 test('workflows : le mode pilote les instructions', () => {
   assert.deepEqual(WORKFLOWS.map((w) => w.name), ['ui_screen', 'ui_component', 'ui_review', 'dna_from_sites']);
   const site = getWorkflow('ui_screen')!.render({ brief: 'Landing pour une boulangerie', mode: 'website', dna: 'field-notes' });

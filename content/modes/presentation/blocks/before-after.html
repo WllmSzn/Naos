@@ -1,0 +1,23 @@
+<!-- {"id":"before-after","name":"Avant / après","kind":"figure","description":"Deux valeurs de même nature face à face, séparées par une flèche, la seconde portée par la mise en avant, et la base de comparaison en légende : ce qui change, et de combien. Les valeurs restent sur une ligne, même longues.","tags":["avant","après","comparaison","délai","gain","progression","présentation"],"slots":[{"name":"valeur de départ","description":"La valeur avant, son étiquette au-dessus et sa précision en dessous","constraint":"20 caractères au plus"},{"name":"valeur d’arrivée","description":"La valeur après, mise en avant ; même nature et même unité que le départ","constraint":"20 caractères au plus"},{"name":"base","description":"La base de comparaison, sous les deux valeurs","constraint":"1 ligne, ex. « cycle moyen des onze derniers motifs »"}],"variants":[{"name":"large","attribute":"data-variant=\"large\""}],"fits":["statement","split","comparison"],"minWidth":800} -->
+<div class="group flex flex-col gap-6">
+  <div class="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-8">
+    <div class="min-w-0">
+      <p class="font-mono text-caption uppercase tracking-[0.2em] text-muted">Aujourd’hui</p>
+      <p class="mt-3 break-words text-subtitle tabular-nums text-ink group-data-[variant=large]:!text-title">12 à 18 mois</p>
+      <p class="mt-3 max-w-[520px] text-body text-muted">Décision, développement, recette.</p>
+    </div>
+
+    <svg class="h-8 w-14 shrink-0 text-connector" viewBox="0 0 56 32" fill="none" aria-hidden="true">
+      <path d="M2 16h46" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" />
+      <path d="M39 7l9 9-9 9" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+
+    <div class="min-w-0">
+      <p class="font-mono text-caption uppercase tracking-[0.2em] text-muted">Avec le playbook</p>
+      <p class="mt-3 break-words text-subtitle tabular-nums text-highlight group-data-[variant=large]:!text-title">Quelques semaines</p>
+      <p class="mt-3 max-w-[520px] text-body text-muted">Les règles s’écrivent dans le poste de pilotage.</p>
+    </div>
+  </div>
+
+  <p class="font-mono text-caption text-muted">Base : cycle moyen des onze derniers motifs, hors audit de sécurité.</p>
+</div>

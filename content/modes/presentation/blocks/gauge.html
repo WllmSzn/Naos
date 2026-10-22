@@ -1,0 +1,21 @@
+<!-- {"id":"gauge","name":"Jauge","kind":"figure","description":"Un score ou une probabilité de 0 à 100 %, sa jauge graduée et une phrase qui dit ce que le chiffre signifie : le sens ne repose jamais sur la couleur seule.","tags":["jauge","score","probabilité","risque","niveau","pourcentage","présentation"],"slots":[{"name":"titre","description":"Ce que mesure la jauge","constraint":"3 à 5 mots"},{"name":"valeur","description":"Le score, en pourcentage ou en points","constraint":"3 caractères au plus"},{"name":"lecture","description":"Ce que la valeur veut dire, en une phrase : c’est elle qui porte le sens","constraint":"1 ligne, 12 mots au plus"}],"fits":["statement","split","chart"],"minWidth":420} -->
+<div class="flex flex-col gap-4">
+  <div class="flex items-baseline justify-between gap-6">
+    <p class="min-w-0 font-mono text-caption uppercase tracking-[0.18em] text-muted">Probabilité de retard</p>
+    <p class="shrink-0 font-mono text-caption tabular-nums text-muted">0 – 100</p>
+  </div>
+
+  <p class="text-display tabular-nums text-highlight">72 %</p>
+
+  <div class="h-5 w-full overflow-hidden rounded-ui bg-ink/15">
+    <div class="h-full w-[72%] bg-highlight"></div>
+  </div>
+
+  <div class="flex justify-between font-mono text-caption tabular-nums text-muted" aria-hidden="true">
+    <span>0</span>
+    <span>50</span>
+    <span>100</span>
+  </div>
+
+  <p class="max-w-[640px] text-body text-ink">Élevé : trois dépendances externes ne sont pas contractualisées.</p>
+</div>

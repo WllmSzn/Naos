@@ -1,7 +1,11 @@
-<!-- {"id":"key-figure","name":"Chiffre clé","kind":"figure","description":"Un chiffre et son unité, une période et une source, empilés en colonne : la preuve d’une affirmation, posée dans une diapo ou une colonne de comparaison.","tags":["chiffre","kpi","preuve","résultat","métrique","présentation"],"slots":[{"name":"valeur","description":"Le chiffre, avec son signe si c’est une variation","constraint":"5 caractères au plus"},{"name":"unité","description":"Ce que le chiffre mesure, sous la valeur","constraint":"3 à 5 mots"},{"name":"période","description":"La fenêtre de mesure","constraint":"1 ligne courte, ex. « sur 12 mois »"},{"name":"source","description":"L’origine du chiffre, en mention","constraint":"1 ligne, ex. « Chiffres illustratifs, à consolider »"}],"variants":[{"name":"tendance","attribute":"data-variant=\"trend\""},{"name":"inversé","attribute":"data-variant=\"inverted\""}],"fits":["statement","split","comparison"],"minWidth":320} -->
-<div class="flex flex-col">
-  <p class="font-mono text-caption uppercase tracking-[0.2em] text-muted">Sinistres évités</p>
-  <p class="mt-4 text-display tabular-nums text-highlight">+38 %</p>
-  <p class="mt-2 text-subtitle text-ink">par an, sur le parc couvert</p>
-  <p class="mt-4 text-caption text-muted">Chiffres illustratifs, à consolider avec l’assureur.</p>
+<!-- {"id":"key-figure","name":"Chiffre clé","kind":"figure","description":"Un chiffre et son unité, une période et une source, empilés en colonne : la preuve d’une affirmation, posée dans une diapo ou une colonne de comparaison. La variante tendance ajoute la direction et la période de comparaison.","tags":["chiffre","kpi","preuve","résultat","métrique","tendance","présentation"],"slots":[{"name":"valeur","description":"Le chiffre, avec son signe si c’est une variation","constraint":"5 caractères au plus"},{"name":"unité","description":"Ce que le chiffre mesure, sous la valeur","constraint":"3 à 5 mots"},{"name":"période","description":"La fenêtre de mesure","constraint":"1 ligne courte, ex. « sur 12 mois »"},{"name":"source","description":"L’origine du chiffre, en mention","constraint":"1 ligne, ex. « Chiffres illustratifs, à consolider »"},{"name":"tendance","description":"Direction et période de comparaison, en une ligne (variante trend)","constraint":"ex. « ↑ 6 points » puis « vs 2024 »"}],"variants":[{"name":"tendance","attribute":"data-variant=\"trend\""},{"name":"inversé","attribute":"data-variant=\"inverted\""}],"fits":["statement","split","comparison"],"minWidth":320} -->
+<div class="group flex flex-col">
+  <p class="font-mono text-caption uppercase tracking-[0.2em] text-muted group-data-[variant=inverted]:!text-inverse/70">Sinistres évités</p>
+  <p class="mt-4 text-display tabular-nums text-highlight group-data-[variant=inverted]:!text-inverse">+38 %</p>
+  <p class="mt-2 text-subtitle text-ink group-data-[variant=inverted]:!text-inverse">par an, sur le parc couvert</p>
+  <p class="mt-3 hidden items-baseline gap-2 text-body group-data-[variant=trend]:flex">
+    <span class="text-highlight group-data-[variant=inverted]:!text-inverse">↑ 6 points</span>
+    <span class="text-muted group-data-[variant=inverted]:!text-inverse/70">vs 2024</span>
+  </p>
+  <p class="mt-4 text-caption text-muted group-data-[variant=inverted]:!text-inverse/70">Chiffres illustratifs, à consolider avec l’assureur.</p>
 </div>

@@ -1,0 +1,15 @@
+<!-- {"id":"tag-cloud","name":"Nuage d’étiquettes","kind":"grid","description":"Une liste d’outils ou de technologies en étiquettes mono, terminée par un « +N » qui dit ce qui n’est pas nommé : ce qui est en place, sans hiérarchie inventée.","tags":["étiquettes","outils","technologies","stack","liste","présentation"],"slots":[{"name":"titre","description":"Ce que rassemble la liste","constraint":"3 à 5 mots"},{"name":"étiquettes","description":"8 à 14 noms courts, en une ou deux lignes de mots","constraint":"1 ou 2 mots par étiquette"},{"name":"reste","description":"Le « +N » final quand la liste est plus longue que la place","constraint":"ex. « +9 autres »"}],"fits":["split","statement","appendix"],"minWidth":420} -->
+<div class="flex flex-col gap-4">
+  <p class="font-mono text-caption uppercase tracking-[0.18em] text-muted">Outils en place</p>
+
+  <ul class="flex flex-wrap gap-3">
+    <li class="rounded-ui border border-line px-5 py-2 font-mono text-body text-ink">Splunk</li>
+    <li class="rounded-ui border border-line px-5 py-2 font-mono text-body text-ink">Cortex</li>
+    <li class="rounded-ui border border-line px-5 py-2 font-mono text-body text-ink">TheHive</li>
+    <li class="rounded-ui border border-line px-5 py-2 font-mono text-body text-ink">MISP</li>
+    <li class="rounded-ui border border-line px-5 py-2 font-mono text-body text-ink">Ansible</li>
+    <li class="rounded-ui border border-line px-5 py-2 font-mono text-body text-ink">GitLab</li>
+    <li class="rounded-ui border border-line px-5 py-2 font-mono text-body text-ink">Zammad</li>
+    <li class="rounded-ui border border-dashed border-line px-5 py-2 font-mono text-body text-muted">+9 autres</li>
+  </ul>
+</div>

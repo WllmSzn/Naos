@@ -41,6 +41,29 @@ Une présentation se projette : l'audience écoute celui qui parle et lit la dia
 
 - Un **bloc** est un fragment : un chiffre clé, un schéma, une grille de trois preuves, un emplacement média. Il s'insère DANS une diapo, sous son titre, et n'apporte jamais son propre titre de diapo. Appeler `get_blocks` (ou `list_blocks` pour le catalogue) avec le mode et la DNA.
 - Un bloc se choisit pour ce qu'il porte, pas pour sa forme : le chiffre clé d'un résultat, la chaîne d'étapes d'un processus, le schéma d'une architecture. Deux blocs qui disent la même chose sur une diapo font doublon.
+
+Ce que la diapo doit faire comprendre décide du bloc ; la forme suit :
+
+| Ce qu'il faut faire comprendre | Bloc | Type |
+|---|---|---|
+| un résultat qui prouve l'affirmation | `key-figure` | figure |
+| ce qui change, et de combien | `before-after` | figure |
+| une répartition en parts d'un tout | `split-bar` | figure |
+| une tendance sur trois à six points | `bar-series` | figure |
+| un score, une probabilité, un niveau | `gauge` | figure |
+| trois ou quatre arguments numérotés | `numbered-points` | grid |
+| des briques actives ou à venir | `module-grid` | grid |
+| la pile d'outils en un coup d'œil | `tag-cloud` | grid |
+| qui parle, ou l'équipe | `person-card` | grid |
+| la phrase à retenir | `callout` | grid |
+| des références clientes | `logo-row` | grid |
+| un flux qui se sépare, converge, tourne ou s'enchaîne | `branch`, `merge`, `labeled-flow`, `hub-cycle`, `step-chain` | diagram |
+| le pied de la diapo | `slide-footer` | meta |
+| la prise de contact | `contact` | meta |
+
+- Un seul bloc de mise en avant par diapo : `text-highlight` sur la valeur, `border-emphasis` sur le point retenu, `bg-highlight` sur le segment ou la série qui compte. Deux accents sur la même diapo n'en désignent plus aucun.
+- La mise en avant d'un élément se règle dans le bloc (`border-emphasis` sur une colonne de `numbered-points`, `data-variant` sur le bloc), jamais en ajoutant une couleur métier.
+- Le pied de chaque diapo est le bloc `slide-footer`, au même endroit et avec les mêmes classes partout : mention à gauche, partie ensuite, numéro « n / total » à droite. Le numéro est écrit à la main, comme la partie : c'est le seul chiffre à réviser quand le deck change. Pour que le pied reste en bas, le contenu de la diapo vit dans un conteneur `flex flex-1` et le pied le suit, hors de ce conteneur.
 - Il hérite du gabarit de la diapo : même padding, mêmes tailles de l'échelle, mêmes rôles de couleur. Ne pas lui donner de fond, de cadre ou d'ombre qui contredirait la diapo.
 - Remplir ses emplacements (le chiffre et son unité, les branches, les étapes) avec le contenu réel ; ses variantes (`data-variant`) sont des états du bloc, pas des diapositives différentes.
 - Un schéma reste lisible à 3 mètres : peu de nœuds (sept au plus), des libellés courts, un seul accent par schéma.
@@ -62,6 +85,18 @@ Cinq schémas couvrent les cas d'une présentation métier. Choisir par ce qu'il
 Sens des traits, dans tous les schémas : **trait plein** = lien actif, le flux passe ; **trait pointillé** = lien faible, délai, dépendance à un humain ou absence. Un schéma dont tous les traits sont pointillés ne montre plus rien : garder au moins un lien plein, sauf quand l'absence est justement le sujet.
 
 Les connecteurs se dessinent dans une colonne ou une rangée de la grille, jamais par-dessus les nœuds. Un nœud n'est jamais placé en position absolue : c'est la grille qui répartit, et le trait s'y adapte.
+
+### Données et contenu
+
+- Un chiffre sans unité, sans période et sans source n'est pas une preuve : `key-figure` et `gauge` portent les trois, et la source reste en `text-caption`.
+- `before-after` compare deux valeurs de **même nature et même unité**, la seconde en `text-highlight`, avec la base de comparaison en légende. Ses valeurs tiennent sur une ligne : `data-variant="large"` les passe en `text-title` pour une diapo pleine largeur aux valeurs courtes (dix caractères au plus) ; sans la variante, elles restent à l'échelle du sous-titre et passent dans une colonne de comparaison.
+- `split-bar` garde ses libellés **hors** de la barre, en légende : un segment de 5 % n'a pas la place d'y écrire quoi que ce soit. Les segments non mis en avant se font par opacité du texte (`bg-ink/40`, `/25`, `/15`), pas par une couleur métier.
+- `bar-series` reprend la mécanique de la section `chart` : hauteurs en pourcentage d'une même échelle, valeurs au-dessus, étiquettes en dessous, une seule barre en `bg-highlight`.
+- `gauge` dit ce que le score signifie en toutes lettres, sous la jauge : la couleur ne porte jamais le sens seule. La graduation (0, 50, 100) est décorative aux lecteurs d'écran.
+- `module-grid` et `numbered-points` ne laissent pas de cellule isolée : trois, six ou neuf modules en trois colonnes, `data-variant="duo"` pour quatre, `data-variant="pair"` pour quatre points en 2×2.
+- L'état d'un module se lit sans la couleur : pastille pleine **et** mot « Actif », pastille vide **et** mot « À venir ».
+- `person-card` n'affiche jamais de visage : les initiales suffisent, et une carte décrit un rôle réel, pas un profil inventé.
+- `logo-row` n'affiche jamais de faux logo : un emplacement décrit (`data-image`) par logo, avec son nom et sa version. `callout` non plus : une seule phrase à retenir par diapo, avec sa source.
 
 ## Rôles visuels
 

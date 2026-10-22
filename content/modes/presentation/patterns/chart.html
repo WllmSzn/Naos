@@ -1,46 +1,53 @@
 <!-- {"id":"chart","name":"Diapo graphique","kind":"chart","description":"Diapo de preuve chiffrée : un graphique en barres construit en HTML (pas de librairie), des valeurs lisibles au-dessus, une légende réalisé/projeté et la source en mentions.","tags":["graphique","barres","chiffres","preuve","tendance","présentation"]} -->
-<section data-slide class="flex h-[1080px] flex-col justify-center overflow-hidden bg-base px-24">
-  <div class="flex items-end justify-between gap-16">
-    <div>
-      <h2 class="max-w-[1000px] font-display text-title">Automatiser trois motifs retire 36 % des tickets</h2>
-      <p class="mt-6 text-subtitle text-muted">Tickets reçus par trimestre, en milliers.</p>
+<section data-slide class="flex h-[1080px] flex-col overflow-hidden bg-base px-24 py-20">
+  <div class="flex flex-1 flex-col">
+    <div class="flex items-end justify-between gap-16">
+      <div>
+        <h2 class="max-w-[1000px] font-display text-title">Automatiser trois motifs retire 36 % des tickets</h2>
+        <p class="mt-6 text-subtitle text-muted">Tickets reçus par trimestre, en milliers.</p>
+      </div>
+      <div class="flex items-center gap-8 text-caption text-muted">
+        <span class="flex items-center gap-3"><span class="h-4 w-8 bg-highlight"></span>réalisé</span>
+        <span class="flex items-center gap-3"><span class="h-4 w-8 border-2 border-dashed border-muted/50 bg-raised"></span>projeté</span>
+      </div>
     </div>
-    <div class="flex items-center gap-8 text-caption text-muted">
-      <span class="flex items-center gap-3"><span class="h-4 w-8 bg-highlight"></span>réalisé</span>
-      <span class="flex items-center gap-3"><span class="h-4 w-8 border-2 border-dashed border-muted/50 bg-raised"></span>projeté</span>
+
+    <div class="mt-12 grid min-h-[240px] flex-1 grid-cols-5 gap-12">
+      <div class="flex flex-col">
+        <p class="text-body tabular-nums text-ink">96</p>
+        <div class="mt-4 flex flex-1 items-end"><div class="h-full w-full bg-highlight"></div></div>
+      </div>
+      <div class="flex flex-col">
+        <p class="text-body tabular-nums text-ink">88</p>
+        <div class="mt-4 flex flex-1 items-end"><div class="h-[92%] w-full bg-highlight"></div></div>
+      </div>
+      <div class="flex flex-col">
+        <p class="text-body tabular-nums text-ink">74</p>
+        <div class="mt-4 flex flex-1 items-end"><div class="h-[77%] w-full bg-highlight"></div></div>
+      </div>
+      <div class="flex flex-col">
+        <p class="text-body tabular-nums text-ink">68</p>
+        <div class="mt-4 flex flex-1 items-end"><div class="h-[71%] w-full bg-highlight"></div></div>
+      </div>
+      <div class="flex flex-col">
+        <p class="text-body tabular-nums text-ink">61</p>
+        <div class="mt-4 flex flex-1 items-end"><div class="h-[64%] w-full border-2 border-dashed border-muted/50 bg-raised"></div></div>
+      </div>
+    </div>
+
+    <div class="mt-6 grid grid-cols-5 gap-12 border-t border-line pt-6">
+      <p class="font-mono text-caption text-muted">T1 2026</p>
+      <p class="font-mono text-caption text-muted">T2 2026</p>
+      <p class="font-mono text-caption text-muted">T3 2026</p>
+      <p class="font-mono text-caption text-muted">T4 2026</p>
+      <p class="font-mono text-caption text-muted">T1 2027</p>
     </div>
   </div>
 
-  <div class="mt-14 grid h-[360px] grid-cols-5 gap-12">
-    <div class="flex flex-col">
-      <p class="text-body tabular-nums text-ink">96</p>
-      <div class="mt-4 flex flex-1 items-end"><div class="h-full w-full bg-highlight"></div></div>
-    </div>
-    <div class="flex flex-col">
-      <p class="text-body tabular-nums text-ink">88</p>
-      <div class="mt-4 flex flex-1 items-end"><div class="h-[92%] w-full bg-highlight"></div></div>
-    </div>
-    <div class="flex flex-col">
-      <p class="text-body tabular-nums text-ink">74</p>
-      <div class="mt-4 flex flex-1 items-end"><div class="h-[77%] w-full bg-highlight"></div></div>
-    </div>
-    <div class="flex flex-col">
-      <p class="text-body tabular-nums text-ink">68</p>
-      <div class="mt-4 flex flex-1 items-end"><div class="h-[71%] w-full bg-highlight"></div></div>
-    </div>
-    <div class="flex flex-col">
-      <p class="text-body tabular-nums text-ink">61</p>
-      <div class="mt-4 flex flex-1 items-end"><div class="h-[64%] w-full border-2 border-dashed border-muted/50 bg-raised"></div></div>
-    </div>
-  </div>
-
-  <div class="mt-6 grid grid-cols-5 gap-12 border-t border-line pt-6">
-    <p class="font-mono text-caption text-muted">T1 2026</p>
-    <p class="font-mono text-caption text-muted">T2 2026</p>
-    <p class="font-mono text-caption text-muted">T3 2026</p>
-    <p class="font-mono text-caption text-muted">T4 2026</p>
-    <p class="font-mono text-caption text-muted">T1 2027</p>
-  </div>
-
-  <p class="mt-8 font-mono text-caption text-muted">Source : outil de ticketing, 12 mois glissants · projection au rythme des deux premiers chantiers.</p>
+  <footer data-slide-footer class="flex flex-wrap items-baseline gap-x-4 gap-y-2 border-t border-line pt-6 text-body text-muted data-[variant=inverse]:!border-inverse/20 data-[variant=inverse]:!text-inverse/70 data-[variant=alt]:!border-on-alt/20 data-[variant=alt]:!text-on-alt-muted">
+    <p class="min-w-0">Source : outil de ticketing, 12 mois glissants</p>
+    <span aria-hidden="true">·</span>
+    <p class="min-w-0">Projection au rythme des deux premiers chantiers</p>
+    <p class="ml-auto shrink-0 font-mono text-caption tabular-nums">05 / 13</p>
+  </footer>
 </section>

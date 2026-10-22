@@ -1,0 +1,26 @@
+<!-- {"id":"module-grid","name":"Grille de modules","kind":"grid","description":"Trois à neuf cartes nommées, décrites et datées d’un état : la pastille et le mot disent « actif » ou « à venir » sans dépendre de la couleur.","tags":["modules","capacités","briques","état","actif","à venir","grille","présentation"],"slots":[{"name":"modules","description":"Nom, une phrase de description et un état ; 3, 6 ou 9 cartes en trois colonnes","constraint":"nom 2 mots, description 1 phrase"},{"name":"état","description":"« Actif » (pastille pleine) ou « À venir » (pastille vide) : le mot est obligatoire","constraint":"1 mot"}],"variants":[{"name":"duo","attribute":"data-variant=\"duo\""}],"fits":["split","statement","comparison"],"minWidth":540} -->
+<div class="grid grid-cols-3 gap-5 data-[variant=duo]:grid-cols-2">
+  <div class="flex min-w-0 flex-col rounded-card border border-line bg-surface p-6">
+    <h3 class="text-subtitle text-ink">Qualification</h3>
+    <p class="mt-2 text-body text-muted">Catégorie, priorité et propriétaire.</p>
+    <p class="mt-4 flex items-center gap-2 font-mono text-caption text-muted">
+      <span class="h-2.5 w-2.5 shrink-0 rounded-full bg-highlight"></span>Actif
+    </p>
+  </div>
+
+  <div class="flex min-w-0 flex-col rounded-card border border-line bg-surface p-6">
+    <h3 class="text-subtitle text-ink">Réponse guidée</h3>
+    <p class="mt-2 text-body text-muted">Le texte à envoyer, prêt à relire.</p>
+    <p class="mt-4 flex items-center gap-2 font-mono text-caption text-muted">
+      <span class="h-2.5 w-2.5 shrink-0 rounded-full bg-highlight"></span>Actif
+    </p>
+  </div>
+
+  <div class="flex min-w-0 flex-col rounded-card border border-line bg-surface p-6">
+    <h3 class="text-subtitle text-ink">Envoi automatique</h3>
+    <p class="mt-2 text-body text-muted">Sans validation humaine sur les motifs sûrs.</p>
+    <p class="mt-4 flex items-center gap-2 font-mono text-caption text-muted">
+      <span class="h-2.5 w-2.5 shrink-0 rounded-full border border-line"></span>À venir
+    </p>
+  </div>
+</div>
