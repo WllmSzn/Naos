@@ -68,6 +68,14 @@ test('findPatterns : sections propres à une DNA réservées à cette DNA, et en
   }
 });
 
+test('findPatterns : les types de présentation sont couverts, y compris les nouveaux', () => {
+  const kinds = ['agenda', 'divider', 'quote', 'comparison', 'transition', 'appendix'];
+  const picked = findPatterns(all, { mode: 'presentation', kinds, limit: kinds.length });
+  assert.deepEqual(picked.map((p) => p.kind), kinds);
+  const comparisons = findPatterns(all, { mode: 'presentation', kinds: ['comparison'], limit: 4 }).map((p) => p.id);
+  assert.deepEqual(comparisons.sort(), ['comparison-before-after', 'comparison-options']);
+});
+
 test('workflows : le mode pilote les instructions', () => {
   assert.deepEqual(WORKFLOWS.map((w) => w.name), ['ui_screen', 'ui_component', 'ui_review', 'dna_from_sites']);
   const site = getWorkflow('ui_screen')!.render({ brief: 'Landing pour une boulangerie', mode: 'website', dna: 'field-notes' });

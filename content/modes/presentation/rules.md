@@ -26,7 +26,12 @@ Une présentation se projette : l'audience écoute celui qui parle et lit la dia
 
 ## Composition
 
-- Les types de diapositives du mode donnent le rythme : title (ouverture), agenda (trajet), statement (idée forte), split (texte et visuel), chart (preuve chiffrée), quote (voix extérieure), comparison (avant/après, deux options), closing (message et décision attendue).
+- Les types de diapositives du mode donnent le rythme : title (ouverture), agenda (trajet), divider (ouverture de partie), statement (idée forte), transition (souffle), split (texte et visuel), chart (preuve chiffrée), quote (voix extérieure ou objection), comparison (avant/après, options), appendix (sources et définitions), closing (message et décision attendue).
+- `agenda` sert deux fois : en début de deck pour annoncer les parties, puis en repère avant chaque partie, avec la partie en cours marquée (`border-emphasis`, son nom en `text-highlight`) et les autres atténuées. Un deck de plus de douze diapositives gagne à ouvrir chaque partie par un `divider` ; en dessous, les intercalaires prennent la place du contenu.
+- `divider` et `transition` ne disent pas la même chose : le divider nomme une partie et son intention, la transition marque un changement de registre (démo, atelier, pause) et s'écrit en un mot. Aucun des deux ne porte d'argument : s'il faut démontrer, c'est une diapo de contenu.
+- `quote` porte une voix extérieure ou une objection. Pour une objection, la citation reste en titre et la réponse tient en trois lignes au plus, sous un trait d'emphase : elle répond au mot employé, pas à une reformulation.
+- `comparison` désigne l'option retenue par un trait d'emphase et son libellé, jamais par un fond de couleur ; chaque option garde une zone où insérer le schéma qui la décrit (`get_blocks`, type diagram). L'avant/après se compare sur deux valeurs de même nature et de même unité, avec la base de comparaison en légende.
+- `appendix` ne se projette pas pendant le fil : sources, définitions et chiffres à consolider, en deux colonnes, sans grand titre. Elle est annoncée à la clôture, pas parcourue à voix haute.
 - Varier les compositions : une diapo pleine de texte suivie d'une diapo à un seul chiffre, puis d'une image. Jamais trois diapositives de suite avec la même structure.
 - Alignement franc, une ou deux lignes directrices par diapo. Éviter le tout centré : le centrage est réservé aux diapos à une seule affirmation ou à un seul chiffre.
 - Le vide fait partie de la composition : mieux vaut une diapo à moitié pleine qu'une diapo remplie jusqu'aux bords.
