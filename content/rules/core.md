@@ -31,6 +31,8 @@ Les opacités sont permises sur les tokens (`bg-accent/10`, `text-ink/70`, `bord
 
 **Icônes** : `<iconify-icon icon="lucide:calendar"></iconify-icon>`. Un seul jeu par écran (lucide par défaut). La taille suit le `font-size` du parent, ou se règle avec `text-lg`, `size-icon`…
 
+**Sections et blocs** : une section (`get_patterns`) est l'unité d'une page ou d'une diapo ; un bloc (`get_blocks`) est un **fragment** inséré DANS une section : chiffre clé, schéma, grille, emplacement média, mention. Un bloc n'a ni titre principal ni cadre de page : il hérite du titre et du gabarit de la section qui l'accueille, et l'on remplit ses emplacements nommés avec le contenu réel. Ses variantes (attribut `data-variant`) sont des états, pas de nouvelles sections.
+
 **Graphiques** (Chart.js, avec `libs: ["chartjs"]`) : les couleurs de séries viennent de `NAOS.dataPalette[0]`, `[1]`… et celles d'interface de `NAOS.tokens.muted`, `NAOS.tokens.line`. Jamais de hex en dur dans le script : le retheme ne pourrait pas les suivre.
 
 ## 2. Typographie : invariants

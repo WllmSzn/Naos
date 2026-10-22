@@ -52,6 +52,10 @@ export const ModeSchema = z.object({
     .default([])
     .describe('Rôles visuels exposés par ce mode (bg-alt, bg-highlight, border-emphasis, text-connector, bg-brand)'),
   patternKinds: z.array(kebab).min(1).describe('Types de sections propres au mode, dans l’ordre de lecture'),
+  blockKinds: z
+    .array(kebab)
+    .default([])
+    .describe('Types de blocs du mode (fragments insérés dans une section : diagram, figure, grid, media, meta)'),
   /**
    * Comportement de la page produite. Générique : n'importe quel mode peut demander
    * un runtime ; le code ne teste jamais un id de mode.
@@ -137,5 +141,12 @@ export function modePatternsDir(id: string, dir: string = MODES_DIR): string {
 }
 
 export function modeSummary(m: Mode) {
-  return { id: m.id, name: m.name, description: m.description, viewports: m.viewports.map((v) => `${v.name} (${v.width}px)`), patternKinds: m.patternKinds };
+  return {
+    id: m.id,
+    name: m.name,
+    description: m.description,
+    viewports: m.viewports.map((v) => `${v.name} (${v.width}px)`),
+    patternKinds: m.patternKinds,
+    ...(m.blockKinds.length ? { blockKinds: m.blockKinds } : {}),
+  };
 }

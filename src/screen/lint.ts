@@ -53,6 +53,11 @@ export interface LintProfile {
   bannedWords: boolean;
   genericCta: string[];
   requireH1: boolean;
+  /**
+   * Fragment (bloc) et non écran : pas de titre principal, pas de cadre de diapo,
+   * pas de texte sous l'échelle de légende. Le titre appartient à la section hôte.
+   */
+  fragment?: boolean;
 }
 
 /** Profil par défaut (mode site web), utilisé quand aucun mode n'est connu. */
@@ -437,6 +442,30 @@ function lintA11y($: cheerio.CheerioAPI, out: Collector, profile: LintProfile) {
     const clickable = attrs.some((a) => a === 'onclick' || a === '@click' || a.startsWith('@click.') || a === 'x-on:click');
     if (clickable && !$(el).attr('role')) out.violation('a11y.clickable-div', 'warning', 'Élément non interactif cliquable : utiliser <button> ou <a>.', snippet($.html(el)));
   });
+
+  // Un SVG doit dire ce qu'il est : décoratif (aria-hidden) ou porteur de sens (role="img" + aria-label).
+  $('svg').each((_, el) => {
+    const $el = $(el);
+    const role = ($el.attr('role') ?? '').trim();
+    const decorative = $el.attr('aria-hidden') === 'true' || role === 'presentation' || role === 'none';
+    const described = role === 'img' && !!($el.attr('aria-label') ?? '').trim();
+    if (!decorative && !described) {
+      out.violation('a11y.svg-role', 'error', 'SVG sans rôle : aria-hidden="true" s’il est décoratif, sinon role="img" et aria-label.', snippet($.html(el), 60));
+    }
+  });
+
+  // Règles du fragment : le bloc n'est pas une page, il vit sous le titre d'une section.
+  if (profile.fragment) {
+    $('h1, h2').each((_, el) => {
+      out.violation('a11y.block-heading', 'error', 'Un bloc ne porte pas de titre h1/h2 : le titre appartient à la section hôte.', snippet($.html(el), 60));
+    });
+    $('[data-slide]').each((_, el) => {
+      out.violation('structure.block-frame', 'error', 'Un bloc n’est pas une diapo : pas de <section data-slide>, il s’insère dans une section existante.', snippet($.html(el), 60));
+    });
+    $('[class*="text-xs"]').each((_, el) => {
+      out.violation('type.under-caption', 'error', 'Texte sous l’échelle de légende : text-caption est la plus petite taille autorisée dans un bloc.', snippet($.html(el), 60));
+    });
+  }
 }
 
 // ── Structure et styles en ligne ───────────────────────────────────────────

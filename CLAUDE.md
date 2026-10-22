@@ -26,7 +26,7 @@ Le navigateur headless (scan, aperçu, audit) est l'Edge installé, piloté par 
 ```
 content/                 données éditables, rechargées par l'outil reload_library
   rules/core.md          règles communes à tous les modes
-  modes/<mode>/          un mode de conception : mode.json, rules.md, patterns/<id>.html (sections génériques)
+  modes/<mode>/          un mode de conception : mode.json, rules.md, patterns/<id>.html (sections), blocks/<id>.html (fragments)
 naos.config.json         emplacement de la bibliothèque de DNA (local, hors git)
 src/
   index.ts               point d'entrée stdio (stdout réservé au protocole, logs sur stderr)
@@ -37,6 +37,7 @@ src/
   scan/                  scan d'un site : collecte dans la page, analyse, brouillon de DNA
   preview/               rendu réel aux viewports du mode : captures en tranches et contrôles
   patterns/              chargement et sélection des sections, par mode
+  blocks/                chargement et sélection des blocs (fragments), par mode, et leur section hôte
   workflows.ts           ui_screen, ui_component, ui_review, dna_from_sites (contenu métier tiré du mode)
 examples/                corps d'écran utilisés par npm run demo
 output/                  pages, scans, aperçus générés (ignoré par git)
@@ -44,14 +45,14 @@ output/                  pages, scans, aperçus générés (ignoré par git)
 
 ## La bibliothèque de DNA (hors de Naos)
 
-Les DNA vivent dans **`C:\Users\Artefact\naos-library`**, un dépôt git séparé, déclaré dans `naos.config.json` (la variable `NAOS_LIBRARY` a priorité, `content/dna` sert de repli historique). Rangement : `<famille>/<id>/dna.json`, avec les familles `artefact`, `inspirations`, `base` et `clients/<client>`. Une section propre à une DNA va dans `<famille>/<id>/patterns/<mode>/`, une section partagée par une famille dans `<famille>/patterns/<mode>/`. `loadLibrary()` renvoie aussi `locations` (famille, dossier, fichier de chaque DNA).
+Les DNA vivent dans **`C:\Users\Artefact\naos-library`**, un dépôt git séparé, déclaré dans `naos.config.json` (la variable `NAOS_LIBRARY` a priorité, `content/dna` sert de repli historique). Rangement : `<famille>/<id>/dna.json`, avec les familles `artefact`, `inspirations`, `base` et `clients/<client>`. Une section propre à une DNA va dans `<famille>/<id>/patterns/<mode>/`, une section partagée par une famille dans `<famille>/patterns/<mode>/`. Les blocs suivent la même règle dans `blocks/` : `<famille>/<id>/blocks/<mode>/` et `<famille>/blocks/<mode>/`. `loadLibrary()` renvoie aussi `locations` (famille, dossier, fichier de chaque DNA).
 
 - **Les tests n'utilisent jamais la bibliothèque réelle** : chaque fichier de test importe d'abord `./setup.js`, qui pointe `NAOS_LIBRARY` vers `test/fixtures/library` (11 DNA). Un nouveau test qui a besoin d'une DNA l'y copie.
 - **Après une modification de DNA**, régénérer la galerie : `npm run catalog -- --previews`. La bibliothèque se commite **dans son propre dépôt**, pas dans Naos.
 
 ## Les modes
 
-Naos distingue des **métiers de conception** : `website` (sites, landings) et `product-desktop` (écrans d'application). Un mode est **entièrement décrit par son dossier**. Le code ne doit jamais tester un id de mode en dur : il lit `mode.json` (viewports, seuils de cibles, profil de lint, `dnaRequires`, `patternKinds`, textes du workflow). Ajouter un mode (`product-mobile`…) = un dossier + des blocs dans les DNA concernées. Si un besoin semble exiger du code propre à un mode, c'est un réglage manquant dans `ModeSchema`.
+Naos distingue des **métiers de conception** : `website` (sites, landings) et `product-desktop` (écrans d'application). Un mode est **entièrement décrit par son dossier**. Le code ne doit jamais tester un id de mode en dur : il lit `mode.json` (viewports, seuils de cibles, profil de lint, `dnaRequires`, `patternKinds`, `blockKinds`, textes du workflow). Ajouter un mode (`product-mobile`…) = un dossier + des blocs dans les DNA concernées. Si un besoin semble exiger du code propre à un mode, c'est un réglage manquant dans `ModeSchema`.
 
 Une DNA sert un mode seulement si elle a le bloc `modes.<mode>`, avec les champs exigés par ce mode. Les sections portant `"dna": [...]` sont réservées à ces DNA. Le mode est inscrit dans la page (`<meta name="naos-mode">`) : le lint, le rendu et le retheme le relisent.
 
@@ -73,6 +74,7 @@ Pièges connus :
 
 - **Le schéma DNA refuse un contraste insuffisant** : ink ≥ 7 ; muted, accentInk/accent ≥ 4.5 ; couleurs d'état et accent en texte ≥ 4.5 sur le fond **et sur leur propre teinte /15**. Pour corriger une couleur, la rapprocher de ink (`ensureContrast` dans `src/color.ts`) plutôt que d'en inventer une autre.
 - **Chaque section passe le lint de son mode sans erreur ni correction**, en clair et en sombre (vérifié dans `test/patterns.test.ts`).
+- **Chaque bloc passe le lint de son mode en profil `block`** (fragment : pas de `h1`/`h2`, pas de `data-slide`, pas de texte sous `text-caption`, SVG avec rôle), en clair et en sombre (`test/blocks.test.ts`).
 - **Pas de texte coloré ou gris sur une teinte posée sur une autre teinte** (badge sur ligne sélectionnée, compteur dans un item actif) : la double teinte fait tomber le contraste. Utiliser une pastille pleine ou retirer le fond de la ligne.
 - **`npm run audit` ne relève aucune erreur.** Les avertissements de cibles tactiles sont tolérés.
 - **Toujours vérifier visuellement.** Après une modification de DNA, de section ou d'enveloppe, regarder le rendu (`npm run demo`, ouvrir dans Brave, ou l'outil `preview_screen`). Plusieurs défauts réels n'ont été vus que sur une capture : un badge illisible, une image ovale, une carte flottante qui masquait du texte.

@@ -23,8 +23,8 @@ test('le serveur expose les outils attendus', async () => {
   const client = await connect();
   const { tools } = await client.listTools();
   assert.deepEqual(tools.map((t) => t.name).sort(), [
-    'export_pdf', 'get_dna', 'get_patterns', 'get_rules', 'get_workflow', 'lint_screen', 'list_dna', 'list_modes', 'list_patterns', 'preview_screen', 'read_screen',
-    'reload_library', 'retheme', 'save_dna', 'scan_url', 'suggest_dna', 'wrap_screen',
+    'export_pdf', 'get_blocks', 'get_dna', 'get_patterns', 'get_rules', 'get_workflow', 'lint_screen', 'list_blocks', 'list_dna', 'list_modes',
+    'list_patterns', 'preview_screen', 'read_screen', 'reload_library', 'retheme', 'save_dna', 'scan_url', 'suggest_dna', 'wrap_screen',
   ]);
 });
 
@@ -53,6 +53,18 @@ test('get_patterns et list_patterns', async () => {
   const html = text(await client.callTool({ name: 'get_patterns', arguments: { mode: 'website', ids: ['cta-panel'] } }));
   assert.match(html, /<!-- cta-panel · cta ·/);
   assert.match(html, /bg-accent/);
+});
+
+test('get_blocks et list_blocks', async () => {
+  const client = await connect();
+  const list = JSON.parse(text(await client.callTool({ name: 'list_blocks', arguments: { mode: 'presentation' } })));
+  assert.ok(list.blocks.length > 0 && list.blocks.every((b: { mode: string; html?: string }) => b.mode === 'presentation' && b.html === undefined));
+  assert.ok(list.kinds.includes('figure'));
+  const html = text(await client.callTool({ name: 'get_blocks', arguments: { mode: 'presentation', ids: ['key-figure'] } }));
+  assert.match(html, /<!-- key-figure · figure/);
+  assert.match(html, /text-highlight/);
+  const wrongMode = await client.callTool({ name: 'get_blocks', arguments: { mode: 'website', ids: ['key-figure'] } });
+  assert.equal(wrongMode.isError, true);
 });
 
 function parts(result: Awaited<ReturnType<Client['callTool']>>): [any, string] {

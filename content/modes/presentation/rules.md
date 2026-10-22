@@ -32,9 +32,19 @@ Une présentation se projette : l'audience écoute celui qui parle et lit la dia
 - Le vide fait partie de la composition : mieux vaut une diapo à moitié pleine qu'une diapo remplie jusqu'aux bords.
 - Les visuels passent par un emplacement `data-image` décrit (sujet, cadrage, lumière), jamais par une photo aléatoire ni un faux logo.
 
+## Blocs
+
+- Un **bloc** est un fragment : un chiffre clé, un schéma, une grille de trois preuves, un emplacement média. Il s'insère DANS une diapo, sous son titre, et n'apporte jamais son propre titre de diapo. Appeler `get_blocks` (ou `list_blocks` pour le catalogue) avec le mode et la DNA.
+- Un bloc se choisit pour ce qu'il porte, pas pour sa forme : le chiffre clé d'un résultat, la chaîne d'étapes d'un processus, le schéma d'une architecture. Deux blocs qui disent la même chose sur une diapo font doublon.
+- Il hérite du gabarit de la diapo : même padding, mêmes tailles de l'échelle, mêmes rôles de couleur. Ne pas lui donner de fond, de cadre ou d'ombre qui contredirait la diapo.
+- Remplir ses emplacements (le chiffre et son unité, les branches, les étapes) avec le contenu réel ; ses variantes (`data-variant`) sont des états du bloc, pas des diapositives différentes.
+- Un schéma reste lisible à 3 mètres : peu de nœuds (sept au plus), des libellés courts, un seul accent par schéma.
+- Un bloc s'adapte à la largeur de son conteneur : grille ou flex, jamais de position absolue en pixels pour placer du texte. Les connecteurs SVG se dessinent avec `preserveAspectRatio="none"` et `vector-effect="non-scaling-stroke"`, en `stroke="currentColor"` et une classe `text-connector` : le trait suit la DNA et le retheme.
+- Un SVG décoratif porte `aria-hidden="true"` ; un SVG porteur de sens `role="img"` et un `aria-label`. Aucun texte sous `text-caption`.
+
 ## Rôles visuels
 
-Sept rôles ont un nom commun dans toutes les DNA du mode, pour que le corps d'une diapo survive à un changement de DNA. Ils se remplissent dans le bloc `presentation.roles` de chaque DNA ; sans déclaration, ils retombent sur l'accent de la DNA.
+Onze classes ont un nom commun dans toutes les DNA du mode, pour que le corps d'une diapo survive à un changement de DNA. Elles se remplissent dans le bloc `presentation.roles` de chaque DNA ; sans déclaration, elles retombent sur l'accent de la DNA.
 
 - `bg-alt` / `text-on-alt` / `text-on-alt-muted` — fond de diapo alterné et ses textes. À utiliser quand la DNA alterne deux fonds dans son deck (diapos de preuve claires, par exemple). Ne jamais poser `text-ink` sur `bg-alt` : le contraste est celui de l'autre fond.
 - `bg-highlight` / `text-highlight` / `border-highlight` — mise en avant qui n'est pas une action : chiffre clé, série principale d'un graphique, option retenue. Une seule par diapo.

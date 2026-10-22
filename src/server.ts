@@ -10,6 +10,7 @@ import { scanUrl } from './scan/scan.js';
 import { previewScreen } from './preview/preview.js';
 import { exportPdf } from './preview/pdf.js';
 import { findPatterns, getPatterns, patternMeta, reloadPatterns } from './patterns/library.js';
+import { blockMeta, findBlocks, getBlocks, reloadBlockLibrary } from './blocks/library.js';
 import { getWorkflow, WORKFLOWS } from './workflows.js';
 import { suggestDna } from './dna/suggest.js';
 import type { Dna } from './dna/schema.js';
@@ -518,6 +519,62 @@ export function createServer(): McpServer {
     }),
   );
 
+  server.registerTool(
+    'list_blocks',
+    {
+      title: 'Lister les blocs',
+      description:
+        'Catalogue des blocs d’un mode : fragments insérés DANS une section (chiffre clé, schéma, grille, emplacement média), sans le HTML. ' +
+        'Chaque bloc annonce ses emplacements, ses variantes et les sections qui l’accueillent.',
+      inputSchema: {
+        mode: z.string().describe('Mode : presentation, website…'),
+        kind: z.string().optional().describe('Filtrer par type de bloc (voir blockKinds du mode)'),
+        dna: z.string().optional().describe('DNA en cours'),
+      },
+      annotations: { readOnlyHint: true },
+    },
+    guarded(({ mode, kind, dna }: { mode: string; kind?: string; dna?: string }) => {
+      const m = requireMode(mode);
+      const list = findBlocks(getBlocks().blocks.values(), { mode: m.id, dna, kinds: kind ? [kind] : undefined, limit: 200 });
+      return json({ mode: m.id, kinds: m.blockKinds, count: list.length, blocks: list.map(blockMeta) });
+    }),
+  );
+
+  server.registerTool(
+    'get_blocks',
+    {
+      title: 'Blocs',
+      description:
+        'Renvoie le HTML de blocs d’un mode, en classes sémantiques donc valables pour toute DNA du mode. Un bloc est un FRAGMENT : ' +
+        'il n’a ni titre de diapo ni cadre, et s’insère dans une section hôte (champ fits). Avec dna, ses blocs propres passent en tête. ' +
+        'Adapter les valeurs, ne pas recopier la démo telle quelle.',
+      inputSchema: {
+        mode: z.string().describe('Mode : presentation, website…'),
+        dna: z.string().optional().describe('DNA en cours'),
+        ids: z.array(z.string()).optional().describe('Ids précis (prioritaires sur les autres filtres)'),
+        kinds: z.array(z.string()).optional().describe('Types de blocs voulus'),
+        query: z.string().optional().describe('Mots-clés, ex. "chiffre clé", "chaîne d’étapes"'),
+        limit: z.number().int().min(1).max(12).optional().describe('6 par défaut'),
+      },
+      annotations: { readOnlyHint: true },
+    },
+    guarded((a: { mode: string; dna?: string; ids?: string[]; kinds?: string[]; query?: string; limit?: number }) => {
+      const m = requireMode(a.mode);
+      const list = findBlocks(getBlocks().blocks.values(), { ...a, mode: m.id });
+      if (!list.length) throw new ToolError(`Aucun bloc ne correspond dans le mode ${m.id}. Voir list_blocks.`);
+      const text = list
+        .map(
+          (b) =>
+            `<!-- ${b.id} · ${b.kind}${b.dna ? ' · propre à la DNA' : ''} · ${b.description}` +
+            `${b.slots.length ? ` · emplacements : ${b.slots.map((s) => s.name).join(', ')}` : ''}` +
+            `${b.variants.length ? ` · variantes : ${b.variants.map((v) => v.name).join(', ')}` : ''}` +
+            `${b.libs.length ? ` · libs: ${b.libs.join(', ')}` : ''} -->\n${b.html}`,
+        )
+        .join('\n\n');
+      return { content: [{ type: 'text', text }] };
+    }),
+  );
+
   // ── Workflows (prompts MCP + outil miroir) ───────────────────────────────
 
   for (const wf of WORKFLOWS) {
@@ -607,13 +664,14 @@ export function createServer(): McpServer {
     'reload_library',
     {
       title: 'Recharger la bibliothèque',
-      description: 'Relit content/modes, content/dna et les sections après une modification, et signale les fichiers invalides.',
+      description: 'Relit content/modes, content/dna, les sections et les blocs après une modification, et signale les fichiers invalides.',
       annotations: { readOnlyHint: true, idempotentHint: true },
     },
     () => {
       const modes = reloadModes();
       const { dnas, errors } = reloadLibrary();
       const patterns = reloadPatterns();
+      const blocks = reloadBlockLibrary();
       return json({
         modes: [...modes.modes.keys()],
         invalidModes: modes.errors,
@@ -621,6 +679,8 @@ export function createServer(): McpServer {
         invalid: errors,
         patterns: patterns.patterns.size,
         invalidPatterns: patterns.errors,
+        blocks: blocks.blocks.size,
+        invalidBlocks: blocks.errors,
       });
     },
   );

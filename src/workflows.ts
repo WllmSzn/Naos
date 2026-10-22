@@ -55,6 +55,9 @@ ${instruction}
 `;
     if (!mode) return head;
     const m = mode.id;
+    const blocks = mode.blockKinds.length
+      ? `\nAppelle get_blocks avec les types retenus, mode "${m}" et dna : les blocs (${mode.blockKinds.join(', ')}) sont des fragments à insérer DANS une section, avec leurs valeurs et leurs emplacements remplis — pas des pages ni des unités autonomes. Un bloc qui n'apporte pas de preuve ou de structure utile reste dehors.`
+      : '';
     return `${head}
 ## 1. Cadrer
 ${mode.workflow.frame}
@@ -69,7 +72,7 @@ Rédige tous les textes : titres, libellés, actions, données (noms, montants, 
 
 ## 4. Structurer
 ${mode.workflow.structure}
-Appelle get_patterns avec les types retenus, mode "${m}" et dna (l'id de la DNA) : ses sections propres passent en tête. Les sections sont des références de STRUCTURE : adapte-les, ne les recopie pas telles quelles.
+Appelle get_patterns avec les types retenus, mode "${m}" et dna (l'id de la DNA) : ses sections propres passent en tête. Les sections sont des références de STRUCTURE : adapte-les, ne les recopie pas telles quelles.${blocks}
 
 ## 5. Composer le corps
 Écris uniquement le contenu du <body>, en classes sémantiques (règles communes, section 1).
